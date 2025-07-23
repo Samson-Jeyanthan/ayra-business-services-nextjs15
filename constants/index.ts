@@ -19,3 +19,26 @@ export const RIBBON_NAMES: IRibbonNames[] = [
     name: "App Development",
   },
 ];
+
+export const NAV_LINKS = [
+  {
+    name: "About",
+    href: "/#about",
+    scroll: true,
+  },
+  {
+    name: "Services",
+    href: "/#services",
+    scroll: true,
+  },
+  {
+    name: "Looking for Work",
+    href: "/looking-for-work",
+    scroll: false,
+  },
+  {
+    name: "Looking for Staff",
+    href: "/looking-for-staff",
+    scroll: false,
+  },
+];
