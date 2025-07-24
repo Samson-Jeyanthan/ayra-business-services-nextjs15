@@ -9,13 +9,13 @@ const Ribbon = () => {
       <div className="relative z-10 flex justify-center items-center py-5 shadow-xl mt-28 gap-6 md:gap-16 bg-primary text-light-300">
         {RIBBON_NAMES.map((item, index) => (
           <React.Fragment key={item.name}>
-            <p className="whitespace-nowrap font-medium">{item.name}</p>
+            <p className="whitespace-nowrap text-lg font-medium">{item.name}</p>
             {index !== RIBBON_NAMES.length - 1 && (
               <Image
                 src="/svgs/star.svg"
                 alt="Ribbon Logo"
-                width={20}
-                height={20}
+                width={26}
+                height={26}
               />
             )}
           </React.Fragment>

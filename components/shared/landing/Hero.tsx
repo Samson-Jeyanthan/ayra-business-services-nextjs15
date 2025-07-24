@@ -4,7 +4,9 @@ const Hero = () => {
   return (
     <div className="">
       <section className="flex flex-col w-1/2 items-start gap-5">
-        <h1 className="text-7xl font-semibold">Ayra Business Services</h1>
+        <h1 className="text-7xl font-semibold tracking-tight">
+          Ayra Business Services
+        </h1>
         <h3 className="text-2xl font-semibold">Simplify, Empower, Grow</h3>
         <p className="font-medium">
           We don’t just fill vacancies or sell services—we build long-term

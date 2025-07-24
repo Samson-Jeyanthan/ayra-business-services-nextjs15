@@ -4,7 +4,7 @@ const Aboutus = () => {
   return (
     <section className="bg-light-700 p-20 min-h-screen">
       <div className="relative flex flex-col items-center justify-start px-20 py-10 gap-10 bg-light-300 h-full text-light-800 rounded-3xl bg-[url(/images/black-bg-light.png)] bg-contain bg-local bg-no-repeat">
-        <h1 className="uppercase text-3xl font-semibold w-1/2 text-center">
+        <h1 className="uppercase text-4xl font-semibold w-1/2 text-center">
           Complete Business Solutions Under One Roof
         </h1>
         <div className="w-full flex justify-end">
