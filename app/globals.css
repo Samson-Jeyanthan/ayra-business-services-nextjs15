@@ -158,3 +158,25 @@
     @apply ring-0 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 outline-none;
   }
 }
+
+@layer components {
+  .footer-title {
+    @apply text-lg font-semibold text-light-300;
+  }
+
+  .footer-links-group {
+    @apply flex flex-col gap-4 text-sm mt-6 text-light-500;
+  }
+
+  .primary-btn {
+    @apply !flex !gap-4 !items-center !bg-light-300 !rounded-full !text-light-800 !px-6 !py-3 !font-medium;
+  }
+
+  .secondary-btn {
+    @apply flex gap-4 border border-light-300 border-solid rounded-full text-light-300 px-6 py-3 font-medium;
+  }
+
+  .primary-btn-light {
+    @apply !flex !gap-7 !bg-light-900 text-light-300 !px-7 !py-6 !text-base !font-medium !rounded-full !items-center;
+  }
+}

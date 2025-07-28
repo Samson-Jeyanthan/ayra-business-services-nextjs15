@@ -2,6 +2,7 @@ import {
   Aboutus,
   Cargo,
   ClientChoose,
+  ContactUs,
   Hero,
   Ribbon,
   Services,
@@ -16,6 +17,11 @@ const LandingPage = () => {
       <Services />
       <ClientChoose />
       <Cargo />
+      <div className="h-6 w-full bg-light-700" />
+      <ContactUs
+        title="Ready to work with us ?"
+        titleClass="text-7xl font-semibold"
+      />
     </section>
   );
 };

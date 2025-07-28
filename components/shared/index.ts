@@ -5,3 +5,5 @@ export { default as Aboutus } from "./landing/Aboutus";
 export { default as Services } from "./landing/Services";
 export { default as ClientChoose } from "./landing/ClientChoose";
 export { default as Cargo } from "./landing/Cargo";
+export { default as ContactUs } from "./ContactUs";
+export { default as Footer } from "./Footer";
