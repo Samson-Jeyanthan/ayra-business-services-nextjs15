@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <div className="relative w-full p-20">
+    <div className="relative flex-center w-full p-20 3xl:px-44 h-[calc(100vh-12.5rem)]">
       <Image
         src="/svgs/net.svg"
         alt="bg-net"
@@ -36,7 +36,7 @@ const Hero = () => {
           </Link>
         </div>
       </section>
-      <section></section>
+      <section className="w-1/2">images</section>
     </div>
   );
 };

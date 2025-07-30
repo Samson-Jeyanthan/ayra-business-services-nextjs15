@@ -169,14 +169,22 @@
   }
 
   .primary-btn {
-    @apply !flex !gap-4 !items-center !bg-light-300 !rounded-full !text-light-800 !px-6 !py-3 !font-medium;
+    @apply !flex !gap-4 !items-center !bg-light-300 !rounded-full !text-light-800 !h-12 !px-6 !font-semibold !text-base !min-w-[160px] !max-w-max !cursor-pointer;
   }
 
   .secondary-btn {
-    @apply flex gap-4 border border-light-300 border-solid rounded-full text-light-300 px-6 py-3 font-medium;
+    @apply !flex !gap-4 !items-center border border-light-300 border-solid rounded-full text-light-300 !h-12 !px-6 !font-semibold !text-base !cursor-pointer;
+  }
+
+  .secondary-btn-custom {
+    @apply flex gap-4 items-center border border-light-300 border-solid rounded-full text-light-300 font-semibold;
   }
 
   .primary-btn-light {
-    @apply !flex !gap-7 !bg-light-900 text-light-300 !px-7 !py-6 !text-base !font-medium !rounded-full !items-center;
+    @apply !flex !gap-7 !bg-light-900 text-light-300 !h-12 !px-6 !text-base !font-semibold !rounded-full !items-center  !cursor-pointer;
+  }
+
+  .heading-2 {
+    @apply capitalize text-5xl font-semibold tracking-tight;
   }
 }

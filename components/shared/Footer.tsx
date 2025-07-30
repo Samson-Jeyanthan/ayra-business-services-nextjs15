@@ -1,4 +1,4 @@
-import { NAV_LINKS } from "@/constants";
+import { NAV_LINKS, SOCIAL_MEDIAS } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -16,7 +16,13 @@ const Footer = () => {
             Partner with Ayra and unlock growth across every lane of your
             business.
           </p>
-          <div>Social medias</div>
+          <div className="flex gap-2 items-center -ml-4">
+            {SOCIAL_MEDIAS.map((item) => (
+              <Link key={item.name} href={item.href}>
+                <Image src={item.icon} alt={item.name} width={50} height={50} />
+              </Link>
+            ))}
+          </div>
         </div>
 
         <div className="w-max">
@@ -78,8 +84,8 @@ const Footer = () => {
         </div>
       </div>
       <p className="text-xs text-center mt-10">
-        © 2025 AYRA BUSINESS SERVICES. All Rights Reserved. | Designed &
-        Developed By Samson
+        © {new Date().getFullYear()} AYRA BUSINESS SERVICES. All Rights
+        Reserved. | Designed & Developed By Samson
       </p>
     </footer>
   );
