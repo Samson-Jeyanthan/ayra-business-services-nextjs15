@@ -21,7 +21,10 @@ const Navbar = () => {
         })}
       </div>
 
-      <Link href="/contact-us" className="secondary-btn">
+      <Link
+        href="/contact-us"
+        className="secondary-btn-custom h-10 px-6 text-sm"
+      >
         Contact Us
       </Link>
     </nav>

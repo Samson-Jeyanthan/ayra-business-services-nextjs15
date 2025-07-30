@@ -4,9 +4,7 @@ import Image from "next/image";
 const ClientChoose = () => {
   return (
     <section className="flex flex-col min-h-screen p-20 gap-10 bg-light-700">
-      <h1 className="capitalize text-5xl font-semibold tracking-tight">
-        why our clients choose us?
-      </h1>
+      <h1 className="heading-2">why our clients choose us?</h1>
       <p className="font-medium text-light-500 w-1/2">
         At Ayra Business Services, we don’t just offer services — we deliver
         reliable, tailored solutions that empower businesses to grow, adapt, and

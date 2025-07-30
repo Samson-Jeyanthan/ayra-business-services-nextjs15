@@ -81,3 +81,70 @@ export const WHY_CHOOSE: IWhyChoose[] = [
       "The world of business is always evolving, and so are we. We're committed to being progressive and constantly innovating to enhance the efficiency and effectiveness of our services. By staying at the forefront of industry practices and adopting cutting-edge technologies, we aim to offer you the best level of service for the lowest possible cost. Our goal is to ensure you always receive exceptional value and superior results.",
   },
 ];
+
+interface ISocialMedias {
+  name: string;
+  icon: string;
+  href: string;
+}
+
+export const SOCIAL_MEDIAS: ISocialMedias[] = [
+  {
+    name: "Facebook",
+    icon: "/svgs/facebook.svg",
+    href: "https://www.facebook.com/",
+  },
+  {
+    name: "Twitter",
+    icon: "/svgs/twitter.svg",
+    href: "https://twitter.com/",
+  },
+  {
+    name: "Linkedin",
+    icon: "/svgs/linkedin.svg",
+    href: "https://www.linkedin.com/",
+  },
+  {
+    name: "Instagram",
+    icon: "/svgs/instagram.svg",
+    href: "https://www.instagram.com/",
+  },
+];
+
+interface IServices {
+  name: string;
+  value: string;
+  description: string;
+  isMore: boolean;
+}
+
+export const SERVICES: IServices[] = [
+  {
+    name: "Recruitment Services",
+    value: "service-1",
+    description:
+      "Finding the right talent is crucial for any organization. Our recruitment services are designed to connect you with the ideal candidates who not only possess the necessary skills and experience but also align with your company culture. From executive search to specialized roles, we leverage our extensive network and expertise to streamline your hiring process, saving you time and resources. We focus on understanding your specific requirements to ensure a perfect match every time.",
+    isMore: false,
+  },
+  {
+    name: "Fuel Card Services",
+    value: "service-2",
+    description:
+      "Managing fuel expenses can be a significant challenge for businesses with fleets. Our fuel card services offer a convenient and cost-effective solution to streamline your fuel management. We provide secure and easy-to-use fuel cards that offer competitive pricing, detailed reporting, and simplified administration, giving you greater control and visibility over your fuel consumption and expenses.",
+    isMore: true,
+  },
+  {
+    name: "Media Services",
+    value: "service-3",
+    description:
+      "In today's visually driven world, compelling content is paramount. Our creative media team specializes in crafting engaging and impactful visuals and narratives that resonate with your target audience. Whether you need stunning graphic design, captivating video production, professional photography, or compelling copywriting, we're here to help you tell your story effectively and elevate your brand presence.",
+    isMore: true,
+  },
+  {
+    name: "Web & App Development Services",
+    value: "service-4",
+    description:
+      "In the digital age, a strong online presence is non-negotiable. Our app and web development services provide cutting-edge solutions tailored to your unique business goals. From intuitive and user-friendly mobile applications to responsive and robust websites, we build platforms that enhance user experience, drive engagement, and support your growth. We focus on modern design, seamless functionality, and scalable architecture to ensure your digital presence is future-proof.",
+    isMore: true,
+  },
+];
