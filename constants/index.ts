@@ -148,3 +148,31 @@ export const SERVICES: IServices[] = [
     isMore: true,
   },
 ];
+
+export interface IWhyPartnerData {
+  title: string;
+  description: string;
+}
+
+export const WHY_PARTNER_STAFF: IWhyPartnerData[] = [
+  {
+    title: "Beyond Recruitment",
+    description:
+      "A Holistic Approach to Your Success. Our commitment to your growth extends far beyond talent acquisition",
+  },
+  {
+    title: "Creative Media",
+    description:
+      "From engaging videos to compelling graphic design, our team crafts media that captures attention and elevates your brand, ensuring your message resonates powerfully.",
+  },
+  {
+    title: "Fuel Card Services",
+    description:
+      "Gain greater control and visibility over your fleet expenses with our efficient fuel card solutions, designed to simplify management and reduce costs.",
+  },
+  {
+    title: "App and Web Development",
+    description:
+      "We build intuitive, robust websites and mobile applications tailored to your business, enhancing your digital presence and streamlining your operations.",
+  },
+];

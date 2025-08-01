@@ -11,6 +11,7 @@
   --color-light-800: #fefffb;
   --color-light-700: #f2f1ed;
   --color-light-600: #cac4b6;
+  --color-light-550: #939393;
   --color-light-500: #787765;
   --color-light-400: #535353;
   --color-light-300: #0c0c0c;
@@ -54,6 +55,7 @@
   --light-800: #fefffb;
   --light-700: #f2f1ed;
   --light-600: #f2f1ed;
+  --light-550: #939393;
   --light-500: #787765;
   --light-400: #535353;
   --light-300: #0c0c0c;
@@ -169,7 +171,7 @@
   }
 
   .primary-btn {
-    @apply !flex !gap-4 !items-center !bg-light-300 !rounded-full !text-light-800 !h-12 !px-6 !font-semibold !text-base !min-w-[160px] !max-w-max !cursor-pointer;
+    @apply !flex !gap-4 !items-center !bg-light-300 !rounded-full !text-light-800 !h-12 !px-6 !font-semibold !text-base !min-w-[140px] !max-w-max !cursor-pointer;
   }
 
   .secondary-btn {
@@ -186,5 +188,9 @@
 
   .heading-2 {
     @apply capitalize text-5xl font-semibold tracking-tight;
+  }
+
+  .heading-3 {
+    @apply text-4xl font-semibold;
   }
 }
