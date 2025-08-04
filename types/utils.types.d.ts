@@ -17,3 +17,13 @@ export interface IWhyPartner {
   description: string;
   data: IWhyPartnerData[];
 }
+
+export type TFormInput = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  form: any;
+  inputName: string;
+  inputType: "text" | "email" | "password" | "number";
+  formLabel: string;
+  placeholder?: string;
+  formDescription?: string;
+};
