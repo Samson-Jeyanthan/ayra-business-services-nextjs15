@@ -23,8 +23,10 @@ const FormInput = ({
       control={form.control}
       name={inputName}
       render={({ field }) => (
-        <FormItem className="flex w-full flex-col pt-[3px]">
-          <FormLabel className="mb-1.5">{formLabel}</FormLabel>
+        <FormItem className="flex w-full flex-col">
+          <FormLabel className="mb-1 font-semibold !text-light-300">
+            {formLabel}
+          </FormLabel>
           <FormControl>
             <Input
               type={inputType || "text"}
@@ -36,14 +38,14 @@ const FormInput = ({
                     : e.target.value
                 )
               }
-              className=""
+              className="no-focus !bg-light-700 !border !border-solid !border-light-500 !text-light-300 !rounded-lg !px-3 !py-2 !w-full !h-12"
             />
           </FormControl>
 
           {formDescription && (
             <FormDescription className="">{formDescription}</FormDescription>
           )}
-          <FormMessage className="text-xs text-custom-red" />
+          <FormMessage className="text-xs text-red-600" />
         </FormItem>
       )}
     />

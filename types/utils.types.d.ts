@@ -27,3 +27,13 @@ export type TFormInput = {
   placeholder?: string;
   formDescription?: string;
 };
+
+export type TTextArea = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  form: any;
+  inputName: string;
+  formLabel: string;
+  placeholder?: string;
+  formDescription?: string;
+  maxLength?: number;
+};

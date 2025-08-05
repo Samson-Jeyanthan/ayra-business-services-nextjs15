@@ -1,6 +1,6 @@
 import {
   About,
-  ClientForm,
+  ClientFormSection,
   CommonHero,
   ContactUs,
   Description,
@@ -31,7 +31,7 @@ const LookingForStaff = () => {
         description="At Ayra Business Services, we don’t just offer services — we deliver reliable, tailored solutions that empower businesses to grow, adapt, and succeed. Our clients trust us for our dedication, versatility, and results-driven approach."
         data={WHY_PARTNER_STAFF}
       />
-      <ClientForm />
+      <ClientFormSection />
       <Description />
       <ContactUs
         title="Ready to experience the Ayra difference and drive your business forward?"

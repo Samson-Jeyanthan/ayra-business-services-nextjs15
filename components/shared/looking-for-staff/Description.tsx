@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const Description = () => {
   return (
-    <div className="flex flex-col gap-16 items-center p-20">
+    <div className="flex flex-col gap-16 items-center p-20 bg-light-700">
       <h3 className="heading-2">Your Trusted Partner for Growth</h3>
       <div className="flex-center gap-16">
         <p className="font-medium text-lg text-justify text-light-300 w-1/3">
