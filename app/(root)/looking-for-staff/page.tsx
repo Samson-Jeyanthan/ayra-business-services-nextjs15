@@ -11,15 +11,16 @@ import { WHY_PARTNER_STAFF } from "@/constants";
 const LookingForStaff = () => {
   return (
     <section className="relative flex flex-col gap-10 w-full items-center z-10">
-      <div className="bg-repeat bg-linear-to-b from-light-900 to-light-700 flex flex-col gap-10 w-full items-center pb-16 -mb-10">
+      <div className="bg-repeat bg-linear-to-b from-light-900 to-light-600 flex flex-col gap-10 w-full items-center pb-16 -mb-10">
         <CommonHero
           title="Looking for Staff ??"
-          description=" At Ayra Business Services, we connect businesses with skilled
+          description="At Ayra Business Services, we connect businesses with skilled
         professionals who are ready to make an impact. Whether you’re hiring for
         short-term roles or building a long-term team, we make recruitment
         simple, fast, and reliable."
-          image_one="/images/staff-hero-img-1.jpg"
-          image_two="/images/staff-hero-img-2.jpg"
+          img_one="/images/staff-hero-img-1.jpg"
+          img_two="/images/staff-hero-img-2.jpg"
+          inverse_img={false}
         />
         <About
           title="Recruitment  that  Understands  Your  Needs"

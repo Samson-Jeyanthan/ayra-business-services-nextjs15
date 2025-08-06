@@ -9,8 +9,8 @@ const Footer = () => {
       <div className="h-2 w-full flex bg-primary" />
       <div className="flex gap-18 justify-between items-start px-5">
         <div className="flex flex-col items-start gap-5 w-[45%]">
-          <h1 className="font-bold text-2xl">Ayra Business Services</h1>
-          <p className="text-light-500">
+          <h1 className="font-semibold text-3xl">Ayra Business Services</h1>
+          <p className="text-light-400">
             We don’t just fill vacancies or sell services—we build long-term
             solutions for your workforce, your operations, and your brand.
             Partner with Ayra and unlock growth across every lane of your
@@ -19,7 +19,7 @@ const Footer = () => {
           <div className="flex gap-2 items-center -ml-4">
             {SOCIAL_MEDIAS.map((item) => (
               <Link key={item.name} href={item.href}>
-                <Image src={item.icon} alt={item.name} width={50} height={50} />
+                <Image src={item.icon} alt={item.name} width={48} height={48} />
               </Link>
             ))}
           </div>
@@ -57,8 +57,8 @@ const Footer = () => {
               <Image
                 src="/svgs/phone.svg"
                 alt="location"
-                width={25}
-                height={25}
+                width={24}
+                height={24}
               />
               (406) 555-0120
             </li>
@@ -66,8 +66,8 @@ const Footer = () => {
               <Image
                 src="/svgs/email.svg"
                 alt="location"
-                width={25}
-                height={25}
+                width={24}
+                height={24}
               />
               ayrabusiness@gmail.com
             </li>
@@ -75,8 +75,8 @@ const Footer = () => {
               <Image
                 src="/svgs/location.svg"
                 alt="location"
-                width={25}
-                height={25}
+                width={24}
+                height={24}
               />
               2972 Westheimer Rd. Santa Ana, Illinois 85486
             </li>

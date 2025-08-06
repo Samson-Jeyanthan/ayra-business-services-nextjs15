@@ -10,14 +10,14 @@ import {
 
 const LandingPage = () => {
   return (
-    <section className="w-full flex-col min-h-screen">
+    <section className="w-full flex flex-col min-h-screen items-center">
       <Hero />
       <Ribbon />
       <Aboutus />
       <Services />
       <ClientChoose />
       <Cargo />
-      <div className="h-6 w-full bg-light-700" />
+      <div className="h-6 w-full bg-light-600" />
       <ContactUs
         title="Ready to work with us ?"
         titleClass="text-7xl font-semibold"

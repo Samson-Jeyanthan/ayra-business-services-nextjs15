@@ -17,3 +17,6 @@ export { default as Cargo } from "./landing/Cargo";
 // Looking for staff Components
 export { default as ClientFormSection } from "./looking-for-staff/ClientFormSection";
 export { default as Description } from "./looking-for-staff/Description";
+
+// Looking for work Components
+export { default as CandidateFormSection } from "./looking-for-work/CandidateFormSection";

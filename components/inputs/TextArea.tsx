@@ -24,13 +24,13 @@ const TextArea = ({
       name={inputName}
       render={({ field }) => (
         <FormItem className="flex w-full flex-col">
-          <FormLabel className="mb-1 font-semibold !text-light-300">
+          <FormLabel className="mb-1 font-semibold !text-light-100">
             {formLabel}
           </FormLabel>
           <FormControl>
             <Textarea
               {...field}
-              className="no-focus !h-40 resize-none !bg-light-700 !border !border-solid !border-light-500 !text-light-300 !rounded-lg !px-3 !py-2 text-sm"
+              className="no-focus !h-40 resize-none !bg-light-700 !border !border-solid !border-light-500 !text-light-100 !rounded-lg !px-3 !py-2 text-sm"
               maxLength={maxLength}
             />
           </FormControl>
