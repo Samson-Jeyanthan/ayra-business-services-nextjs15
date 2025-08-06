@@ -2,7 +2,13 @@ import { Button } from "@/components/ui/button";
 import { ICommonHero } from "@/types/utils.types";
 import Image from "next/image";
 
-const Hero = ({ title, description, image_one, image_two }: ICommonHero) => {
+const Hero = ({
+  title,
+  description,
+  img_one,
+  img_two,
+  inverse_img,
+}: ICommonHero) => {
   return (
     <div className="relative flex-center flex-col gap-12 w-full px-20 pb-4 pt-36 3xl:px-44 min-h-[95vh] bg-[url(/images/net.png)] bg-size-[auto_600px]">
       <h1 className="text-8xl font-semibold tracking-tight">{title}</h1>
@@ -10,14 +16,14 @@ const Hero = ({ title, description, image_one, image_two }: ICommonHero) => {
       <Button className="primary-btn">Get Started</Button>
       <div className="flex w-full gap-20">
         <Image
-          src={image_one}
+          src={inverse_img ? img_two : img_one}
           alt="hero"
           width={1000}
           height={1000}
           className="w-2/6 rounded-3xl"
         />
         <Image
-          src={image_two}
+          src={inverse_img ? img_one : img_two}
           alt="hero"
           width={1000}
           height={1000}

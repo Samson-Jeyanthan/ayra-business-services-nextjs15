@@ -2,10 +2,10 @@ import Image from "next/image";
 
 const Description = () => {
   return (
-    <div className="flex flex-col gap-16 items-center p-20 bg-light-700">
+    <div className="flex flex-col gap-16 items-center p-20 bg-light-600">
       <h3 className="heading-2">Your Trusted Partner for Growth</h3>
       <div className="flex-center gap-16">
-        <p className="font-medium text-lg text-justify text-light-300 w-1/3">
+        <p className="font-medium text-lg text-justify text-light-100 w-1/3 leading-10">
           Choosing Ayra Business Services means partnering with a team that
           values practical understanding, innovation, and measurable results. We
           integrate diverse services to provide seamless, comprehensive
@@ -18,7 +18,7 @@ const Description = () => {
           alt="about-progress-img"
           width={500}
           height={500}
-          className="w-1/3 h-auto object-cover rounded-3xl"
+          className="w-1/3 h-[17rem] object-cover rounded-3xl"
         />
       </div>
     </div>

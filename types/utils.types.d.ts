@@ -3,8 +3,9 @@ import { IWhyPartnerData } from "@/constants";
 export interface ICommonHero {
   title: string;
   description: string;
-  image_one: string;
-  image_two: string;
+  img_one: string;
+  img_two: string;
+  inverse_img: boolean;
 }
 
 export interface IAbout {
@@ -36,4 +37,14 @@ export type TTextArea = {
   placeholder?: string;
   formDescription?: string;
   maxLength?: number;
+};
+
+export type TDropdown = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  form: any;
+  formLabel: string;
+  inputName: string;
+  formDescription?: string;
+  options: { _id: string; name: string }[];
+  prevValue?: string;
 };
