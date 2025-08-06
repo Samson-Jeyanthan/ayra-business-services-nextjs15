@@ -33,13 +33,13 @@ const Dropdown = ({
       control={form.control}
       name={inputName}
       render={({ field }) => (
-        <FormItem className="w-full pb-2">
-          <FormLabel className="font-semibold !text-light-100">
+        <FormItem className="w-full">
+          <FormLabel className="mb-1 font-semibold !text-light-100">
             {formLabel}
           </FormLabel>
           <FormControl className="no-focus">
             <Select onValueChange={(_id: string) => field.onChange(_id)}>
-              <SelectTrigger className="no-focus text-light-100 border border-solid border-light-500 bg-light-800 text-sm">
+              <SelectTrigger className="no-focus !text-light-100 !border !border-solid !border-light-500 !bg-light-700 text-sm !px-3 !py-2 !w-full !h-12">
                 {value ? (
                   <p className="first-letter:capitalize">{value}</p>
                 ) : (
@@ -60,9 +60,9 @@ const Dropdown = ({
               </SelectContent>
             </Select>
           </FormControl>
-          <FormDescription className="mt-2.5 text-xs text-light-500">
-            {formDescription}
-          </FormDescription>
+          {formDescription && (
+            <FormDescription className="">{formDescription}</FormDescription>
+          )}
           <FormMessage className="text-xs text-red-600" />
         </FormItem>
       )}

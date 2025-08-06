@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { ICommonHero } from "@/types/utils.types";
 import Image from "next/image";
