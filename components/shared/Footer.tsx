@@ -5,7 +5,10 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="flex flex-col gap-7 px-20 py-10 bg-light-900">
+    <footer
+      className="flex flex-col gap-7 px-20 py-10 bg-light-900"
+      id="footer"
+    >
       <div className="h-2 w-full flex bg-primary" />
       <div className="flex gap-18 justify-between items-start px-5">
         <div className="flex flex-col items-start gap-5 w-[45%]">

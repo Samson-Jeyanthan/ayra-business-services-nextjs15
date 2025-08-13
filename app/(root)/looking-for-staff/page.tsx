@@ -18,6 +18,7 @@ const LookingForStaff = () => {
         professionals who are ready to make an impact. Whether you’re hiring for
         short-term roles or building a long-term team, we make recruitment
         simple, fast, and reliable."
+          linkTo="/looking-for-staff/#client-form"
           img_one="/images/staff-hero-img-1.jpg"
           img_two="/images/staff-hero-img-2.jpg"
           inverse_img={false}

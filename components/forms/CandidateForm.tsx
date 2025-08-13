@@ -5,7 +5,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
 import { Form } from "../ui/form";
-import { FormInput } from "../inputs";
+import { Dropdown, FormInput } from "../inputs";
+import { Button } from "../ui/button";
 
 const CandidateForm = () => {
   const form = useForm<z.infer<typeof CandidateSchema>>({
@@ -67,8 +68,28 @@ const CandidateForm = () => {
             inputType="text"
             formLabel="Your Address"
           />
+          <Dropdown
+            form={form}
+            inputName="prefferedRole"
+            formLabel="Preferred Role"
+            options={[]}
+          />
         </div>
-        <div className="candidate-form-contents"></div>
+        <div className="candidate-form-contents">
+          <Dropdown
+            form={form}
+            inputName="prefferedEmploymentStatus"
+            formLabel="Employment Status You Prefer"
+            options={[]}
+          />
+          <Dropdown
+            form={form}
+            inputName="typeOfWork"
+            formLabel="What Type of Work Do You Prefer?"
+            options={[]}
+          />
+        </div>
+        <Button className="primary-btn-custom mt-4">Submit</Button>
       </form>
     </Form>
   );

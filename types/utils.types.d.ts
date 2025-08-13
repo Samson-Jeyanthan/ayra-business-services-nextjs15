@@ -3,6 +3,7 @@ import { IWhyPartnerData } from "@/constants";
 export interface ICommonHero {
   title: string;
   description: string;
+  linkTo: string;
   img_one: string;
   img_two: string;
   inverse_img: boolean;

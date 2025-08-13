@@ -23,7 +23,7 @@ const FormInput = ({
       control={form.control}
       name={inputName}
       render={({ field }) => (
-        <FormItem className="flex w-full flex-col">
+        <FormItem className="w-full">
           <FormLabel className="mb-1 font-semibold !text-light-100">
             {formLabel}
           </FormLabel>
