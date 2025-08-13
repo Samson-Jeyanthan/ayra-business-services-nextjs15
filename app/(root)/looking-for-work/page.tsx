@@ -12,6 +12,7 @@ const LookingForWork = () => {
         <CommonHero
           title="Looking for Work ??"
           description="Are you searching for a new role that truly fits your skills, experience, and aspirations? At Ayra Business Services, we don't just connect you with jobs; we connect you with the right opportunities."
+          linkTo="/looking-for-work/#candidate-form"
           img_one="/images/work-hero-img-1.jpg"
           img_two="/images/work-hero-img-2.jpg"
           inverse_img={true}
