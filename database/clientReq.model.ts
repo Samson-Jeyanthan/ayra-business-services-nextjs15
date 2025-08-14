@@ -1,13 +1,15 @@
 import { model, models, Schema } from "mongoose";
 
-export interface IClient {
+export interface IClientReq {
+  userId: Schema.Types.ObjectId;
   companyName: string;
   phoneNo: string;
   message: string;
   status: string;
 }
 
-const ClientSchema = new Schema({
+const ClientReqSchema = new Schema<IClientReq>({
+  userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
   companyName: { type: String, required: true },
   phoneNo: { type: String, required: true },
   message: { type: String, required: true },
@@ -19,6 +21,7 @@ const ClientSchema = new Schema({
   },
 });
 
-const Client = models?.Client || model<IClient>("Client", ClientSchema);
+const ClientReq =
+  models?.ClientReq || model<IClientReq>("ClientReq", ClientReqSchema);
 
-export default Client;
+export default ClientReq;

@@ -7,7 +7,7 @@ export interface IUser {
   userType: string;
 }
 
-const UserSchema = new Schema(
+const UserSchema = new Schema<IUser>(
   {
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },

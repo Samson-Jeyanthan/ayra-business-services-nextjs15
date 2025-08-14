@@ -1,6 +1,7 @@
 import { model, models, Schema } from "mongoose";
 
-export interface ICandidate {
+export interface ICandidateReq {
+  userId: Schema.Types.ObjectId;
   address: string;
   prefRole: string;
   prefEmpStatus: string;
@@ -9,8 +10,9 @@ export interface ICandidate {
   status: string;
 }
 
-const CandidateSchema = new Schema(
+const CandidateReqSchema = new Schema<ICandidateReq>(
   {
+    userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
     address: { type: String, required: true },
     prefRole: { type: String, required: true },
     prefEmpStatus: { type: String, required: true },
@@ -28,7 +30,8 @@ const CandidateSchema = new Schema(
   }
 );
 
-const Candidate =
-  models?.Candidate || model<ICandidate>("Candidate", CandidateSchema);
+const CandidateReq =
+  models?.CandidateReq ||
+  model<ICandidateReq>("CandidateReq", CandidateReqSchema);
 
-export default Candidate;
+export default CandidateReq;
