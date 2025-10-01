@@ -1,4 +1,5 @@
 import mongoose, { Mongoose } from "mongoose";
+import logger from "./logger";
 
 const MONGODB_URI = process.env.MONGODB_URI as string;
 
@@ -24,9 +25,10 @@ if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
 }
 
-// Connect to database
+// connect to database
 const dbConnect = async (): Promise<Mongoose> => {
   if (cached.conn) {
+    logger.info("Reusing existing database connection");
     return cached.conn;
   }
 
@@ -36,11 +38,11 @@ const dbConnect = async (): Promise<Mongoose> => {
         dbName: "ayra_business_services",
       })
       .then((result) => {
-        console.log("Connected to MongoDB");
+        logger.info("Connected to MongoDB");
         return result;
       })
       .catch((error) => {
-        console.log("Error connecting to MongoDB: ", error);
+        logger.error("Error connecting to MongoDB: ", error);
         return error;
       });
   }

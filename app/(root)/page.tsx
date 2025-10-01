@@ -8,7 +8,23 @@ import {
   Services,
 } from "@/components/shared";
 
-const LandingPage = () => {
+// import handleError from "@/lib/handlers/error";
+// import { ValidationError } from "@/lib/http-errors";
+
+// const test = async () => {
+//   try {
+//     throw new ValidationError({
+//       title: ["Required"],
+//       tags: ['"JavaScript" is not a valid tag.'],
+//     });
+//   } catch (error) {
+//     return handleError(error);
+//   }
+// };
+
+const LandingPage = async () => {
+  // await test();
+
   return (
     <section className="w-full flex flex-col min-h-screen items-center">
       <Hero />

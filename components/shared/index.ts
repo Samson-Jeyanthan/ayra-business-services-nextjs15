@@ -5,6 +5,7 @@ export { default as CommonHero } from "./common/Hero";
 export { default as About } from "./common/About";
 export { default as WhyPartner } from "./common/WhyPartner";
 export { default as ContactUs } from "./common/ContactUs";
+export { default as Sidebar } from "./Sidebar";
 
 // Landing Components
 export { default as Hero } from "./landing/Hero";

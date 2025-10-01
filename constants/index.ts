@@ -176,3 +176,23 @@ export const WHY_PARTNER_STAFF: IWhyPartnerData[] = [
       "We build intuitive, robust websites and mobile applications tailored to your business, enhancing your digital presence and streamlining your operations.",
   },
 ];
+
+export interface IAdminSidebarLinks {
+  name: string;
+  href: string;
+}
+
+export const ADMIN_SIDEBAR_LINKS: IAdminSidebarLinks[] = [
+  {
+    name: "Dashboard",
+    href: "/admin",
+  },
+  {
+    name: "Clients",
+    href: "/admin/clients",
+  },
+  {
+    name: "Candidates",
+    href: "/admin/candidates",
+  },
+];

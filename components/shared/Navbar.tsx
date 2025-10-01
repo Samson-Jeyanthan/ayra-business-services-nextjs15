@@ -21,10 +21,9 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`${scrollNav ? "bg-light-900 shadow-md shadow-gray-900/5" : "bg-transparent"} flex sticky top-0 px-14 items-center -mt-20 z-50 justify-between w-full p-4`}
+      className={`${scrollNav ? "bg-light-900 shadow-md shadow-gray-900/5" : "bg-transparent"} flex sticky top-0 px-14 items-center -mt-20 z-50 justify-between p-4`}
     >
       <h1>Ayra</h1>
-
       <div className="flex gap-6">
         {NAV_LINKS.map((item) => {
           return (

@@ -7,6 +7,7 @@ import z from "zod";
 import { Form } from "../ui/form";
 import { Dropdown, FormInput } from "../inputs";
 import { Button } from "../ui/button";
+import { createCandidateRequest } from "@/lib/actions/candidate.action";
 
 const CandidateForm = () => {
   const form = useForm<z.infer<typeof CandidateSchema>>({
@@ -23,8 +24,23 @@ const CandidateForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof CandidateSchema>) {
+  async function onSubmit(values: z.infer<typeof CandidateSchema>) {
     console.log(values);
+
+    try {
+      await createCandidateRequest({
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        phoneNo: values.phoneNo,
+        address: values.address,
+        prefRole: values.prefferedRole,
+        prefEmpStatus: values.prefferedEmploymentStatus,
+        typeOfWork: values.typeOfWork,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -72,7 +88,11 @@ const CandidateForm = () => {
             form={form}
             inputName="prefferedRole"
             formLabel="Preferred Role"
-            options={[]}
+            options={[
+              { _id: "frontend", name: "Frontend" },
+              { _id: "backend", name: "Backend" },
+              { _id: "fullStack", name: "Fullstack" },
+            ]}
           />
         </div>
         <div className="candidate-form-contents">
@@ -80,13 +100,19 @@ const CandidateForm = () => {
             form={form}
             inputName="prefferedEmploymentStatus"
             formLabel="Employment Status You Prefer"
-            options={[]}
+            options={[
+              { _id: "fullTime", name: "Full Time" },
+              { _id: "partTime", name: "Part Time" },
+            ]}
           />
           <Dropdown
             form={form}
             inputName="typeOfWork"
             formLabel="What Type of Work Do You Prefer?"
-            options={[]}
+            options={[
+              { _id: "remote", name: "Remote" },
+              { _id: "onsite", name: "Onsite" },
+            ]}
           />
         </div>
         <Button className="primary-btn-custom mt-4">Submit</Button>

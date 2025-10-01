@@ -18,3 +18,8 @@ export const CandidateSchema = z.object({
   prefferedEmploymentStatus: z.string().min(3),
   typeOfWork: z.string().min(3),
 });
+
+export const AdminLoginSchema = z.object({
+  email: z.email(),
+  password: z.string().min(3),
+});

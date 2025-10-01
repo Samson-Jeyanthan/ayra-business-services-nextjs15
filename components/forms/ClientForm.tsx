@@ -7,6 +7,7 @@ import { Form } from "../ui/form";
 import { ClientSchema } from "@/lib/validations";
 import { FormInput, TextArea } from "../inputs";
 import { Button } from "../ui/button";
+import { createClientRequestAction } from "@/lib/actions/client.action";
 
 const ClientForm = () => {
   const form = useForm<z.infer<typeof ClientSchema>>({
@@ -20,7 +21,19 @@ const ClientForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof ClientSchema>) {
+  async function onSubmit(values: z.infer<typeof ClientSchema>) {
+    try {
+      await createClientRequestAction({
+        fullName: values.fullName,
+        companyName: values.companyName,
+        email: values.email,
+        phoneNo: values.phoneNo,
+        message: values.message,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
     console.log(values);
   }
 
