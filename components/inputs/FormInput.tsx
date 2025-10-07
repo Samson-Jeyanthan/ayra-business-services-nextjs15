@@ -23,7 +23,7 @@ const FormInput = ({
       control={form.control}
       name={inputName}
       render={({ field }) => (
-        <FormItem className="w-full">
+        <FormItem className="!max-w-[420px] !w-full">
           <FormLabel className="mb-1 font-semibold !text-light-100">
             {formLabel}
           </FormLabel>
@@ -38,7 +38,7 @@ const FormInput = ({
                     : e.target.value
                 )
               }
-              className="no-focus !bg-light-700 !border !border-solid !border-light-500 !text-light-100 !rounded-lg !px-3 !py-2 !w-full !h-12"
+              className="no-focus !bg-light-700 !border !border-solid !border-light-500 !text-light-100 !rounded-full !px-3 !py-2 !w-full !h-12"
             />
           </FormControl>
 

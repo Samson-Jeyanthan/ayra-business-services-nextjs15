@@ -6,6 +6,7 @@ export interface IUser {
   email: string;
   password: string;
   userType: string;
+  status: string;
 }
 
 const UserSchema = new Schema<IUser>(
@@ -18,6 +19,11 @@ const UserSchema = new Schema<IUser>(
       type: String,
       required: true,
       enum: ["client", "canditate", "admin", "superadmin"],
+    },
+    status: {
+      type: String,
+      required: true,
+      enum: ["pending", "rejected", "registered", "removed"],
     },
   },
   {

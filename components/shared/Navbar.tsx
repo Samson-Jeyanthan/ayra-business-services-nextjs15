@@ -39,11 +39,8 @@ const Navbar = () => {
         })}
       </div>
 
-      <Link
-        href="/contact-us"
-        className="secondary-btn-custom h-10 px-6 text-sm"
-      >
-        Contact Us
+      <Link href="/sign-in" className="secondary-btn-custom h-10 px-6 text-sm">
+        Sign In
       </Link>
     </nav>
   );

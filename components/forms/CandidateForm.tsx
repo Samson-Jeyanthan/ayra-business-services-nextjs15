@@ -1,6 +1,6 @@
 "use client";
 
-import { CandidateSchema } from "@/lib/validations";
+import { CandidateReqSchema } from "@/lib/validations";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -10,8 +10,8 @@ import { Button } from "../ui/button";
 import { createCandidateRequest } from "@/lib/actions/candidate.action";
 
 const CandidateForm = () => {
-  const form = useForm<z.infer<typeof CandidateSchema>>({
-    resolver: zodResolver(CandidateSchema),
+  const form = useForm<z.infer<typeof CandidateReqSchema>>({
+    resolver: zodResolver(CandidateReqSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -24,7 +24,7 @@ const CandidateForm = () => {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof CandidateSchema>) {
+  async function onSubmit(values: z.infer<typeof CandidateReqSchema>) {
     console.log(values);
 
     try {

@@ -72,7 +72,7 @@ const Footer = () => {
                 width={24}
                 height={24}
               />
-              ayrabusiness@gmail.com
+              info@ayrabs.com
             </li>
             <li className="flex gap-2">
               <Image

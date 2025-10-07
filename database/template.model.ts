@@ -14,3 +14,5 @@ const ModelSchema = new Schema<IModel>(
 const Model = models?.Model || model<IModel>("Model", ModelSchema);
 
 export default Model;
+
+// client booking model

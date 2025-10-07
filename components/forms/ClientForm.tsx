@@ -4,14 +4,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form } from "../ui/form";
-import { ClientSchema } from "@/lib/validations";
+import { ClientReqSchema } from "@/lib/validations";
 import { FormInput, TextArea } from "../inputs";
 import { Button } from "../ui/button";
 import { createClientRequestAction } from "@/lib/actions/client.action";
 
 const ClientForm = () => {
-  const form = useForm<z.infer<typeof ClientSchema>>({
-    resolver: zodResolver(ClientSchema),
+  const form = useForm<z.infer<typeof ClientReqSchema>>({
+    resolver: zodResolver(ClientReqSchema),
     defaultValues: {
       fullName: "",
       companyName: "",
@@ -21,7 +21,7 @@ const ClientForm = () => {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof ClientSchema>) {
+  async function onSubmit(values: z.infer<typeof ClientReqSchema>) {
     try {
       await createClientRequestAction({
         fullName: values.fullName,
