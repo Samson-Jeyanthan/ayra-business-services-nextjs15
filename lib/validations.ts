@@ -87,3 +87,77 @@ export const AdminLoginSchema = z.object({
   email: z.email().min(3),
   password: z.string().min(3),
 });
+
+export const CandidRegOneSchema = z.object({
+  title: z.string().min(1, { message: "Title is required." }),
+  firstName: z.string().min(3, { message: "First name is required." }),
+  lastName: z.string().min(3, { message: "Last name is required." }),
+  dob: z
+    .date({
+      message: "Date of birth is required.",
+    })
+    .nullable()
+    .refine((val) => val !== null, { message: "Date of birth is required." }),
+  homeAddress: z.string().min(10, { message: "Home address is required." }),
+  town: z.string().min(3),
+  postCode: z.string().min(3),
+  mobileNo: z.string().min(10),
+  landlineNo: z.string().min(10),
+  email: z.email().min(3),
+  pictureOfYourself: z.string().min(3),
+});
+
+export const CandidRegTwoSchema = z.object({
+  fullNameOfKin: z.string().min(3, { message: "First name is required." }),
+  relationToYou: z.string().min(3, { message: "Last name is required." }),
+  kinMobileNo: z.string().min(10),
+  kinLandlineNo: z.string().min(10),
+  kinEmail: z.email().min(3),
+});
+
+export const CandidRegThreeSchema = z.object({
+  criminalCautionAct1974: z.boolean(),
+  reasonForAct1974: z.string(),
+});
+
+export const CandidRegFourSchema = z.object({
+  nameAsOnAccount: z.string(),
+  bankSocietyName: z.string(),
+  accountNo: z.number(),
+  sortCode: z.number(),
+  bankDetailConfirmation: z.string(),
+  holidayMode: z.boolean(),
+});
+
+export const CandidRegFiveSchema = z.object({
+  drivingLicenceNo: z.string(),
+  drivingLicenseShareCode: z.string(),
+  drivingLicense: z.object({
+    frontPic: z.custom<File[]>().optional(),
+    backPic: z.custom<File[]>().optional(),
+  }),
+  cpcCard: z.object({
+    frontPic: z.custom<File[]>().optional(),
+    backPic: z.custom<File[]>().optional(),
+  }),
+  digitalDrivingTachographCard: z.object({
+    frontPic: z.custom<File[]>().optional(),
+    backPic: z.custom<File[]>().optional(),
+  }),
+  allInOne: z.object({
+    frontPic: z.custom<File[]>().optional(),
+    backPic: z.custom<File[]>().optional(),
+  }),
+  motorIncidents: z.object({
+    currentDrivingEndorsement: z.string(),
+    hgvPsvCollisionYears5: z.boolean(),
+    subjectFromTrafficCommissioner: z.boolean(),
+    appearedBeforeTrafficCommissioner: z.boolean(),
+    prescribedMedication: z.boolean(),
+    sufferFromDrugs: z.boolean(),
+    illegalSubstance: z.boolean(),
+    reasonForIllegalSubstance: z.string(),
+    needGlassToDrive: z.string(),
+    lastEyeTestDate: z.string(),
+  }),
+});

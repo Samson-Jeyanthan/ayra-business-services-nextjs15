@@ -23,7 +23,7 @@ const UserSchema = new Schema<IUser>(
     status: {
       type: String,
       required: true,
-      enum: ["pending", "rejected", "registered", "removed"],
+      enum: ["pending", "rejected", "signedUp", "registered", "removed"],
     },
   },
   {

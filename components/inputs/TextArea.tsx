@@ -24,9 +24,11 @@ const TextArea = ({
       name={inputName}
       render={({ field }) => (
         <FormItem className="flex w-full flex-col">
-          <FormLabel className="mb-1 font-semibold !text-light-100">
-            {formLabel}
-          </FormLabel>
+          {formLabel && (
+            <FormLabel className="mb-1 font-semibold !text-light-100">
+              {formLabel}
+            </FormLabel>
+          )}
           <FormControl>
             <Textarea
               {...field}
@@ -34,7 +36,7 @@ const TextArea = ({
               maxLength={maxLength}
             />
           </FormControl>
-          <FormDescription className="mt-2.5 text-xs text-light-500">
+          <FormDescription className="mt-2.5 text-xs text-light-300 whitespace-pre-line">
             {formDescription}
           </FormDescription>
           <FormMessage className="text-xs text-custom-red" />

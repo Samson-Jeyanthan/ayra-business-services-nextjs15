@@ -1,3 +1,15 @@
+import {
+  CandStepEightForm,
+  CandStepFiveForm,
+  CandStepFourForm,
+  CandStepNineForm,
+  CandStepOneForm,
+  CandStepSevenForm,
+  CandStepSixForm,
+  CandStepThreeForm,
+  CandStepTwoForm,
+} from "../components/forms";
+
 interface IRibbonNames {
   name: string;
 }
@@ -194,5 +206,115 @@ export const ADMIN_SIDEBAR_LINKS: IAdminSidebarLinks[] = [
   {
     name: "Candidates",
     href: "/admin/candidates",
+  },
+];
+
+export interface IMultiStepStages {
+  stepName: string;
+  description: string;
+}
+
+export const CANDIDATE_MULTISTEP_STAGES: IMultiStepStages[] = [
+  {
+    stepName: "Personal Information",
+    description:
+      "Provide your basic details such as full name, contact information, date of birth, and address.",
+  },
+  {
+    stepName: "Next of Kin",
+    description:
+      "Enter the contact details of your next of kin or emergency contact person for safety and verification purposes.",
+  },
+  {
+    stepName: "Criminal Convictions",
+    description:
+      "Disclose any previous or pending criminal convictions as required for background verification.",
+  },
+  {
+    stepName: "Pay",
+    description:
+      "Provide your payment-related details such as bank account information and preferred payment frequency.",
+  },
+  {
+    stepName: "Your Driving",
+    description:
+      "Share information about your driving experience, license type, and any relevant certifications.",
+  },
+  {
+    stepName: "References",
+    description:
+      "Add professional or personal references who can verify your experience, skills, and reliability.",
+  },
+  {
+    stepName: "Preferences",
+    description:
+      "Specify your job preferences, working hours, preferred locations, and any additional requirements.",
+  },
+  {
+    stepName: "Data Protection & Privacy",
+    description:
+      "Review and agree to our data protection policy outlining how your personal data will be collected and used.",
+  },
+  {
+    stepName: "New Starter Declaration",
+    description:
+      "Confirm that all the information provided is accurate and complete to finalize your registration process.",
+  },
+];
+
+export const CLIENT_MULTISTEP_STAGES: IMultiStepStages[] = [
+  {
+    stepName: "",
+    description: "",
+  },
+  {
+    stepName: "",
+    description: "",
+  },
+  {
+    stepName: "",
+    description: "",
+  },
+  {
+    stepName: "",
+    description: "",
+  },
+  {
+    stepName: "",
+    description: "",
+  },
+];
+
+export interface IMultiStepForms {
+  form: React.ReactNode;
+}
+
+export const CANDIDATE_MULTISTEP_FORMS = [
+  {
+    form: CandStepOneForm,
+  },
+  {
+    form: CandStepTwoForm,
+  },
+  {
+    form: CandStepThreeForm,
+  },
+  {
+    form: CandStepFourForm,
+  },
+  {
+    form: CandStepFiveForm,
+  },
+  {
+    form: CandStepSixForm,
+  },
+  {
+    form: CandStepSevenForm,
+  },
+  {
+    form: CandStepEightForm,
+  },
+  {
+    form: CandStepNineForm,
   },
 ];

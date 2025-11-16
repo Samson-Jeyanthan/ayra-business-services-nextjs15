@@ -9,12 +9,11 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { Input } from "../ui/input";
+import { Calendar } from "../ui/calendar";
 
-const FormInput = ({
+const CalendarInput = ({
   form,
   inputName,
-  inputType,
   formLabel,
   formDescription,
 }: TFormInput) => {
@@ -28,17 +27,11 @@ const FormInput = ({
             {formLabel}
           </FormLabel>
           <FormControl>
-            <Input
-              type={inputType || "text"}
-              {...field}
-              onChange={(e) =>
-                field.onChange(
-                  inputType === "number"
-                    ? Number(e.target.value)
-                    : e.target.value
-                )
-              }
-              className="no-focus !bg-light-700 !border !border-solid !border-light-500 !text-light-100 !rounded-full !px-3 !py-2 !w-full !h-12"
+            <Calendar
+              mode="single"
+              selected={field.value}
+              onSelect={(date) => field.onChange(date)}
+              className="rounded-lg border"
             />
           </FormControl>
 
@@ -52,4 +45,4 @@ const FormInput = ({
   );
 };
 
-export default FormInput;
+export default CalendarInput;

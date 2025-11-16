@@ -1,4 +1,4 @@
-import { ClientForm } from "@/components/forms";
+import { ClientReqForm } from "@/components/forms";
 import Image from "next/image";
 
 const ClientFormSection = () => {
@@ -19,7 +19,7 @@ const ClientFormSection = () => {
           className="w-full h-auto object-cover rounded-3xl"
         />
       </div>
-      <ClientForm />
+      <ClientReqForm />
     </div>
   );
 };

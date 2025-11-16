@@ -1,9 +1,9 @@
 import { model, models, Schema } from "mongoose";
 
-export interface ICandidateApplication {
+export interface ICandidate {
   userId: Schema.Types.ObjectId;
   candidateReqId: Schema.Types.ObjectId;
-  // step 01 - basic info
+  // step 01 - basic info / personal info
   stepOne: {
     title: string;
     firstName: string;
@@ -45,19 +45,19 @@ export interface ICandidateApplication {
     drivingLicenseShareCode: string;
     drivingLicense: {
       frontPic: string;
-      backPick: string;
+      backPic: string;
     };
     cpcCard: {
       frontPic: string;
-      backPick: string;
+      backPic: string;
     };
     digitalDrivingTacographCard: {
       frontPic: string;
-      backPick: string;
+      backPic: string;
     };
     allInOne: {
       frontPic: string;
-      backPick: string;
+      backPic: string;
     };
     motorIncidents: {
       currentDrivingEndorsement: string;
@@ -73,7 +73,7 @@ export interface ICandidateApplication {
     };
   };
   // step 06 - references X 2
-  stepSixReferences: [
+  stepSix: [
     {
       companyName: string;
       position: string;
@@ -151,11 +151,10 @@ export interface ICandidateApplication {
   updatedAt: Date;
 }
 
-const CandidateApplicationSchema = new Schema<ICandidateApplication>({
+const CandidateSchema = new Schema<ICandidate>({
   userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
   candidateReqId: {
     type: Schema.Types.ObjectId,
-    required: true,
     ref: "CandidateReq",
   },
   // step 01 - basic info
@@ -200,19 +199,19 @@ const CandidateApplicationSchema = new Schema<ICandidateApplication>({
     drivingLicenseShareCode: { type: String },
     drivingLicense: {
       frontPic: { type: String },
-      backPick: { type: String },
+      backPic: { type: String },
     },
     cpcCard: {
       frontPic: { type: String },
-      backPick: { type: String },
+      backPic: { type: String },
     },
     digitalDrivingTacographCard: {
       frontPic: { type: String },
-      backPick: { type: String },
+      backPic: { type: String },
     },
     allInOne: {
       frontPic: { type: String },
-      backPick: { type: String },
+      backPic: { type: String },
     },
     motorIncidents: {
       currentDrivingEndorsement: { type: String },
@@ -228,7 +227,7 @@ const CandidateApplicationSchema = new Schema<ICandidateApplication>({
     },
   },
   // step 06 - references X 2
-  stepSixReferences: [
+  stepSix: [
     {
       companyName: { type: String },
       position: { type: String },
@@ -311,11 +310,7 @@ const CandidateApplicationSchema = new Schema<ICandidateApplication>({
   updatedAt: { type: Date, default: Date.now },
 });
 
-const CandidateApplication =
-  models?.CandidateApplication ||
-  model<ICandidateApplication>(
-    "CandidateApplication",
-    CandidateApplicationSchema
-  );
+const Candidate =
+  models?.Candidate || model<ICandidate>("Candidate", CandidateSchema);
 
-export default CandidateApplication;
+export default Candidate;

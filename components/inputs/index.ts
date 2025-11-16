@@ -1,3 +1,8 @@
 export { default as FormInput } from "./FormInput";
 export { default as TextArea } from "./TextArea";
 export { default as Dropdown } from "./Dropdown";
+export { default as CalendarInput } from "./CalendarInput";
+export { default as PopupCalendar } from "./PopupCalendar";
+export { default as RadioButton } from "./RadioButton";
+export { default as SwitchButton } from "./SwitchButton";
+export { default as MediaInput } from "./MediaInput";

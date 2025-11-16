@@ -25,6 +25,7 @@ const Dropdown = ({
   options,
   formDescription,
   prevValue,
+  className,
 }: TDropdown) => {
   const [value, setValue] = useState(prevValue || "");
 
@@ -33,13 +34,13 @@ const Dropdown = ({
       control={form.control}
       name={inputName}
       render={({ field }) => (
-        <FormItem className="w-full">
+        <FormItem className={`${className ? className : "w-full"}`}>
           <FormLabel className="mb-1 font-semibold !text-light-100">
             {formLabel}
           </FormLabel>
           <FormControl className="no-focus">
             <Select onValueChange={(_id: string) => field.onChange(_id)}>
-              <SelectTrigger className="no-focus !text-light-100 !border !border-solid !border-light-500 !bg-light-700 text-sm !px-3 !py-2 !w-full !h-12">
+              <SelectTrigger className="no-focus !text-light-100 !border !border-solid !border-light-500 !bg-light-700 text-sm !px-3 !py-2 !w-full !h-12 !rounded-full">
                 {value ? (
                   <p className="first-letter:capitalize">{value}</p>
                 ) : (

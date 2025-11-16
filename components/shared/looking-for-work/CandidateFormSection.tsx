@@ -1,4 +1,4 @@
-import { CandidateForm } from "@/components/forms";
+import { CandidateReqForm } from "@/components/forms";
 import Image from "next/image";
 
 const CandidateFormSection = () => {
@@ -17,7 +17,7 @@ const CandidateFormSection = () => {
         height={1000}
         className="w-8/10 h-auto object-cover rounded-3xl"
       />
-      <CandidateForm />
+      <CandidateReqForm />
     </div>
   );
 };

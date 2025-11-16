@@ -34,7 +34,7 @@ export type TTextArea = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   form: any;
   inputName: string;
-  formLabel: string;
+  formLabel?: string;
   placeholder?: string;
   formDescription?: string;
   maxLength?: number;
@@ -48,4 +48,46 @@ export type TDropdown = {
   formDescription?: string;
   options: { _id: string; name: string }[];
   prevValue?: string;
+  className?: string;
 };
+
+export type TSwitchButton = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  form: any;
+  formLabel: string;
+  inputName: string;
+};
+
+export type TRadioButton = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  form: any;
+  formLabel: string;
+  inputName: string;
+  formDescription?: string;
+  options: { _id: string; name: string }[];
+};
+
+export type TPopupCalendar = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  form: any;
+  formLabel: string;
+  inputName: string;
+  formDescription?: string;
+  prevValue?: string;
+  className?: string;
+  disableFunc?: () => boolean;
+};
+
+export type TStageURLProps = {
+  params: { stepNo: string };
+};
+
+export type IImageMediaProps = {
+  mediaURL: string;
+};
+
+export interface IMediaProps {
+  mediaType: "image" | "video" | "audio" | "pdf" | "svg" | "youtube-url";
+  mediaURL: string;
+  thumbnailURL: string;
+}

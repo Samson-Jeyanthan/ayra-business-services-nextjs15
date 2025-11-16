@@ -15,9 +15,9 @@ export { default as Services } from "./landing/Services";
 export { default as ClientChoose } from "./landing/ClientChoose";
 export { default as Cargo } from "./landing/Cargo";
 
-// Looking for staff Components
+// Other Components
 export { default as ClientFormSection } from "./looking-for-staff/ClientFormSection";
 export { default as Description } from "./looking-for-staff/Description";
-
-// Looking for work Components
 export { default as CandidateFormSection } from "./looking-for-work/CandidateFormSection";
+export { default as MultiStepSidebar } from "./multistep/MultiStepSidebar";
+export { default as Required } from "./common/Required";
