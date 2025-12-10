@@ -150,14 +150,111 @@ export const CandidRegFiveSchema = z.object({
   }),
   motorIncidents: z.object({
     currentDrivingEndorsement: z.string(),
-    hgvPsvCollisionYears5: z.boolean(),
-    subjectFromTrafficCommissioner: z.boolean(),
-    appearedBeforeTrafficCommissioner: z.boolean(),
-    prescribedMedication: z.boolean(),
-    sufferFromDrugs: z.boolean(),
-    illegalSubstance: z.boolean(),
+    hgvPsvCollisionYears5: z.string(),
+    subjectFromTrafficCommissioner: z.string(),
+    appearedBeforeTrafficCommissioner: z.string(),
+    prescribedMedication: z.string(),
+    sufferFromDrugs: z.string(),
+    illegalSubstance: z.string(),
     reasonForIllegalSubstance: z.string(),
+    randomDrugTest: z.string(),
+    reasonForNoRandomDrugTest: z.string(),
     needGlassToDrive: z.string(),
-    lastEyeTestDate: z.string(),
+    lastEyeTestDate: z.date({
+      message: "Last eye test date is required.",
+    }),
+  }),
+});
+
+export const CandidRegSixSchema = z.object({
+  references: z
+    .array(
+      z.object({
+        companyName: z.string(),
+        position: z.string(),
+        contactName: z.string(),
+        address: z.string(),
+        postCode: z.string(),
+        phoneNo: z.string(),
+        email: z.string(),
+        employmentStartDate: z.string(),
+        employmentEndDate: z.string(),
+        approachability: z.boolean(),
+      })
+    )
+    .max(2),
+});
+
+export const CandidRegSevenSchema = z.object({
+  preferences: z
+    .array(
+      z.object({
+        adrTanks: z.boolean(),
+        adrPackages: z.boolean(),
+        bullTanker: z.boolean(),
+        carTransporters: z.boolean(),
+        container: z.boolean(),
+        curtainSideOrTautliner: z.boolean(),
+        doubleDecker: z.boolean(),
+        flatBedOrLowLoader: z.boolean(),
+        freezer: z.boolean(),
+        fridge: z.boolean(),
+        gravityPumpOrCompressor: z.boolean(),
+        handBall: z.boolean(),
+        haibGrab: z.boolean(),
+        hookLift: z.boolean(),
+        leftHandDrive: z.boolean(),
+        moffat: z.boolean(),
+        multiDrop: z.boolean(),
+        nonHazTankers: z.boolean(),
+        pallestised: z.boolean(),
+        pdpPetrol: z.boolean(),
+        rollCages: z.boolean(),
+        ropingAndSheeting: z.boolean(),
+        shunting: z.boolean(),
+        bitumen: z.boolean(),
+        tailLift: z.boolean(),
+        tipper: z.boolean(),
+        tramping: z.boolean(),
+        trunking: z.boolean(),
+        tug: z.boolean(),
+        vaccumTankers: z.boolean(),
+        wagAndDrag: z.boolean(),
+        walkingFloors: z.boolean(),
+
+        // FIXED: must be a Zod object
+        preferredShiftPatterns: z.object({
+          days: z.boolean(),
+          nights: z.boolean(),
+          nightsOut: z.boolean(),
+          tramper: z.boolean(),
+        }),
+      })
+    )
+    .max(1),
+  preferredStartedTimeWindow: z.string(),
+});
+
+export const CandidRegEightSchema = z.object({
+  drivingLicenseInfo: z.boolean(),
+  payInfo: z.boolean(),
+  contactInfo: z.boolean(),
+  medicalInfo: z.boolean(),
+  criminalConvictionsInfo: z.boolean(),
+  rightToWorkInfo: z.boolean(),
+});
+
+export const CandidRegNineSchema = z.object({
+  nationalInsuranceNo: z.string(),
+  sex: z.string(),
+  p45File: z.custom<File[]>(),
+  employeeStatus: z.string(),
+  studentLoans: z.object({
+    dontHaveLoan: z.boolean(),
+    haveLoan: z.boolean(),
+    havePlanOneLoan: z.boolean(),
+    havePlanTwoLoan: z.boolean(),
+    havePlanFourLoan: z.boolean(),
+    havePostgraduateLoan: z.boolean(),
   }),
 });

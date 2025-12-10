@@ -1,6 +1,6 @@
 import React from "react";
 import { MultiStepSidebar } from "@/components/shared";
-import { CANDIDATE_MULTISTEP_STAGES } from "@/constants";
+import { CLIENT_MULTISTEP_STAGES } from "@/constants";
 import Image from "next/image";
 
 export default async function MultiStepLayout({
@@ -23,12 +23,12 @@ export default async function MultiStepLayout({
               width={130}
               height={32}
             />
-            <p className="mt-4 font-semibold text-lg">Candidate Registration</p>
+            <p className="mt-4 font-semibold text-lg">Client Registration</p>
           </header>
           <MultiStepSidebar
-            multiStepStagesArray={CANDIDATE_MULTISTEP_STAGES}
+            multiStepStagesArray={CLIENT_MULTISTEP_STAGES}
             stepNo={resolvedParams.stepNo}
-            isCandidStep={true}
+            isCandidStep={false}
           />
         </aside>
         <div className="w-full">{children}</div>

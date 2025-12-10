@@ -131,12 +131,12 @@ export interface ICandidate {
   };
   // step 08 - data protection & privacy
   stepEight: {
-    drivingLicenseInfo: string;
-    payInfo: string;
-    contactInfo: string;
-    medicalInfo: string;
-    criminalConvictionsInfo: string;
-    rightToWorkInfo: string;
+    drivingLicenseInfo: boolean;
+    payInfo: boolean;
+    contactInfo: boolean;
+    medicalInfo: boolean;
+    criminalConvictionsInfo: boolean;
+    rightToWorkInfo: boolean;
   };
   // step 09 - new starter declaration
   stepNine: {
@@ -147,6 +147,7 @@ export interface ICandidate {
     studentLoans: string;
   };
   status: string;
+  completedSteps: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -298,7 +299,14 @@ const CandidateSchema = new Schema<ICandidate>({
     sex: { type: String },
     p45File: { type: String },
     employeeStatus: { type: String },
-    studentLoans: { type: String },
+    studentLoans: {
+      dontHaveLoan: { type: Boolean },
+      haveLoan: { type: Boolean },
+      havePlanOneLoan: { type: Boolean },
+      havePlanTwoLoan: { type: Boolean },
+      havePlanFourLoan: { type: Boolean },
+      havePostgraduateLoan: { type: Boolean },
+    },
   },
   status: {
     type: String,
@@ -306,6 +314,7 @@ const CandidateSchema = new Schema<ICandidate>({
     enum: ["read", "unread", "approved", "rejected"],
     default: "unread",
   },
+  completedSteps: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
 });

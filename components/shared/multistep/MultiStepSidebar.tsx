@@ -1,14 +1,16 @@
 import { IMultiStepStages } from "@/constants";
-import getStageNumber from "@/lib/functions/client.functions";
+import { getStageNumber } from "@/lib/functions/client.functions";
 
 const MultiStepSidebar = ({
   multiStepStagesArray,
   stepNo,
+  isCandidStep,
 }: {
   multiStepStagesArray: IMultiStepStages[];
   stepNo: string;
+  isCandidStep: boolean;
 }) => {
-  const currentStage = getStageNumber({ stepNo });
+  const currentStage = getStageNumber({ stepNo, isCandidStep });
 
   return (
     <aside className="w-[26rem] px-4 flex flex-col">

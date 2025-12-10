@@ -24,7 +24,7 @@ const RadioButton = ({
       name={inputName}
       render={({ field }) => (
         <FormItem className="w-full">
-          <FormLabel className="mb-1 font-semibold !text-light-100">
+          <FormLabel className="mb-1 font-semibold !text-light-100 leading-6 w-[80%]">
             {formLabel}
           </FormLabel>
           <FormControl>
@@ -34,14 +34,18 @@ const RadioButton = ({
               className="flex flex-col space-y-2"
             >
               {options?.map((option, index) => (
-                <div className="flex items-center space-x-2" key={index}>
+                <div
+                  className="flex items-start justify-start space-x-2"
+                  key={index}
+                >
                   <RadioGroupItem
                     value={option._id} // ✅ use value, not id
-                    id={option._id}
+                    id={`${inputName}${option._id}`}
+                    className="border border-solid border-light-300"
                   />
                   <FormLabel
-                    htmlFor={option._id}
-                    className="font-normal cursor-pointer text-light-100"
+                    htmlFor={`${inputName}${option._id}`}
+                    className="font-normal cursor-pointer text-light-100 leading-6 -mt-1"
                   >
                     {option.name}
                   </FormLabel>

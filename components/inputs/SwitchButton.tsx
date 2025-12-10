@@ -17,10 +17,12 @@ const SwitchButton = ({ form, formLabel, inputName }: TSwitchButton) => {
       name={inputName}
       render={({ field }) => (
         <FormItem className="w-full flex gap-4 items-start">
-          <FormControl className="border border-solid border-red-500">
+          <FormControl className="">
             <Switch
               {...field}
-              className="px-5 py-3 border border-solid border-red-500"
+              className="px-5 py-3 "
+              checked={field.value}
+              onCheckedChange={field.onChange}
             />
           </FormControl>
           <FormLabel className="font-medium !text-light-200 text-sm">

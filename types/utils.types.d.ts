@@ -67,6 +67,13 @@ export type TRadioButton = {
   options: { _id: string; name: string }[];
 };
 
+export type TCheckBox = Pick<
+  TFormInput,
+  "form" | "inputName" | "formLabel" | "formDescription"
+> & {
+  checkboxLabel: string;
+};
+
 export type TPopupCalendar = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   form: any;
@@ -90,4 +97,9 @@ export interface IMediaProps {
   mediaType: "image" | "video" | "audio" | "pdf" | "svg" | "youtube-url";
   mediaURL: string;
   thumbnailURL: string;
+}
+
+export interface IYesNoOptions {
+  _id: string;
+  name: string;
 }

@@ -36,9 +36,11 @@ const TextArea = ({
               maxLength={maxLength}
             />
           </FormControl>
-          <FormDescription className="mt-2.5 text-xs text-light-300 whitespace-pre-line">
-            {formDescription}
-          </FormDescription>
+          {formDescription && (
+            <FormDescription className="mt-2.5 text-xs text-light-300 whitespace-pre-line">
+              {formDescription}
+            </FormDescription>
+          )}
           <FormMessage className="text-xs text-custom-red" />
         </FormItem>
       )}

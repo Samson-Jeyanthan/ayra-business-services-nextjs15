@@ -8,6 +8,11 @@ import {
   CandStepSixForm,
   CandStepThreeForm,
   CandStepTwoForm,
+  CliStepFiveForm,
+  CliStepFourForm,
+  CliStepOneForm,
+  CliStepThreeForm,
+  CliStepTwoForm,
 } from "../components/forms";
 
 interface IRibbonNames {
@@ -262,33 +267,6 @@ export const CANDIDATE_MULTISTEP_STAGES: IMultiStepStages[] = [
   },
 ];
 
-export const CLIENT_MULTISTEP_STAGES: IMultiStepStages[] = [
-  {
-    stepName: "",
-    description: "",
-  },
-  {
-    stepName: "",
-    description: "",
-  },
-  {
-    stepName: "",
-    description: "",
-  },
-  {
-    stepName: "",
-    description: "",
-  },
-  {
-    stepName: "",
-    description: "",
-  },
-];
-
-export interface IMultiStepForms {
-  form: React.ReactNode;
-}
-
 export const CANDIDATE_MULTISTEP_FORMS = [
   {
     form: CandStepOneForm,
@@ -316,5 +294,51 @@ export const CANDIDATE_MULTISTEP_FORMS = [
   },
   {
     form: CandStepNineForm,
+  },
+];
+
+export const CLIENT_MULTISTEP_STAGES: IMultiStepStages[] = [
+  {
+    stepName: "Client Company Information",
+    description:
+      "Provide the basic information about your company so we can create your client profile.",
+  },
+  {
+    stepName: "Contact Information",
+    description:
+      "Share the primary contact details of the person responsible for communication and coordination.",
+  },
+  {
+    stepName: "Staffing Request Details",
+    description:
+      "Specify your hiring requirements, including job roles, number of staff, and preferred qualifications.",
+  },
+  {
+    stepName: "Recruitment Process",
+    description:
+      "Outline your recruitment workflow, timelines, and any specific procedures we should follow.",
+  },
+  {
+    stepName: "Agreement & Authorisation",
+    description:
+      "Review and confirm the terms, conditions, and authorisation to proceed with the recruitment process.",
+  },
+];
+
+export const CLIENT_MULTISTEP_FORMS = [
+  {
+    form: CliStepOneForm,
+  },
+  {
+    form: CliStepTwoForm,
+  },
+  {
+    form: CliStepThreeForm,
+  },
+  {
+    form: CliStepFourForm,
+  },
+  {
+    form: CliStepFiveForm,
   },
 ];
