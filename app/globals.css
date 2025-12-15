@@ -204,6 +204,8 @@
     @apply text-4xl font-semibold;
   }
 
+  /* Form utility classes */
+
   .candidate-form-contents {
     @apply flex w-full gap-20 justify-between items-start;
   }
@@ -211,8 +213,6 @@
   .multi-form-wrapper {
     @apply flex flex-col gap-8 w-full min-h-[58vh];
   }
-
-  /* Form utility classes */
 
   .form-img-input-wrapper {
     @apply flex flex-col gap-2 font-medium;
@@ -224,5 +224,9 @@
 
   .req-wrapper {
     @apply flex gap-1 flex-wrap;
+  }
+
+  .form-sub-title {
+    @apply mt-3 text-2xl font-semibold border-b pb-4 w-1/2 border-solid border-light-500;
   }
 }

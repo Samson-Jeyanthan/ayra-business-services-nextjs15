@@ -69,8 +69,9 @@ export type TRadioButton = {
 
 export type TCheckBox = Pick<
   TFormInput,
-  "form" | "inputName" | "formLabel" | "formDescription"
+  "form" | "inputName" | "formDescription"
 > & {
+  formLabel?: string;
   checkboxLabel: string;
 };
 

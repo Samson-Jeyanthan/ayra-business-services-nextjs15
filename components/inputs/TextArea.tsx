@@ -37,7 +37,7 @@ const TextArea = ({
             />
           </FormControl>
           {formDescription && (
-            <FormDescription className="mt-2.5 text-xs text-light-300 whitespace-pre-line">
+            <FormDescription className="text-sm whitespace-pre-line italic">
               {formDescription}
             </FormDescription>
           )}

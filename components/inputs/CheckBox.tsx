@@ -24,9 +24,11 @@ const CheckBox = ({
       name={inputName}
       render={({ field }) => (
         <FormItem className="w-full">
-          <FormLabel className="mb-1 font-semibold !text-light-100">
-            {formLabel}
-          </FormLabel>
+          {formLabel && (
+            <FormLabel className="mb-1 font-semibold !text-light-100">
+              {formLabel}
+            </FormLabel>
+          )}
           <FormControl>
             <div className="flex gap-4 items-center justify-start">
               <Checkbox

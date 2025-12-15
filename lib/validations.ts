@@ -258,3 +258,81 @@ export const CandidRegNineSchema = z.object({
     havePostgraduateLoan: z.boolean(),
   }),
 });
+
+// client
+
+export const CliRegOneSchema = z.object({
+  companyLegalName: z.string(),
+  tradingAs: z.string(),
+  companyRegistrationNo: z.string(),
+  vatNo: z.string(),
+  registeredBusinessAddress: z.object({
+    street: z.string(),
+    city: z.string(),
+    country: z.string(),
+    postCode: z.string(),
+  }),
+  companyWebsite: z.string(),
+  industry: z.string(),
+});
+
+export const CliRegTwoSchema = z.object({
+  primaryContact: z.object({
+    fullName: z.string(),
+    jobTitle: z.string(),
+    address: z.string(),
+    email: z.string(),
+    phoneNo: z.string(),
+  }),
+  sameAsPrimary: z.boolean(),
+  billingContact: z.object({
+    fullName: z.string(),
+    address: z.string(),
+    email: z.string(),
+    phoneNo: z.string(),
+  }),
+});
+
+export const CliRegThreeSchema = z.object({
+  jobInformation: z.object({
+    jobTitle: z.string(),
+    department: z.string(),
+    reportingTo: z.string(),
+    locationOfWork: z.string(),
+  }),
+  employmentTerms: {
+    typeOfPosition: z.string(),
+    startDate: z.string(),
+    endDate: z.string(),
+    workingTimeType: z.string(),
+    workingHours: z.string(),
+    workSchedule: z.string(),
+  },
+  compensations: {
+    salaryRangeFrom: z.number(),
+    salaryRangTo: z.number(),
+    hourlyRate: z.number(),
+    isBonusCommission: z.boolean(),
+    ifYesBonusCommission: z.string(),
+    keyBenefitsOffered: z.string(),
+  },
+  roleAndCandidateProfile: {
+    mainResponsibilities: z.string(),
+    essentialSkills: z.string(),
+    desirableSkills: z.string(),
+    requiredQualifications: z.string(),
+    keySoftSkills: z.string(),
+  },
+});
+
+export const CliRegFourSchema = z.object({
+  intendedInterviewProcess: z.string(),
+  deadlineForCandidate: z.date(),
+});
+
+export const CliRegFiveSchema = z.object({
+  authorizedPersonName: z.string(),
+  jobTitle: z.string(),
+  signature: z.string(),
+  date: z.date(),
+});

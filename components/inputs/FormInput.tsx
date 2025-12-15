@@ -43,7 +43,9 @@ const FormInput = ({
           </FormControl>
 
           {formDescription && (
-            <FormDescription className="">{formDescription}</FormDescription>
+            <FormDescription className="text-sm whitespace-pre-line italic">
+              {formDescription}
+            </FormDescription>
           )}
           <FormMessage className="text-xs text-red-600" />
         </FormItem>

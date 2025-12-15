@@ -36,7 +36,7 @@ const StepThree = () => {
           <RadioButton
             form={form}
             inputName="criminalCautionAct1974"
-            formLabel="Holiday Mode"
+            formLabel=""
             options={[
               {
                 _id: "true",
