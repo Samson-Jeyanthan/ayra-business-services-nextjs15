@@ -1,83 +1,28 @@
+import { cliStepOneSchema } from "./schemas/cliStepOne.schema";
 import { model, models, Schema } from "mongoose";
+import { cliStepThreeSchema } from "./schemas/cliStepThree.schema";
+import { cliStepTwoSchema } from "./schemas/cliStepTwo.schema";
+import { cliStepFourSchema } from "./schemas/cliStepFour.schema";
+import { cliStepFiveSchema } from "./schemas/cliStepFive.schema";
 
-export interface ICandidate {
-  userId: Schema.Types.ObjectId;
-  clientReqId: Schema.Types.ObjectId;
-  // step 01 - client company information
-  stepOne: {
-    companyLegalName: string;
-    tradingAs: string;
-    companyRegistrationNo: string;
-    vatNo: string;
-    registeredBusinessAddress: {
-      street: string;
-      city: string;
-      country: string;
-      postCode: string;
-    };
-    companyWebsite: string;
-    industry: string;
-  };
-  // step 02 - contact information
-  stepTwo: {
-    primaryContact: {
-      fullName: string;
-      jobTitle: string;
-      address: string;
-      email: string;
-      phoneNo: string;
-    };
-    sameAsPrimary: boolean;
-    billingContact: {
-      fullName: string;
-      address: string;
-      email: string;
-      phoneNo: string;
-    };
-  };
-  // step 03 - staffing request details
-  stepThree: {
-    jobInformation: {
-      jobTitle: string;
-      department: string;
-      reportingTo: string;
-      locationOfWork: string;
-      ifYesHybrid: string;
-    };
-    employmentTerms: {
-      typeOfPosition: string;
-      startDate: string;
-      endDate: string;
-      workingTimeType: string;
-      workingHours: string;
-      workSchedule: string;
-    };
-    compensations: {
-      salaryRangeFrom: number;
-      salaryRangeTo: number;
-      hourlyRate: number;
-      isBonusCommission: boolean;
-      ifYesBonusCommission?: string;
-      keyBenefitsOffered: string;
-    };
-    roleAndCandidateProfile: {
-      mainResponsibilities: string;
-      essentialSkills: string;
-      desirableSkills: string;
-      requiredQualifications: string;
-      keySoftSkills: string;
-    };
-  };
-  // step 04 - recruitment process
-  stepFour: {
-    intendedInterviewProcess: string;
-    deadlineForCandidate: string;
-  };
-  // step - 05 - agreement & Authourization
-  stepFive: {
-    authorizedPersonName: string;
-    jobTitle: string;
-    signature: string;
-    date: string;
-  };
-}
+const ClientSchema = new Schema(
+  {
+    userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
+    clientReqId: { type: Schema.Types.ObjectId, ref: "ClientReq" },
+
+    // multistep forms
+    stepOne: cliStepOneSchema,
+    stepTwo: cliStepTwoSchema,
+    stepThree: cliStepThreeSchema,
+    stepFour: cliStepFourSchema,
+    stepFive: cliStepFiveSchema,
+
+    completedSteps: { type: Number, default: 0 },
+    status: { type: String, default: "pending" },
+  },
+  { timestamps: true }
+);
+
+const Client = models?.Client || model("Client", ClientSchema);
+
+export default Client;

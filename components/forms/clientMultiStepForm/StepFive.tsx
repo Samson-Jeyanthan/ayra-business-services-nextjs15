@@ -30,21 +30,45 @@ const StepFive = () => {
         className="flex flex-col gap-8"
       >
         <div className="multi-form-wrapper">
-          <FormInput
-            form={form}
-            inputName="authorizedPersonName"
-            formLabel="Authorized Person Name"
-            inputType="text"
-          />
-          <FormInput
-            form={form}
-            inputName="jobTitle"
-            formLabel="Job Title"
-            inputType="text"
-          />
-          <div className="w-1/2">
+          By signing below, you confirm that:
+          <div className="flex flex-col gap-4">
+            <p>
+              1. The information provided in this form is accurate to the best
+              of your knowledge.
+            </p>
+            <p>
+              2. You are an authorised representative of your company with the
+              authority to engage recruitment services.
+            </p>
+            <p>
+              3. You have read, understood, and agree to the Terms and
+              Conditions of Business provided by [Ayra Business Services] (copy
+              attached/available at [Link to your T&Cs]).
+            </p>
+            <p>
+              4. You authorise [Ayra Business Services] to source and submit
+              candidates for the position(s) detailed herein.
+            </p>
+          </div>
+          <div className="">
+            <FormInput
+              form={form}
+              inputName="authorizedPersonName"
+              formLabel="Authorized Person Name"
+              inputType="text"
+            />
+            <FormInput
+              form={form}
+              inputName="jobTitle"
+              formLabel="Job Title"
+              inputType="text"
+            />
             <PopupCalendar form={form} formLabel="Date" inputName=" date" />
           </div>
+          <p>
+            Thank you for choosing Ayra Business Services. We will be in touch
+            shortly to confirm receipt and discuss the next steps.
+          </p>
         </div>
         <footer className="flex w-full gap-4 justify-between">
           <Button className="secondary-btn">Back</Button>
