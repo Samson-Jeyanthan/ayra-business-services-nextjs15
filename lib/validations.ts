@@ -76,7 +76,7 @@ export const ClientReqSchema = z.object({
 export const CandidateReqSchema = z.object({
   firstName: z.string().min(3),
   lastName: z.string().min(3),
-  email: z.email(),
+  email: z.email().min(3),
   phoneNo: z.string().min(3),
   address: z.string().min(3),
   prefferedRole: z.string().min(3),

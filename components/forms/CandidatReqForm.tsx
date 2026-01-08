@@ -7,9 +7,13 @@ import z from "zod";
 import { Form } from "../ui/form";
 import { Dropdown, FormInput } from "../inputs";
 import { Button } from "../ui/button";
-import { createCandidateRequest } from "@/lib/actions/candidate.action";
+import { createCandidateRequestAction } from "@/lib/actions/candidate.action";
+import { useTransition } from "react";
+import { toast } from "sonner";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 const CandidateForm = () => {
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof CandidateReqSchema>>({
     resolver: zodResolver(CandidateReqSchema),
     defaultValues: {
@@ -25,22 +29,19 @@ const CandidateForm = () => {
   });
 
   async function onSubmit(values: z.infer<typeof CandidateReqSchema>) {
-    console.log(values);
+    startTransition(async () => {
+      const result = await createCandidateRequestAction(values);
 
-    try {
-      await createCandidateRequest({
-        firstName: values.firstName,
-        lastName: values.lastName,
-        email: values.email,
-        phoneNo: values.phoneNo,
-        address: values.address,
-        prefRole: values.prefferedRole,
-        prefEmpStatus: values.prefferedEmploymentStatus,
-        typeOfWork: values.typeOfWork,
-      });
-    } catch (error) {
-      console.log(error);
-    }
+      console.log(result, "result");
+
+      if (result.success) {
+        toast.success("Form has been submitted");
+      } else {
+        toast.error("Form submission failed");
+      }
+    });
+
+    console.log(values);
   }
 
   return (
@@ -115,7 +116,16 @@ const CandidateForm = () => {
             ]}
           />
         </div>
-        <Button className="primary-btn-custom mt-4">Submit</Button>
+        <Button className="primary-btn-custom mt-4" disabled={isPending}>
+          {isPending ? (
+            <>
+              <ReloadIcon className="mr-2 size-4 animate-spin" />
+              <span>Submitting</span>
+            </>
+          ) : (
+            <>Submit</>
+          )}
+        </Button>
       </form>
     </Form>
   );

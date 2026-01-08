@@ -18,7 +18,7 @@ const UserSchema = new Schema<IUser>(
     userType: {
       type: String,
       required: true,
-      enum: ["client", "canditate", "admin", "superadmin"],
+      enum: ["client", "candidate", "admin", "superadmin"],
     },
     status: {
       type: String,

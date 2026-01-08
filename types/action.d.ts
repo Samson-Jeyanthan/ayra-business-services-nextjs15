@@ -15,7 +15,7 @@ interface ICandidateRequestParams {
   email: string;
   phoneNo: string;
   address: string;
-  prefRole: string;
-  prefEmpStatus: string;
+  prefferedRole: string;
+  prefferedEmploymentStatus: string;
   typeOfWork: string;
 }
