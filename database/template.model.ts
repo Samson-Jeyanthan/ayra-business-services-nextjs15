@@ -15,4 +15,4 @@ const Model = models?.Model || model<IModel>("Model", ModelSchema);
 
 export default Model;
 
-// client booking model
+// template of a database model

@@ -58,14 +58,15 @@ export const UserSchema = z.object({
     }),
   firstName: z.string().min(3),
   lastName: z.string().min(3),
-  email: z.email(),
+  email: z.email().min(3),
   password: z.string(),
   userType: z.enum(["client", "canditate", "admin", "superadmin"]),
   status: z.enum(["pending", "rejected", "registered", "removed"]),
 });
 
 export const ClientReqSchema = z.object({
-  fullName: z.string().min(3),
+  firstName: z.string().min(3),
+  lastName: z.string().min(3),
   companyName: z.string().min(3),
   email: z.email(),
   phoneNo: z.string().min(3),

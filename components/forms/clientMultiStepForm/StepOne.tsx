@@ -29,6 +29,11 @@ const StepOne = () => {
 
   async function onSubmit(values: z.infer<typeof CliRegOneSchema>) {
     console.log(values);
+
+    //     const result = await createClientStepOneAction(values);
+    //     if (result.success) {
+    //       console.log(result)
+    // }
   }
 
   return (

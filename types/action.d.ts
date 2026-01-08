@@ -1,7 +1,8 @@
 // server actions types
 
 interface IClientRequestParams {
-  fullName: string;
+  firstName: string;
+  lastName: string;
   companyName: string;
   email: string;
   phoneNo: string;
