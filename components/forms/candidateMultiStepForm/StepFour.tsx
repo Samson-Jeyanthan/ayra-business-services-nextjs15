@@ -3,21 +3,25 @@
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { CandidRegThreeSchema } from "@/lib/validations";
+import { CandidRegFourSchema } from "@/lib/validations";
 import { Form } from "@/components/ui/form";
 import { FormInput, RadioButton, SwitchButton } from "@/components/inputs";
 import { Button } from "@/components/ui/button";
 
 const StepFour = () => {
-  const form = useForm<z.infer<typeof CandidRegThreeSchema>>({
-    resolver: zodResolver(CandidRegThreeSchema),
+  const form = useForm<z.infer<typeof CandidRegFourSchema>>({
+    resolver: zodResolver(CandidRegFourSchema),
     defaultValues: {
-      criminalCautionAct1974: false,
-      reasonForAct1974: "",
+      nameAsOnAccount: "",
+      bankSocietyName: "",
+      accountNo: 0,
+      sortCode: 0,
+      bankDetailConfirmation: "",
+      holidayMode: false,
     },
   });
 
-  async function onSubmit(values: z.infer<typeof CandidRegThreeSchema>) {
+  async function onSubmit(values: z.infer<typeof CandidRegFourSchema>) {
     console.log(values);
   }
 

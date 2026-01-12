@@ -15,14 +15,14 @@ const StepOne = () => {
       title: "",
       firstName: "",
       lastName: "",
-      dob: null,
+      dob: new Date(),
       homeAddress: "",
       town: "",
       postCode: "",
       mobileNo: "",
       landlineNo: "",
       email: "",
-      pictureOfYourself: "",
+      pictureOfYourself: [],
     },
   });
 

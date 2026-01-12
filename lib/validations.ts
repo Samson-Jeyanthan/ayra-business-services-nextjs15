@@ -91,21 +91,37 @@ export const AdminLoginSchema = z.object({
 
 export const CandidRegOneSchema = z.object({
   title: z.string().min(1, { message: "Title is required." }),
-  firstName: z.string().min(3, { message: "First name is required." }),
-  lastName: z.string().min(3, { message: "Last name is required." }),
-  dob: z
-    .date({
-      message: "Date of birth is required.",
+  firstName: z.string().min(3, {
+    message: "First name must be at least 3 characters.",
+  }),
+  lastName: z.string().min(3, {
+    message: "Last name must be at least 3 characters.",
+  }),
+  dob: z.date({
+    message: "Date of birth is required.",
+  }),
+  homeAddress: z.string().min(10, {
+    message: "Home address must be at least 10 characters.",
+  }),
+  town: z.string().min(3, {
+    message: "Town must be at least 3 characters.",
+  }),
+  postCode: z.string().min(3, {
+    message: "Post code must be at least 3 characters.",
+  }),
+  mobileNo: z.string().regex(/^\d{10,15}$/, {
+    message: "Mobile number must be 10–15 digits.",
+  }),
+  landlineNo: z
+    .string()
+    .regex(/^\d{10,15}$/, {
+      message: "Landline number must be 10–15 digits.",
     })
-    .nullable()
-    .refine((val) => val !== null, { message: "Date of birth is required." }),
-  homeAddress: z.string().min(10, { message: "Home address is required." }),
-  town: z.string().min(3),
-  postCode: z.string().min(3),
-  mobileNo: z.string().min(10),
-  landlineNo: z.string().min(10),
-  email: z.email().min(3),
-  pictureOfYourself: z.string().min(3),
+    .optional(),
+  email: z.email({
+    message: "Please enter a valid email address.",
+  }),
+  pictureOfYourself: z.custom<File[]>(),
 });
 
 export const CandidRegTwoSchema = z.object({
