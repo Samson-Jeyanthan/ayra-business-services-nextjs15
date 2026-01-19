@@ -2,6 +2,8 @@ import React from "react";
 import { MultiStepSidebar } from "@/components/shared";
 import { CANDIDATE_MULTISTEP_STAGES } from "@/constants";
 import Image from "next/image";
+import { auth, getUserByIdAction } from "@/auth";
+// import { redirect } from "next/navigation";
 
 export default async function MultiStepLayout({
   params,
@@ -11,6 +13,15 @@ export default async function MultiStepLayout({
   children: React.ReactNode;
 }>) {
   const resolvedParams = await params;
+  const session = await auth();
+
+  console.log(session, "layout session check");
+
+  // if (!session) return redirect("/");
+
+  const res = await getUserByIdAction(session?.user?.id as string);
+
+  console.log(res, "this_is_a_user_by_id");
 
   return (
     <main className="relative flex justify-center w-full">

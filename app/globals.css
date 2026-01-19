@@ -181,7 +181,7 @@
   }
 
   .primary-btn-custom {
-    @apply !bg-light-100 !text-light-800 !font-semibold !rounded-full !text-base !min-w-[140px] !max-w-[420px] !w-full !cursor-pointer !h-12 !px-6;
+    @apply !bg-light-100 !text-light-800 !font-semibold !rounded-full !text-base !min-w-[140px] !max-w-[520px] !w-full !cursor-pointer !h-12 !px-6;
   }
 
   .secondary-btn {

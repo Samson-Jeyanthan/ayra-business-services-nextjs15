@@ -33,7 +33,11 @@ const AuthForm = <T extends FieldValues>({
     defaultValues: defaultValues as DefaultValues<T>,
   });
 
-  const handleSubmit: SubmitHandler<T> = async () => {};
+  const handleSubmit: SubmitHandler<T> = async (data) => {
+    const result = (await onSubmit(data)) as ActionResponse;
+
+    console.log(result);
+  };
 
   const buttonText = formType === "SIGN_IN" ? "Sign In" : "Sign Up";
 
@@ -43,7 +47,7 @@ const AuthForm = <T extends FieldValues>({
       <h3 className="font-semibold text-2xl mt-5">Login to your account</h3>
       <Form {...form}>
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
+          onSubmit={form.handleSubmit(handleSubmit)}
           className="flex flex-col gap-4 rounded-2xl items-center w-4/6 mt-5"
         >
           {Object.keys(defaultValues).map((field: any) => (
@@ -65,7 +69,11 @@ const AuthForm = <T extends FieldValues>({
             type="submit"
             className="primary-btn-custom mt-4"
           >
-            {formType === "SIGN_IN" ? "Sign In" : "Sign Up"}
+            {form.formState.isSubmitting
+              ? buttonText === "Sign In"
+                ? "Signin In..."
+                : "Signing Up..."
+              : buttonText}
           </Button>
 
           {formType === "SIGN_IN" ? (

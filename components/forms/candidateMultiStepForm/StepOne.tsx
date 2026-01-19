@@ -15,7 +15,7 @@ const StepOne = () => {
       title: "",
       firstName: "",
       lastName: "",
-      dob: new Date(),
+      dob: null,
       homeAddress: "",
       town: "",
       postCode: "",

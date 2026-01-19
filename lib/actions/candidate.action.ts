@@ -3,9 +3,10 @@
 import handleError from "../handlers/error";
 import mongoose from "mongoose";
 import action from "../handlers/action";
-import { CandidateReqSchema } from "../validations";
+import { CandidateReqSchema, CandidRegOneSchema } from "../validations";
 import User from "@/database/user.model";
 import CandiRequest from "@/database/candiRequest.model";
+import Candidate from "@/database/candidate.model";
 
 export async function createCandidateRequestAction(
   params: ICandidateRequestParams
@@ -77,6 +78,72 @@ export async function createCandidateRequestAction(
     return {
       success: true,
       data: JSON.parse(JSON.stringify(newUser)),
+    };
+  } catch (error) {
+    await session.abortTransaction();
+    return handleError(error) as ErrorResponse;
+  } finally {
+    session.endSession();
+  }
+}
+
+export async function candidateRegStepOneAction(
+  params: ICandidateRegStepOneParams
+): Promise<ActionResponse> {
+  const validationResult = await action({
+    params,
+    schema: CandidRegOneSchema,
+    authorize: false,
+  });
+
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+
+  const {
+    title,
+    firstName,
+    lastName,
+    dob,
+    homeAddress,
+    town,
+    postCode,
+    mobileNo,
+    landlineNo,
+    email,
+    pictureOfYourself,
+  } = validationResult.params!;
+
+  const session = await mongoose.startSession();
+
+  try {
+    session.startTransaction();
+
+    const [candidRegOne] = await Candidate.create([
+      {
+        title,
+        firstName,
+        lastName,
+        dob,
+        homeAddress,
+        town,
+        postCode,
+        mobileNo,
+        landlineNo,
+        email,
+        pictureOfYourself,
+      },
+    ]);
+
+    if (!candidRegOne) {
+      throw new Error("Failed to submit request");
+    }
+
+    await session.commitTransaction();
+
+    return {
+      success: true,
+      // data: JSON.parse(JSON.stringify(newUser)),
     };
   } catch (error) {
     await session.abortTransaction();

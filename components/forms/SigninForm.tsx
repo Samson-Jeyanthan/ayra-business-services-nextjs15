@@ -10,8 +10,13 @@ import { SignInSchema } from "@/lib/validations";
 import Link from "next/link";
 import ROUTES from "@/constants/routes";
 import { toast } from "sonner";
+import { signInWithCredentials } from "@/lib/actions/auth.actions";
+import { useTransition } from "react";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import { redirect } from "next/navigation";
 
 const SigninForm = () => {
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof SignInSchema>>({
     resolver: zodResolver(SignInSchema),
     defaultValues: {
@@ -20,24 +25,22 @@ const SigninForm = () => {
     },
   });
 
-  const handleSignIn = async () => {
-    try {
-      throw new Error("Sign-in failed");
-    } catch (error) {
-      console.log(error);
-
-      toast.error("Sign-in failed", {
-        description:
-          error instanceof Error
-            ? error.message
-            : "An error occurred during sign-in.",
-        duration: 5000,
-      });
-    }
-  };
-
   async function onSubmit(values: z.infer<typeof SignInSchema>) {
-    console.log(values);
+    startTransition(async () => {
+      const result = await signInWithCredentials(values);
+
+      console.log(result, "result");
+
+      if (result.success) {
+        toast.success("You have signed up successfully");
+
+        redirect("/candidate-registration/step-one");
+      } else {
+        toast("Sign-in failed", {
+          description: `${result?.error?.message}`,
+        });
+      }
+    });
   }
 
   return (
@@ -47,7 +50,7 @@ const SigninForm = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 rounded-2xl items-center w-4/6 mt-5"
+          className="flex flex-col gap-4 rounded-2xl items-center w-5/8 mt-5"
         >
           <FormInput
             form={form}
@@ -61,8 +64,15 @@ const SigninForm = () => {
             formLabel="Password"
             inputType="password"
           />
-          <Button className="primary-btn-custom mt-4" onClick={handleSignIn}>
-            Login
+          <Button className="primary-btn-custom mt-4" disabled={isPending}>
+            {isPending ? (
+              <>
+                <ReloadIcon className="mr-2 size-4 animate-spin" />
+                <span>Login In...</span>
+              </>
+            ) : (
+              <>Login</>
+            )}
           </Button>
 
           <div className="flex gap-2 text-sm ">
