@@ -4,12 +4,32 @@ import { Schema } from "mongoose";
 
 export const candStepEightSchema = new Schema(
   {
-    drivingLicenseInfo: Boolean,
-    payInfo: Boolean,
-    contactInfo: Boolean,
-    medicalInfo: Boolean,
-    criminalConvictionsInfo: Boolean,
-    rightToWorkInfo: Boolean,
+    data: {
+      drivingLicenseInfo: { type: Boolean },
+      payInfo: { type: Boolean },
+      contactInfo: { type: Boolean },
+      medicalInfo: { type: Boolean },
+      criminalConvictionsInfo: { type: Boolean },
+      rightToWorkInfo: { type: Boolean },
+    },
+    status: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
+    },
+    reviewedBy: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
+    reviewedAt: {
+      type: Date,
+      default: null,
+    },
+    rejectionReason: {
+      type: String,
+      default: null,
+    },
   },
   { _id: false }
 );

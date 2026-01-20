@@ -30,7 +30,7 @@ interface ICandidateRegStepOneParams {
   title: string;
   firstName: string;
   lastName: string;
-  dob: string;
+  dob: date;
   homeAddress: string;
   town: string;
   postCode: string;

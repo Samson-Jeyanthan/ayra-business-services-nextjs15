@@ -4,17 +4,37 @@ import { Schema } from "mongoose";
 
 export const candStepNineSchema = new Schema(
   {
-    nationalInsuranceNo: String,
-    sex: String,
-    p45File: String,
-    employeeStatus: String,
-    studentLoans: {
-      dontHaveLoan: Boolean,
-      haveLoan: Boolean,
-      havePlanOneLoan: Boolean,
-      havePlanTwoLoan: Boolean,
-      havePlanFourLoan: Boolean,
-      havePostgraduateLoan: Boolean,
+    data: {
+      nationalInsuranceNo: { type: String },
+      sex: { type: String },
+      p45File: { type: String },
+      employeeStatus: { type: String },
+      studentLoans: {
+        dontHaveLoan: { type: Boolean },
+        haveLoan: { type: Boolean },
+        havePlanOneLoan: { type: Boolean },
+        havePlanTwoLoan: { type: Boolean },
+        havePlanFourLoan: { type: Boolean },
+        havePostgraduateLoan: { type: Boolean },
+      },
+    },
+    status: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
+    },
+    reviewedBy: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
+    reviewedAt: {
+      type: Date,
+      default: null,
+    },
+    rejectionReason: {
+      type: String,
+      default: null,
     },
   },
   { _id: false }

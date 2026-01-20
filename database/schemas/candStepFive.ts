@@ -4,37 +4,57 @@ import { Schema } from "mongoose";
 
 export const candStepFiveSchema = new Schema(
   {
-    drivingLicenceNo: String,
-    drivingLicenseShareCode: String,
-    drivingLicense: {
-      frontPic: String,
-      backPic: String,
+    data: {
+      drivingLicenceNo: { type: String },
+      drivingLicenseShareCode: { type: String },
+      drivingLicense: {
+        frontPic: { type: String },
+        backPic: { type: String },
+      },
+      cpcCard: {
+        frontPic: { type: String },
+        backPic: { type: String },
+      },
+      digitalDrivingTachographCard: {
+        frontPic: { type: String },
+        backPic: { type: String },
+      },
+      allInOne: {
+        frontPic: { type: String },
+        backPic: { type: String },
+      },
+      motorIncidents: {
+        currentDrivingEndorsement: { type: String },
+        hgvPsvCollisionYears5: { type: String },
+        subjectFromTrafficCommissioner: { type: String },
+        appearedBeforeTrafficCommissioner: { type: String },
+        prescribedMedication: { type: String },
+        sufferFromDrugs: { type: String },
+        illegalSubstance: { type: String },
+        reasonForIllegalSubstance: { type: String },
+        randomDrugTest: { type: String },
+        reasonForNoRandomDrugTest: { type: String },
+        needGlassToDrive: { type: String },
+        lastEyeTestDate: { type: String },
+      },
     },
-    cpcCard: {
-      frontPic: String,
-      backPic: String,
+    status: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
     },
-    digitalDrivingTachographCard: {
-      frontPic: String,
-      backPic: String,
+    reviewedBy: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
     },
-    allInOne: {
-      frontPic: String,
-      backPic: String,
+    reviewedAt: {
+      type: Date,
+      default: null,
     },
-    motorIncidents: {
-      currentDrivingEndorsement: String,
-      hgvPsvCollisionYears5: String,
-      subjectFromTrafficCommissioner: String,
-      appearedBeforeTrafficCommissioner: String,
-      prescribedMedication: String,
-      sufferFromDrugs: String,
-      illegalSubstance: String,
-      reasonForIllegalSubstance: String,
-      randomDrugTest: String,
-      reasonForNoRandomDrugTest: String,
-      needGlassToDrive: String,
-      lastEyeTestDate: Date,
+    rejectionReason: {
+      type: String,
+      default: null,
     },
   },
   { _id: false }

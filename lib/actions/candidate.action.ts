@@ -7,6 +7,7 @@ import { CandidateReqSchema, CandidRegOneSchema } from "../validations";
 import User from "@/database/user.model";
 import CandiRequest from "@/database/candiRequest.model";
 import Candidate from "@/database/candidate.model";
+import z from "zod";
 
 export async function createCandidateRequestAction(
   params: ICandidateRequestParams
@@ -40,6 +41,7 @@ export async function createCandidateRequestAction(
     const [newUser] = await User.create(
       [
         {
+          username: "N/A",
           firstName,
           lastName,
           email,
@@ -90,10 +92,17 @@ export async function createCandidateRequestAction(
 export async function candidateRegStepOneAction(
   params: ICandidateRegStepOneParams
 ): Promise<ActionResponse> {
+  // server side validation omit & refine
+  const CandidRegOneServerSchema = CandidRegOneSchema.omit({
+    pictureOfYourself: true,
+  }).extend({
+    pictureOfYourself: z.string().min(1, "Picture is required"),
+  });
+
   const validationResult = await action({
     params,
-    schema: CandidRegOneSchema,
-    authorize: false,
+    schema: CandidRegOneServerSchema,
+    authorize: true,
   });
 
   if (validationResult instanceof Error) {
@@ -116,27 +125,39 @@ export async function candidateRegStepOneAction(
 
   const session = await mongoose.startSession();
 
+  const userId = validationResult?.session?.user?.id;
+
   try {
     session.startTransaction();
 
     const [candidRegOne] = await Candidate.create([
       {
-        title,
-        firstName,
-        lastName,
-        dob,
-        homeAddress,
-        town,
-        postCode,
-        mobileNo,
-        landlineNo,
-        email,
-        pictureOfYourself,
+        userId,
+        stepOne: {
+          data: {
+            title,
+            firstName,
+            lastName,
+            dob: dob.toISOString(),
+            homeAddress,
+            town,
+            postCode,
+            mobileNo,
+            landlineNo,
+            email,
+            pictureOfYourself,
+          },
+          status: "pending",
+          reviewedBy: null,
+          reviewedAt: null,
+          rejectionReason: null,
+        },
+        completedSteps: 1,
       },
     ]);
 
     if (!candidRegOne) {
-      throw new Error("Failed to submit request");
+      throw new Error("Failed to submit the step one form");
     }
 
     await session.commitTransaction();

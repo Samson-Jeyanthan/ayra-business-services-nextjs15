@@ -31,10 +31,11 @@ export async function createClientRequestAction(
     const [newUser] = await User.create(
       [
         {
+          username: "N/A",
           firstName,
           lastName,
           email,
-          password: "",
+          password: "N/A",
           userType: "client",
           status: "pending",
         },
@@ -59,7 +60,7 @@ export async function createClientRequestAction(
     );
 
     if (!cliRequest) {
-      throw new Error("Failed to submit request");
+      throw new Error("Failed to submit the client request");
     }
 
     await session.commitTransaction();

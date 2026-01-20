@@ -4,8 +4,28 @@ import { Schema } from "mongoose";
 
 export const candStepThreeSchema = new Schema(
   {
-    criminalCautionAct1974: Boolean,
-    reasonForAct1974: String,
+    data: {
+      criminalCautionAct1974: { type: Boolean },
+      reasonForAct1974: { type: String },
+    },
+    status: {
+      type: String,
+      enum: ["pending", "approved", "rejected"],
+      default: "pending",
+    },
+    reviewedBy: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      default: null,
+    },
+    reviewedAt: {
+      type: Date,
+      default: null,
+    },
+    rejectionReason: {
+      type: String,
+      default: null,
+    },
   },
   { _id: false }
 );
