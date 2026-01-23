@@ -11,6 +11,10 @@ export const candStepTwoSchema = new Schema(
       kinLandlineNo: { type: String },
       kinEmail: { type: String },
     },
+    isCompleted: {
+      type: Boolean,
+      default: false,
+    },
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],

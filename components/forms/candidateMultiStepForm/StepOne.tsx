@@ -8,24 +8,21 @@ import { Form, FormField } from "@/components/ui/form";
 import {
   Dropdown,
   FormInput,
-  ImageInput,
+  MediaInput,
   PopupCalendar,
 } from "@/components/inputs";
 import { Button } from "@/components/ui/button";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { candidateRegStepOneAction } from "@/lib/actions/candidate.action";
-// import { IMediaProps } from "@/types/utils.types";
-import { useMedia } from "@/lib/hooks/useMedia";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { getSignedURL } from "@/lib/actions/utils.action";
 import { redirect } from "next/navigation";
+import { IImageMediaProps } from "@/types/utils.types";
+import Required from "@/components/shared/common/Required";
 
 const StepOne = () => {
   const [isPending, startTransition] = useTransition();
-  const { handleImageInput, media, resetMedia } = useMedia();
-
-  // const [previousMedia, setPreviousMedia] = useState<IMediaProps[]>([]);
   const form = useForm<z.infer<typeof CandidRegOneSchema>>({
     resolver: zodResolver(CandidRegOneSchema),
     defaultValues: {
@@ -41,6 +38,10 @@ const StepOne = () => {
       email: "",
       pictureOfYourself: [],
     },
+  });
+
+  const [previousMedia, setPreviousMedia] = useState<IImageMediaProps>({
+    mediaURL: "",
   });
 
   async function onSubmit(values: z.infer<typeof CandidRegOneSchema>) {
@@ -170,18 +171,23 @@ const StepOne = () => {
             formLabel="Email"
           />
         </div>
-        <FormField
-          control={form.control}
-          name="pictureOfYourself"
-          render={({ field }) => (
-            <ImageInput
-              fieldChange={field.onChange}
-              handleImageInput={handleImageInput}
-              media={media}
-              resetMedia={resetMedia}
-            />
-          )}
-        />
+        <div className="form-img-input-wrapper">
+          <div className="req-wrapper">
+            Please upload a picture of your self
+            <Required />
+          </div>
+          <FormField
+            control={form.control}
+            name="pictureOfYourself"
+            render={({ field }) => (
+              <MediaInput
+                fieldChange={field.onChange}
+                previousMedia={previousMedia}
+                setPreviousMedia={setPreviousMedia}
+              />
+            )}
+          />
+        </div>
 
         <footer className="flex w-full gap-4 justify-end">
           <Button className="primary-btn" type="submit" disabled={isPending}>

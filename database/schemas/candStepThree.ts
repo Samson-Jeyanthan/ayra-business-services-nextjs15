@@ -8,6 +8,10 @@ export const candStepThreeSchema = new Schema(
       criminalCautionAct1974: { type: Boolean },
       reasonForAct1974: { type: String },
     },
+    isCompleted: {
+      type: Boolean,
+      default: false,
+    },
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],

@@ -45,6 +45,10 @@ export const candStepSevenSchema = new Schema(
       },
       preferredStartedTimeWindow: { type: Boolean },
     },
+    isCompleted: {
+      type: Boolean,
+      default: false,
+    },
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],

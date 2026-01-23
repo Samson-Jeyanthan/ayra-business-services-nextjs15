@@ -144,17 +144,31 @@ export const CandidRegTwoSchema = z.object({
 });
 
 export const CandidRegThreeSchema = z.object({
-  criminalCautionAct1974: z.boolean(),
+  criminalCautionAct1974: z.enum(["true", "false"], {
+    message: "Criminal caution is required.",
+  }),
   reasonForAct1974: z.string(),
 });
 
 export const CandidRegFourSchema = z.object({
-  nameAsOnAccount: z.string(),
-  bankSocietyName: z.string(),
-  accountNo: z.number(),
-  sortCode: z.number(),
-  bankDetailConfirmation: z.string(),
-  holidayMode: z.boolean(),
+  nameAsOnAccount: z.string().min(1, "Name is required"),
+  bankSocietyName: z.string().min(1, "Bank name is required"),
+  accountNo: z
+    .string()
+    .min(8, "Account number must be 8 digits")
+    .max(8, "Account number must be 12 digits")
+    .regex(/^\d+$/, "Account number must contain only numbers"),
+  sortCode: z
+    .string()
+    .min(6, "Sort code must be 6 digits")
+    .max(6, "Sort code must be 6 digits")
+    .regex(/^\d+$/, "Sort code must contain only numbers"),
+  bankDetailConfirmation: z.boolean().refine((val) => val === true, {
+    message: "You must confirm your bank details",
+  }),
+  holidayMode: z.enum(["hourlyPay", "accruedForMe"], {
+    message: "Please select a holiday payment option",
+  }),
 });
 
 export const CandidRegFiveSchema = z.object({
@@ -177,17 +191,17 @@ export const CandidRegFiveSchema = z.object({
     backPic: z.custom<File[]>().optional(),
   }),
   motorIncidents: z.object({
-    currentDrivingEndorsement: z.string(),
-    hgvPsvCollisionYears5: z.string(),
-    subjectFromTrafficCommissioner: z.string(),
-    appearedBeforeTrafficCommissioner: z.string(),
-    prescribedMedication: z.string(),
-    sufferFromDrugs: z.string(),
-    illegalSubstance: z.string(),
-    reasonForIllegalSubstance: z.string(),
-    randomDrugTest: z.string(),
-    reasonForNoRandomDrugTest: z.string(),
-    needGlassToDrive: z.string(),
+    currentDrivingEndorsement: z.enum(["true", "false"]),
+    hgvPsvCollisionYears5: z.enum(["true", "false"]),
+    subjectFromTrafficCommissioner: z.enum(["true", "false"]),
+    appearedBeforeTrafficCommissioner: z.enum(["true", "false"]),
+    prescribedMedication: z.enum(["true", "false"]),
+    sufferFromDrugs: z.enum(["true", "false"]),
+    illegalSubstance: z.enum(["true", "false"]),
+    reasonForIllegalSubstance: z.enum(["true", "false"]),
+    randomDrugTest: z.enum(["true", "false"]),
+    reasonForNoRandomDrugTest: z.enum(["true", "false"]),
+    needGlassToDrive: z.enum(["true", "false"]),
     lastEyeTestDate: z.date({
       message: "Last eye test date is required.",
     }),
@@ -284,6 +298,10 @@ export const CandidRegNineSchema = z.object({
     havePlanFourLoan: z.boolean(),
     havePostgraduateLoan: z.boolean(),
   }),
+});
+
+export const GetCandidateRegInfoSchema = z.object({
+  userId: z.string(),
 });
 
 // client multistep form schema

@@ -14,7 +14,7 @@ import {
 } from "@/components/inputs";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { IImageMediaProps, IYesNoOptions } from "@/types/utils.types";
+import { IYesNoOptions } from "@/types/utils.types";
 import Required from "@/components/shared/common/Required";
 
 export const YES_NO_OPTIONS: IYesNoOptions[] = [
@@ -27,6 +27,10 @@ export const YES_NO_OPTIONS: IYesNoOptions[] = [
     name: "No",
   },
 ];
+
+interface IImageMediaProps {
+  mediaURL: string;
+}
 
 const StepFive = () => {
   const form = useForm<z.infer<typeof CandidRegFiveSchema>>({
@@ -51,23 +55,44 @@ const StepFive = () => {
         backPic: [],
       },
       motorIncidents: {
-        currentDrivingEndorsement: "",
-        hgvPsvCollisionYears5: "",
-        subjectFromTrafficCommissioner: "",
-        appearedBeforeTrafficCommissioner: "",
-        prescribedMedication: "",
-        sufferFromDrugs: "",
-        illegalSubstance: "",
-        reasonForIllegalSubstance: "",
-        randomDrugTest: "",
-        reasonForNoRandomDrugTest: "",
-        needGlassToDrive: "",
+        currentDrivingEndorsement: undefined,
+        hgvPsvCollisionYears5: undefined,
+        subjectFromTrafficCommissioner: undefined,
+        appearedBeforeTrafficCommissioner: undefined,
+        prescribedMedication: undefined,
+        sufferFromDrugs: undefined,
+        illegalSubstance: undefined,
+        reasonForIllegalSubstance: undefined,
+        randomDrugTest: undefined,
+        reasonForNoRandomDrugTest: undefined,
+        needGlassToDrive: undefined,
         lastEyeTestDate: new Date(),
       },
     },
   });
 
-  const [previousMedia, setPreviousMedia] = useState<IImageMediaProps>({
+  const [prevFrontDL, setPrevFrontDL] = useState<IImageMediaProps>({
+    mediaURL: "",
+  });
+  const [prevDLBack, setPrevDLBack] = useState<IImageMediaProps>({
+    mediaURL: "",
+  });
+  const [prevFrontCPC, setPrevFrontCPC] = useState<IImageMediaProps>({
+    mediaURL: "",
+  });
+  const [prevBackCPC, setPrevBackCPC] = useState<IImageMediaProps>({
+    mediaURL: "",
+  });
+  const [prevFrontDDTC, setPrevFrontDDTC] = useState<IImageMediaProps>({
+    mediaURL: "",
+  });
+  const [prevBackDDTC, setPrevBackDDTC] = useState<IImageMediaProps>({
+    mediaURL: "",
+  });
+  const [prevFrontAll, setPrevFrontAll] = useState<IImageMediaProps>({
+    mediaURL: "",
+  });
+  const [prevBackAll, setPrevBackAll] = useState<IImageMediaProps>({
     mediaURL: "",
   });
 
@@ -117,8 +142,8 @@ const StepFive = () => {
               render={({ field }) => (
                 <MediaInput
                   fieldChange={field.onChange}
-                  previousMedia={previousMedia}
-                  setPreviousMedia={setPreviousMedia}
+                  previousMedia={prevFrontDL}
+                  setPreviousMedia={setPrevFrontDL}
                 />
               )}
             />
@@ -137,8 +162,8 @@ const StepFive = () => {
               render={({ field }) => (
                 <MediaInput
                   fieldChange={field.onChange}
-                  previousMedia={previousMedia}
-                  setPreviousMedia={setPreviousMedia}
+                  previousMedia={prevDLBack}
+                  setPreviousMedia={setPrevDLBack}
                 />
               )}
             />
@@ -158,8 +183,8 @@ const StepFive = () => {
               render={({ field }) => (
                 <MediaInput
                   fieldChange={field.onChange}
-                  previousMedia={previousMedia}
-                  setPreviousMedia={setPreviousMedia}
+                  previousMedia={prevFrontCPC}
+                  setPreviousMedia={setPrevFrontCPC}
                 />
               )}
             />
@@ -178,8 +203,8 @@ const StepFive = () => {
               render={({ field }) => (
                 <MediaInput
                   fieldChange={field.onChange}
-                  previousMedia={previousMedia}
-                  setPreviousMedia={setPreviousMedia}
+                  previousMedia={prevBackCPC}
+                  setPreviousMedia={setPrevBackCPC}
                 />
               )}
             />
@@ -201,8 +226,8 @@ const StepFive = () => {
               render={({ field }) => (
                 <MediaInput
                   fieldChange={field.onChange}
-                  previousMedia={previousMedia}
-                  setPreviousMedia={setPreviousMedia}
+                  previousMedia={prevFrontDDTC}
+                  setPreviousMedia={setPrevFrontDDTC}
                 />
               )}
             />
@@ -223,8 +248,8 @@ const StepFive = () => {
               render={({ field }) => (
                 <MediaInput
                   fieldChange={field.onChange}
-                  previousMedia={previousMedia}
-                  setPreviousMedia={setPreviousMedia}
+                  previousMedia={prevBackDDTC}
+                  setPreviousMedia={setPrevBackDDTC}
                 />
               )}
             />
@@ -247,8 +272,8 @@ const StepFive = () => {
               render={({ field }) => (
                 <MediaInput
                   fieldChange={field.onChange}
-                  previousMedia={previousMedia}
-                  setPreviousMedia={setPreviousMedia}
+                  previousMedia={prevFrontAll}
+                  setPreviousMedia={setPrevFrontAll}
                 />
               )}
             />
@@ -271,8 +296,8 @@ const StepFive = () => {
               render={({ field }) => (
                 <MediaInput
                   fieldChange={field.onChange}
-                  previousMedia={previousMedia}
-                  setPreviousMedia={setPreviousMedia}
+                  previousMedia={prevBackAll}
+                  setPreviousMedia={setPrevBackAll}
                 />
               )}
             />

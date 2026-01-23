@@ -18,6 +18,10 @@ export const candStepNineSchema = new Schema(
         havePostgraduateLoan: { type: Boolean },
       },
     },
+    isCompleted: {
+      type: Boolean,
+      default: false,
+    },
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],

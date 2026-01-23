@@ -17,6 +17,10 @@ export const candStepOneSchema = new Schema(
       email: { type: String },
       pictureOfYourself: { type: String },
     },
+    isCompleted: {
+      type: Boolean,
+      default: false,
+    },
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],

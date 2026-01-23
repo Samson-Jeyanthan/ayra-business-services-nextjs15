@@ -7,18 +7,33 @@ import { CandidRegThreeSchema } from "@/lib/validations";
 import { Form } from "@/components/ui/form";
 import { RadioButton, TextArea } from "@/components/inputs";
 import { Button } from "@/components/ui/button";
+import { redirect } from "next/navigation";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import { useTransition } from "react";
+import { toast } from "sonner";
+import { candidateRegStepThreeAction } from "@/lib/actions/candidate.action";
 
 const StepThree = () => {
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof CandidRegThreeSchema>>({
     resolver: zodResolver(CandidRegThreeSchema),
     defaultValues: {
-      criminalCautionAct1974: false,
+      criminalCautionAct1974: undefined,
       reasonForAct1974: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof CandidRegThreeSchema>) {
-    console.log(values);
+    startTransition(async () => {
+      const result = await candidateRegStepThreeAction(values);
+      console.log(result, "results on server side");
+      if (result.success) {
+        toast.success("Form has been submitted");
+        redirect("/candidate-registration/step-four");
+      } else {
+        toast.error("Form submission failed");
+      }
+    });
   }
 
   return (
@@ -71,8 +86,23 @@ const StepThree = () => {
           </p>
         </div>
         <footer className="flex w-full gap-4 justify-between">
-          <Button className="secondary-btn">Back</Button>
-          <Button className="primary-btn">Next</Button>
+          <Button
+            type="button"
+            className="secondary-btn"
+            onClick={() => redirect("/candidate-registration/step-two")}
+          >
+            Back
+          </Button>
+          <Button className="primary-btn" type="submit" disabled={isPending}>
+            {isPending ? (
+              <>
+                <ReloadIcon className="mr-2 size-4 animate-spin" />
+                <span>Next</span>
+              </>
+            ) : (
+              <>Next</>
+            )}
+          </Button>
         </footer>
       </form>
     </Form>

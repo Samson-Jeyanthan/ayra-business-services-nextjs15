@@ -7,22 +7,36 @@ import { CandidRegFourSchema } from "@/lib/validations";
 import { Form } from "@/components/ui/form";
 import { FormInput, RadioButton, SwitchButton } from "@/components/inputs";
 import { Button } from "@/components/ui/button";
+import { useTransition } from "react";
+import { candidateRegStepFourAction } from "@/lib/actions/candidate.action";
+import { redirect } from "next/navigation";
+import { toast } from "sonner";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 const StepFour = () => {
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof CandidRegFourSchema>>({
     resolver: zodResolver(CandidRegFourSchema),
     defaultValues: {
       nameAsOnAccount: "",
       bankSocietyName: "",
-      accountNo: 0,
-      sortCode: 0,
-      bankDetailConfirmation: "",
-      holidayMode: false,
+      accountNo: "",
+      sortCode: "",
+      bankDetailConfirmation: false,
+      holidayMode: undefined,
     },
   });
 
   async function onSubmit(values: z.infer<typeof CandidRegFourSchema>) {
-    console.log(values);
+    startTransition(async () => {
+      const result = await candidateRegStepFourAction(values);
+      if (result.success) {
+        toast.success("Form has been submitted");
+        redirect("/candidate-registration/step-five");
+      } else {
+        toast.error("Form submission failed");
+      }
+    });
   }
 
   return (
@@ -47,7 +61,7 @@ const StepFour = () => {
           <FormInput
             form={form}
             formLabel="Account Number"
-            inputName="accountno"
+            inputName="accountNo"
             inputType="text"
           />
           <FormInput
@@ -78,8 +92,22 @@ const StepFour = () => {
           />
         </div>
         <footer className="flex w-full gap-4 justify-between">
-          <Button className="secondary-btn">Back</Button>
-          <Button className="primary-btn">Next</Button>
+          <Button
+            className="secondary-btn"
+            onClick={() => redirect("/candidate-registration/step-three")}
+          >
+            Back
+          </Button>
+          <Button className="primary-btn" type="submit" disabled={isPending}>
+            {isPending ? (
+              <>
+                <ReloadIcon className="mr-2 size-4 animate-spin" />
+                <span>Next</span>
+              </>
+            ) : (
+              <>Next</>
+            )}
+          </Button>
         </footer>
       </form>
     </Form>

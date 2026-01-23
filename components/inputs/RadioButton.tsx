@@ -29,8 +29,9 @@ const RadioButton = ({
           </FormLabel>
           <FormControl>
             <RadioGroup
-              onValueChange={field.onChange} // ✅ Correct binding
-              value={field.value} // ✅ Controlled value
+              onValueChange={(value) => field.onChange(value)} // ✅ Correct binding
+              defaultValue={field.value} // ✅ Controlled value
+              {...field}
               className="flex flex-col space-y-2"
             >
               {options?.map((option, index) => (
@@ -45,7 +46,7 @@ const RadioButton = ({
                   />
                   <FormLabel
                     htmlFor={`${inputName}${option._id}`}
-                    className="font-normal cursor-pointer text-light-100 leading-6 -mt-1"
+                    className="font-normal cursor-pointer !text-light-100 leading-6 -mt-1"
                   >
                     {option.name}
                   </FormLabel>

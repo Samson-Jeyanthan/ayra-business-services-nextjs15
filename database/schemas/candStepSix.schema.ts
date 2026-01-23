@@ -17,6 +17,10 @@ const refereeTemplate = {
 export const candStepSixSchema = new Schema(
   {
     data: [refereeTemplate, refereeTemplate],
+    isCompleted: {
+      type: Boolean,
+      default: false,
+    },
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],

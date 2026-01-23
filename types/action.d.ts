@@ -41,29 +41,145 @@ interface ICandidateRegStepOneParams {
 }
 
 interface ICandidateRegStepTwoParams {
-  title: string;
+  fullNameOfKin: string;
+  relationToYou: string;
+  kinMobileNo: string;
+  kinLandlineNo: string;
+  kinEmail: string;
 }
 
 interface ICandidateRegStepThreeParams {
-  title: string;
+  criminalCautionAct1974: string;
+  reasonForAct1974: string;
 }
 
 interface ICandidateRegStepFourParams {
-  title: string;
+  nameAsOnAccount: string;
+  bankSocietyName: string;
+  accountNo: string;
+  sortCode: string;
+  bankDetailConfirmation: boolean;
+  holidayMode: "hourlyPay" | "accruedForMe";
 }
+
 interface ICandidateRegStepFiveParams {
-  title: string;
+  drivingLicenceNo: string;
+  drivingLicenseShareCode: string;
+  drivingLicense: {
+    frontPic: string;
+    backPic: string;
+  };
+  cpcCard: {
+    frontPic: string;
+    backPic: string;
+  };
+  digitalDrivingTachographCard: {
+    frontPic: string;
+    backPic: string;
+  };
+  allInOne: {
+    frontPic: string;
+    backPic: string;
+  };
+  motorIncidents: {
+    currentDrivingEndorsement: string;
+    isHgvPsvCollisionYears5: boolean;
+    isSubjectFromTrafficCommissioner: boolean;
+    isAppearedBeforeTrafficCommissioner: boolean;
+    isPrescribedMedication: boolean;
+    isSufferFromDrugs: boolean;
+    isIllegalSubstance: boolean;
+    reasonForIllegalSubstance: string;
+    isRandomDrugTest: boolean;
+    reasonForNoRandomDrugTest: string;
+    isNeedGlassToDrive: boolean;
+    lastEyeTestDate: string;
+  };
 }
+
+interface IRefereeTemplate {
+  companyName: string;
+  position: string;
+  contactName: string;
+  address: string;
+  postCode: string;
+  phoneNo: string;
+  email: string;
+  employmentStartDate: string;
+  employmentEndDate: string;
+  approachability: boolean;
+}
+
 interface ICandidateRegStepSixParams {
-  title: string;
+  refereeTemplate: IRefereeTemplate[];
 }
 
 interface ICandidateRegStepSevenParams {
-  title: string;
+  adrTanks: boolean;
+  adrPackages: boolean;
+  bullTanker: boolean;
+  carTransporters: boolean;
+  container: boolean;
+  curtainSideOrTautliner: boolean;
+  doubleDecker: boolean;
+  flatBedOrLowLoader: boolean;
+  freezer: boolean;
+  fridge: boolean;
+  gravityPumpOrCompressor: boolean;
+  handBall: boolean;
+  haibGrab: boolean;
+  hookLift: boolean;
+  leftHandDrive: boolean;
+  moffat: boolean;
+  multiDrop: boolean;
+  nonHazTankers: boolean;
+  pallestised: boolean;
+  pdpPetrol: boolean;
+  rollCages: boolean;
+  ropingAndSheeting: boolean;
+  shunting: boolean;
+  bitumen: boolean;
+  tailLift: boolean;
+  tipper: boolean;
+  tramping: boolean;
+  trunking: boolean;
+  tug: boolean;
+  vaccumTankers: boolean;
+  wagAndDrag: boolean;
+  walkingFloors: boolean;
+  preferredShiftPatterns: {
+    days: boolean;
+    nights: boolean;
+    nightsOut: boolean;
+    tramper: boolean;
+  };
+  preferredStartedTimeWindow: boolean;
 }
+
 interface ICandidateRegStepEightParams {
-  title: string;
+  drivingLicenseInfo: boolean;
+  payInfo: boolean;
+  contactInfo: boolean;
+  medicalInfo: boolean;
+  criminalConvictionsInfo: boolean;
+  rightToWorkInfo: boolean;
 }
+
 interface ICandidateRegStepNineParams {
-  title: string;
+  nationalInsuranceNo: string;
+  sex: string;
+  p45File: string;
+  employeeStatus: string;
+  studentLoans: {
+    dontHaveLoan: boolean;
+    haveLoan: boolean;
+    havePlanOneLoan: boolean;
+    havePlanTwoLoan: boolean;
+    havePlanFourLoan: boolean;
+    havePostgraduateLoan: boolean;
+  };
+}
+
+interface IGetCandidateRegInfoParams {
+  userId?: string | undefined;
 }

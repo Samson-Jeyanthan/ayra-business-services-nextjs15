@@ -12,6 +12,10 @@ export const candStepEightSchema = new Schema(
       criminalConvictionsInfo: { type: Boolean },
       rightToWorkInfo: { type: Boolean },
     },
+    isCompleted: {
+      type: Boolean,
+      default: false,
+    },
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],

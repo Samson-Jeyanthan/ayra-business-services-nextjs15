@@ -5,12 +5,39 @@ import { Schema } from "mongoose";
 export const candStepFourSchema = new Schema(
   {
     data: {
-      nameAsOnAccount: { type: String },
-      bankSocietyName: { type: String },
-      accountNo: { type: Number },
-      sortCode: { type: Number },
-      bankDetailConfirmation: { type: String },
-      holidayMode: { type: Boolean },
+      nameAsOnAccount: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+      bankSocietyName: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+      accountNo: {
+        type: String,
+        required: true,
+        // match: [/^\d{8}$/, "Account number must be 8 digits"],
+      },
+      sortCode: {
+        type: String,
+        required: true,
+        // match: [/^\d{6}$/, "Sort code must be 6 digits"],
+      },
+      bankDetailConfirmation: {
+        type: Boolean,
+        required: true,
+      },
+      holidayMode: {
+        type: String,
+        enum: ["hourlyPay", "accruedForMe"],
+        required: true,
+      },
+    },
+    isCompleted: {
+      type: Boolean,
+      default: false,
     },
     status: {
       type: String,

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useMedia } from "@/lib/hooks/useMedia";
 import { IImageMediaProps } from "@/types/utils.types";
 import { CircleXIcon, Pencil } from "lucide-react";
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 
 type Props = {
   fieldChange: (e: unknown) => void;
@@ -28,11 +28,17 @@ const MediaInput = ({
     handleImageInput({
       e,
       isMultiple: false,
-      acceptFileType: ["image/png", "image/jpeg", "image/webp", "image/jpg"],
+      acceptFileType: ["image/jpeg", "image/png", "image/webp", "image/jpg"],
       filesLimit: 1,
     });
     setSelectedItem({ isURL: false, index: 0 });
+    fieldChange(e.target.files);
   };
+
+  // useEffect(() => {
+  //   fieldChange(media);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [media]);
 
   const handleInputBtn = () => {
     photoRef.current?.click();
@@ -68,7 +74,12 @@ const MediaInput = ({
           />
           <div className="flex flex-col gap-1">
             <CircleXIcon strokeWidth="1.5px" size="20px" cursor="pointer" />
-            <Pencil className="cursor-pointer size-5" strokeWidth="1.5px" />
+
+            <Pencil
+              className="cursor-pointer size-5"
+              strokeWidth="1.5px"
+              onClick={handleInputBtn}
+            />
           </div>
         </div>
       )}

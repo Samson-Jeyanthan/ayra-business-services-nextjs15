@@ -7,8 +7,14 @@ import { CandidRegTwoSchema } from "@/lib/validations";
 import { Form } from "@/components/ui/form";
 import { FormInput } from "@/components/inputs";
 import { Button } from "@/components/ui/button";
+import { redirect } from "next/navigation";
+import { candidateRegStepTwoAction } from "@/lib/actions/candidate.action";
+import { toast } from "sonner";
+import { useTransition } from "react";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 const StepTwo = () => {
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof CandidRegTwoSchema>>({
     resolver: zodResolver(CandidRegTwoSchema),
     defaultValues: {
@@ -21,7 +27,16 @@ const StepTwo = () => {
   });
 
   async function onSubmit(values: z.infer<typeof CandidRegTwoSchema>) {
-    console.log(values);
+    startTransition(async () => {
+      const result = await candidateRegStepTwoAction(values);
+      console.log(result, "results on server side");
+      if (result.success) {
+        toast.success("Form has been submitted");
+        redirect("/candidate-registration/step-three");
+      } else {
+        toast.error("Form submission failed");
+      }
+    });
   }
 
   return (
@@ -43,7 +58,7 @@ const StepTwo = () => {
             inputType="text"
             formLabel="Relation to You"
           />
-          <div className="w-full flex gap-4">
+          <div className="w-full flex gap-4 items-start">
             <FormInput
               form={form}
               inputName="kinMobileNo"
@@ -65,8 +80,23 @@ const StepTwo = () => {
           />
         </div>
         <footer className="flex w-full gap-4 justify-between">
-          <Button className="secondary-btn">Back</Button>
-          <Button className="primary-btn">Next</Button>
+          <Button
+            type="button"
+            className="secondary-btn"
+            onClick={() => redirect("/candidate-registration/step-one")}
+          >
+            Back
+          </Button>
+          <Button className="primary-btn" type="submit" disabled={isPending}>
+            {isPending ? (
+              <>
+                <ReloadIcon className="mr-2 size-4 animate-spin" />
+                <span>Next</span>
+              </>
+            ) : (
+              <>Next</>
+            )}
+          </Button>
         </footer>
       </form>
     </Form>
