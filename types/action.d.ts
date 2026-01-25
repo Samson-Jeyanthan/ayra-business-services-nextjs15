@@ -83,17 +83,17 @@ interface ICandidateRegStepFiveParams {
   };
   motorIncidents: {
     currentDrivingEndorsement: string;
-    isHgvPsvCollisionYears5: boolean;
-    isSubjectFromTrafficCommissioner: boolean;
-    isAppearedBeforeTrafficCommissioner: boolean;
-    isPrescribedMedication: boolean;
-    isSufferFromDrugs: boolean;
-    isIllegalSubstance: boolean;
+    isHgvPsvCollisionYears5: "true" | "false";
+    isSubjectFromTrafficCommissioner: "true" | "false";
+    isAppearedBeforeTrafficCommissioner: "true" | "false";
+    isPrescribedMedication: "true" | "false";
+    isSufferFromDrugs: "true" | "false";
+    isIllegalSubstance: "true" | "false";
     reasonForIllegalSubstance: string;
-    isRandomDrugTest: boolean;
+    isRandomDrugTest: "true" | "false";
     reasonForNoRandomDrugTest: string;
-    isNeedGlassToDrive: boolean;
-    lastEyeTestDate: string;
+    isNeedGlassToDrive: "true" | "false";
+    lastEyeTestDate: date;
   };
 }
 
@@ -105,16 +105,16 @@ interface IRefereeTemplate {
   postCode: string;
   phoneNo: string;
   email: string;
-  employmentStartDate: string;
-  employmentEndDate: string;
+  employmentStartDate?: date;
+  employmentEndDate?: date;
   approachability: boolean;
 }
 
 interface ICandidateRegStepSixParams {
-  refereeTemplate: IRefereeTemplate[];
+  references: IRefereeTemplate[];
 }
 
-interface ICandidateRegStepSevenParams {
+interface IPreferenceTemplate {
   adrTanks: boolean;
   adrPackages: boolean;
   bullTanker: boolean;
@@ -153,7 +153,11 @@ interface ICandidateRegStepSevenParams {
     nightsOut: boolean;
     tramper: boolean;
   };
-  preferredStartedTimeWindow: boolean;
+}
+
+interface ICandidateRegStepSevenParams {
+  preferences: IPreferenceTemplate[];
+  preferredStartedTimeWindow: string;
 }
 
 interface ICandidateRegStepEightParams {

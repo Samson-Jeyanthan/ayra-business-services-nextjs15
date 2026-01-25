@@ -24,7 +24,7 @@ export type TFormInput = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   form: any;
   inputName: string;
-  inputType: "text" | "email" | "password" | "number";
+  inputType: "text" | "email" | "password" | "number" | "time";
   formLabel: string;
   placeholder?: string;
   formDescription?: string;

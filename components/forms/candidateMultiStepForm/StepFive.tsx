@@ -13,9 +13,14 @@ import {
   TextArea,
 } from "@/components/inputs";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { IYesNoOptions } from "@/types/utils.types";
 import Required from "@/components/shared/common/Required";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import { redirect } from "next/navigation";
+import { toast } from "sonner";
+import { candidateRegStepFiveAction } from "@/lib/actions/candidate.action";
+import { getSignedURL } from "@/lib/actions/utils.action";
 
 export const YES_NO_OPTIONS: IYesNoOptions[] = [
   {
@@ -33,6 +38,7 @@ interface IImageMediaProps {
 }
 
 const StepFive = () => {
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof CandidRegFiveSchema>>({
     resolver: zodResolver(CandidRegFiveSchema),
     defaultValues: {
@@ -56,17 +62,17 @@ const StepFive = () => {
       },
       motorIncidents: {
         currentDrivingEndorsement: undefined,
-        hgvPsvCollisionYears5: undefined,
-        subjectFromTrafficCommissioner: undefined,
-        appearedBeforeTrafficCommissioner: undefined,
-        prescribedMedication: undefined,
-        sufferFromDrugs: undefined,
-        illegalSubstance: undefined,
-        reasonForIllegalSubstance: undefined,
-        randomDrugTest: undefined,
-        reasonForNoRandomDrugTest: undefined,
-        needGlassToDrive: undefined,
-        lastEyeTestDate: new Date(),
+        isHgvPsvCollisionYears5: undefined,
+        isSubjectFromTrafficCommissioner: undefined,
+        isAppearedBeforeTrafficCommissioner: undefined,
+        isPrescribedMedication: undefined,
+        isSufferFromDrugs: undefined,
+        isIllegalSubstance: undefined,
+        reasonForIllegalSubstance: "",
+        isRandomDrugTest: undefined,
+        reasonForNoRandomDrugTest: "",
+        isNeedGlassToDrive: undefined,
+        lastEyeTestDate: undefined,
       },
     },
   });
@@ -96,8 +102,132 @@ const StepFive = () => {
     mediaURL: "",
   });
 
+  async function uploadSingleFile(file: File): Promise<string> {
+    const signedURLResult = await getSignedURL({
+      fileType: file.type, // ✅ correct
+    });
+
+    if (signedURLResult.failure !== undefined) {
+      throw new Error(signedURLResult.failure);
+    }
+
+    const uploadURL = signedURLResult.success;
+
+    const res = await fetch(uploadURL, {
+      method: "PUT",
+      body: file,
+      headers: {
+        "Content-Type": file.type,
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error("File upload failed");
+    }
+
+    return uploadURL.split("?")[0]; // ✅ clean S3 URL
+  }
+
   async function onSubmit(values: z.infer<typeof CandidRegFiveSchema>) {
-    console.log(values);
+    toast.warning("Please wait...", { duration: 10000 });
+
+    startTransition(async () => {
+      const postImageURLs = {
+        drivingLicense: { frontPic: "", backPic: "" },
+        cpcCard: { frontPic: "", backPic: "" },
+        digitalDrivingTachographCard: { frontPic: "", backPic: "" },
+        allInOne: { frontPic: "", backPic: "" },
+      };
+
+      try {
+        // 1️⃣ Driving License
+        if (values.drivingLicense.frontPic?.length) {
+          postImageURLs.drivingLicense.frontPic = await uploadSingleFile(
+            values.drivingLicense.frontPic[0]
+          );
+        }
+
+        if (values.drivingLicense.backPic?.length) {
+          postImageURLs.drivingLicense.backPic = await uploadSingleFile(
+            values.drivingLicense.backPic[0]
+          );
+        }
+
+        // 2️⃣ CPC Card
+        if (values.cpcCard.frontPic?.length) {
+          postImageURLs.cpcCard.frontPic = await uploadSingleFile(
+            values.cpcCard.frontPic[0]
+          );
+        }
+
+        if (values.cpcCard.backPic?.length) {
+          postImageURLs.cpcCard.backPic = await uploadSingleFile(
+            values.cpcCard.backPic[0]
+          );
+        }
+
+        // 3️⃣ Digital Tachograph Card
+        if (values.digitalDrivingTachographCard.frontPic?.length) {
+          postImageURLs.digitalDrivingTachographCard.frontPic =
+            await uploadSingleFile(
+              values.digitalDrivingTachographCard.frontPic[0]
+            );
+        }
+
+        if (values.digitalDrivingTachographCard.backPic?.length) {
+          postImageURLs.digitalDrivingTachographCard.backPic =
+            await uploadSingleFile(
+              values.digitalDrivingTachographCard.backPic[0]
+            );
+        }
+
+        // 4️⃣ All-in-One
+        if (values.allInOne.frontPic?.length) {
+          postImageURLs.allInOne.frontPic = await uploadSingleFile(
+            values.allInOne.frontPic[0]
+          );
+        }
+
+        if (values.allInOne.backPic?.length) {
+          postImageURLs.allInOne.backPic = await uploadSingleFile(
+            values.allInOne.backPic[0]
+          );
+        }
+      } catch (error) {
+        console.error(error);
+        toast.error("Image upload failed");
+        return;
+      }
+
+      console.log("Uploaded URLs:", postImageURLs);
+
+      const result = await candidateRegStepFiveAction({
+        ...values,
+        drivingLicense: {
+          frontPic: postImageURLs.drivingLicense.frontPic,
+          backPic: postImageURLs.drivingLicense.backPic,
+        },
+        cpcCard: {
+          frontPic: postImageURLs.cpcCard.frontPic,
+          backPic: postImageURLs.cpcCard.backPic,
+        },
+        digitalDrivingTachographCard: {
+          frontPic: postImageURLs.digitalDrivingTachographCard.frontPic,
+          backPic: postImageURLs.digitalDrivingTachographCard.backPic,
+        },
+        allInOne: {
+          frontPic: postImageURLs.allInOne.frontPic,
+          backPic: postImageURLs.allInOne.backPic,
+        },
+      });
+
+      if (result.success) {
+        toast.success("Form has been submitted");
+        redirect("/candidate-registration/step-six");
+      } else {
+        toast.error("Form submission failed");
+      }
+    });
   }
 
   return (
@@ -308,58 +438,58 @@ const StepFive = () => {
           <div className="w-[80%]">
             <TextArea
               form={form}
-              inputName="currentDrivingEndorsement"
+              inputName="motorIncidents.currentDrivingEndorsement"
               formLabel="Detail any current Driving Endorsement and Points"
               maxLength={400}
             />
           </div>
           <RadioButton
             form={form}
-            inputName="hgvPsvCollisionYears5"
+            inputName="motorIncidents.isHgvPsvCollisionYears5"
             formLabel="Have you been involved in anyb motor vehicle collisions whilst driving a HGV or PSV in the last 5 years?"
             options={YES_NO_OPTIONS}
           />
           <RadioButton
             form={form}
-            inputName="subjectFromTrafficCommissioner"
+            inputName="motorIncidents.isSubjectFromTrafficCommissioner"
             formLabel="Are you currently subject to any direction from a Traffic Commissioner e.g.Suspension / Revocation of your vocational HGV entitlement?"
             options={YES_NO_OPTIONS}
           />
           <RadioButton
             form={form}
-            inputName="motorIncidents.appearedBeforeTrafficCommissioner"
+            inputName="motorIncidents.isAppearedBeforeTrafficCommissioner"
             formLabel="Have you ever appeared before a Traffic Commissioner at a driver conduct hearing regarding any matter and had action taken against your vocational HGV entitlement?"
             options={YES_NO_OPTIONS}
           />
           <RadioButton
             form={form}
-            inputName="motorIncidents.prescribedMedication"
+            inputName="motorIncidents.isPrescribedMedication"
             formLabel="Are you taking any prescribed or other medication which has the capacity to affect your work and/or driving?"
             options={YES_NO_OPTIONS}
           />
           <RadioButton
             form={form}
-            inputName="motorIncidents.sufferFromDrugs"
+            inputName="motorIncidents.isSufferFromDrugs"
             formLabel="Do you currently suffer from, or within the last 12 months, have you suffered from, dependence on alcohol or drugs of any king (including prescription drugs)?"
             options={YES_NO_OPTIONS}
           />
           <RadioButton
             form={form}
-            inputName="motorIncidents.illegalSubstance"
+            inputName="motorIncidents.isIllegalSubstance"
             formLabel="Have you taken any illegal substances (drugs) in the last 6 months?"
             options={YES_NO_OPTIONS}
           />
           <div className="w-[80%]">
             <TextArea
               form={form}
-              inputName="motorIncidents.currentDrivingEndorsement"
+              inputName="motorIncidents.reasonForIllegalSubstance"
               formLabel="If you answered YES to any of the above, please provide details"
               maxLength={400}
             />
           </div>
           <RadioButton
             form={form}
-            inputName="motorIncidents.randomDrugTest"
+            inputName="motorIncidents.isRandomDrugTest"
             formLabel="Do you agree to random drug and alcohol testing if required by either Resolute Logistics Recruitment or our clients if required?"
             options={YES_NO_OPTIONS}
           />
@@ -373,22 +503,34 @@ const StepFive = () => {
           </div>
           <RadioButton
             form={form}
-            inputName="motorIncidents.needGlassToDrive"
+            inputName="motorIncidents.isNeedGlassToDrive"
             formLabel="Do you need to wear glasses to drive?"
             options={YES_NO_OPTIONS}
           />
           <div className="w-1/2 pr-4">
             <PopupCalendar
               form={form}
-              inputName="lastEyeTestDate"
+              inputName="motorIncidents.lastEyeTestDate"
               formLabel="Date of Last Eye Test"
             />
           </div>
         </div>
         <footer className="flex w-full gap-4 justify-between">
-          <Button className="secondary-btn">Back</Button>
-          <Button className="primary-btn" type="submit">
-            Next
+          <Button
+            className="secondary-btn"
+            onClick={() => redirect("/candidate-registration/step-four")}
+          >
+            Back
+          </Button>
+          <Button className="primary-btn" type="submit" disabled={isPending}>
+            {isPending ? (
+              <>
+                <ReloadIcon className="mr-2 size-4 animate-spin" />
+                <span>Next</span>
+              </>
+            ) : (
+              <>Next</>
+            )}
           </Button>
         </footer>
       </form>

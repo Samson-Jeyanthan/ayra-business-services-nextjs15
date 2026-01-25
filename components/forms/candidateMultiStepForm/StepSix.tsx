@@ -8,6 +8,11 @@ import { CandidRegSixSchema } from "@/lib/validations";
 import { FormInput, PopupCalendar, SwitchButton } from "@/components/inputs";
 import Required from "@/components/shared/common/Required";
 import { Button } from "@/components/ui/button";
+import { useTransition } from "react";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import { redirect } from "next/navigation";
+import { candidateRegStepSixAction } from "@/lib/actions/candidate.action";
+import { toast } from "sonner";
 
 const refereeTemplate = {
   companyName: "",
@@ -17,12 +22,13 @@ const refereeTemplate = {
   postCode: "",
   phoneNo: "",
   email: "",
-  employmentStartDate: "",
-  employmentEndDate: "",
+  employmentStartDate: null,
+  employmentEndDate: null,
   approachability: false,
 };
 
 const StepSix = () => {
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof CandidRegSixSchema>>({
     resolver: zodResolver(CandidRegSixSchema),
     defaultValues: { references: [refereeTemplate, refereeTemplate] },
@@ -34,7 +40,16 @@ const StepSix = () => {
   });
 
   async function onSubmit(values: z.infer<typeof CandidRegSixSchema>) {
-    console.log(values);
+    startTransition(async () => {
+      const result = await candidateRegStepSixAction(values);
+      console.log(result, "results on server side");
+      if (result.success) {
+        toast.success("Form has been submitted");
+        redirect("/candidate-registration/step-seven");
+      } else {
+        toast.error("Form submission failed");
+      }
+    });
   }
 
   return (
@@ -131,9 +146,22 @@ const StepSix = () => {
         ))}
 
         <footer className="flex w-full gap-4 justify-between">
-          <Button className="secondary-btn">Back</Button>
-          <Button className="primary-btn" type="submit">
-            Next
+          <Button
+            type="button"
+            className="secondary-btn"
+            onClick={() => redirect("/candidate-registration/step-five")}
+          >
+            Back
+          </Button>
+          <Button className="primary-btn" type="submit" disabled={isPending}>
+            {isPending ? (
+              <>
+                <ReloadIcon className="mr-2 size-4 animate-spin" />
+                <span>Next</span>
+              </>
+            ) : (
+              <>Next</>
+            )}
           </Button>
         </footer>
       </form>

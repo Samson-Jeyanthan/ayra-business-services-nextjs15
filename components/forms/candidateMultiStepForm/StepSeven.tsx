@@ -4,16 +4,14 @@ import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFieldArray, useForm } from "react-hook-form";
 import { CandidRegSevenSchema } from "@/lib/validations";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
-import { SwitchButton } from "@/components/inputs";
+import { Form } from "@/components/ui/form";
+import { SwitchButton, TimeInput } from "@/components/inputs";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { redirect } from "next/navigation";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import { useTransition } from "react";
+import { candidateRegStepSevenAction } from "@/lib/actions/candidate.action";
+import { toast } from "sonner";
 
 const CANDIDATE_PREFERENCES_STEP_SEVEN = {
   adrTanks: false,
@@ -54,7 +52,6 @@ const CANDIDATE_PREFERENCES_STEP_SEVEN = {
     nightsOut: false,
     tramper: false,
   },
-  preferredStartedTimeWindow: false,
 };
 
 const PREFERENCE_SWITCHES = [
@@ -99,11 +96,10 @@ const PREFERENCE_SWITCHES = [
     name: "preferredShiftPatterns.nightsOut",
   },
   { label: "Shift Pattern • Tramper", name: "preferredShiftPatterns.tramper" },
-
-  { label: "Preferred Start Time Window", name: "preferredStartedTimeWindow" },
 ];
 
 const StepSeven = () => {
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof CandidRegSevenSchema>>({
     resolver: zodResolver(CandidRegSevenSchema),
     defaultValues: {
@@ -118,7 +114,17 @@ const StepSeven = () => {
   });
 
   async function onSubmit(values: z.infer<typeof CandidRegSevenSchema>) {
-    console.log(values);
+    startTransition(async () => {
+      console.log(values);
+      const result = await candidateRegStepSevenAction(values);
+      console.log(result, "results on server side");
+      if (result.success) {
+        toast.success("Form has been submitted");
+        redirect("/candidate-registration/step-seven");
+      } else {
+        toast.error("Form submission failed");
+      }
+    });
   }
 
   return (
@@ -164,31 +170,32 @@ const StepSeven = () => {
           </div>
         ))}
 
-        <FormField
-          control={form.control}
-          name="preferredStartedTimeWindow"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Input
-                  type="time"
-                  id="time-picker"
-                  step="1"
-                  className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
-                  value={field.value ? field.value : "00:00:00"}
-                  onChange={field.onChange}
-                  ref={field.ref}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        <div className="w-1/2">
+          <TimeInput
+            form={form}
+            inputName="preferredStartedTimeWindow"
+            inputType="time"
+            formLabel="Preferred Start Time Window"
+          />
+        </div>
 
         <footer className="flex w-full gap-4 justify-between">
-          <Button className="secondary-btn">Back</Button>
-          <Button className="primary-btn" type="submit">
-            Next
+          <Button
+            type="button"
+            className="secondary-btn"
+            onClick={() => redirect("/candidate-registration/step-six")}
+          >
+            Back
+          </Button>
+          <Button className="primary-btn" type="submit" disabled={isPending}>
+            {isPending ? (
+              <>
+                <ReloadIcon className="mr-2 size-4 animate-spin" />
+                <span>Next</span>
+              </>
+            ) : (
+              <>Next</>
+            )}
           </Button>
         </footer>
       </form>

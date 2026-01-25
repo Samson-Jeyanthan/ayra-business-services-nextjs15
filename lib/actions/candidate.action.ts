@@ -5,8 +5,11 @@ import mongoose from "mongoose";
 import action from "../handlers/action";
 import {
   CandidateReqSchema,
+  CandidRegFiveSchema,
   CandidRegFourSchema,
   CandidRegOneSchema,
+  CandidRegSevenSchema,
+  CandidRegSixSchema,
   CandidRegThreeSchema,
   CandidRegTwoSchema,
   GetCandidateRegInfoSchema,
@@ -425,11 +428,250 @@ export async function candidateRegStepFourAction(
   }
 }
 
-export async function candidateRegStepFiveAction() {}
+export async function candidateRegStepFiveAction(
+  params: ICandidateRegStepFiveParams
+): Promise<ActionResponse> {
+  // server side validation omit & refine
+  const CandidRegFiveServerSchema = CandidRegFiveSchema.omit({
+    drivingLicense: true,
+    cpcCard: true,
+    digitalDrivingTachographCard: true,
+    allInOne: true,
+  }).extend({
+    drivingLicense: z.object({
+      frontPic: z.string(),
+      backPic: z.string(),
+    }),
+    cpcCard: z.object({
+      frontPic: z.string(),
+      backPic: z.string(),
+    }),
+    digitalDrivingTachographCard: z.object({
+      frontPic: z.string(),
+      backPic: z.string(),
+    }),
+    allInOne: z.object({
+      frontPic: z.string(),
+      backPic: z.string(),
+    }),
+  });
 
-export async function candidateRegStepSixAction() {}
+  const validationResult = await action({
+    params,
+    schema: CandidRegFiveServerSchema,
+    authorize: true,
+  });
 
-export async function candidateRegStepSevenAction() {}
+  console.log(validationResult, "validation_result_five");
+
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+
+  const {
+    drivingLicenceNo,
+    drivingLicenseShareCode,
+    drivingLicense,
+    cpcCard,
+    digitalDrivingTachographCard,
+    allInOne,
+    motorIncidents: {
+      currentDrivingEndorsement,
+      isHgvPsvCollisionYears5,
+      isSubjectFromTrafficCommissioner,
+      isAppearedBeforeTrafficCommissioner,
+      isPrescribedMedication,
+      isSufferFromDrugs,
+      isIllegalSubstance,
+      reasonForIllegalSubstance,
+      isRandomDrugTest,
+      reasonForNoRandomDrugTest,
+      isNeedGlassToDrive,
+      lastEyeTestDate,
+    },
+  } = validationResult.params!;
+
+  const session = await mongoose.startSession();
+
+  const userId = validationResult?.session?.user?.id;
+
+  try {
+    session.startTransaction();
+
+    const candidate = await Candidate.findOneAndUpdate(
+      {
+        userId,
+        completedSteps: { $gte: 4 }, // ✅ step four completed
+        $or: [
+          { "stepFive.status": { $exists: false } },
+          { "stepFive.status": { $in: ["pending", "rejected"] } },
+        ],
+      },
+      {
+        $set: {
+          "stepFive.data": {
+            drivingLicenceNo,
+            drivingLicenseShareCode,
+            drivingLicense,
+            cpcCard,
+            digitalDrivingTachographCard,
+            allInOne,
+            motorIncidents: {
+              currentDrivingEndorsement,
+              isHgvPsvCollisionYears5,
+              isSubjectFromTrafficCommissioner,
+              isAppearedBeforeTrafficCommissioner,
+              isPrescribedMedication,
+              isSufferFromDrugs,
+              isIllegalSubstance,
+              reasonForIllegalSubstance,
+              isRandomDrugTest,
+              reasonForNoRandomDrugTest,
+              isNeedGlassToDrive,
+              lastEyeTestDate: lastEyeTestDate.toString(),
+            },
+          },
+          "stepFive.isCompleted": true,
+          "stepFive.status": "pending",
+          "stepFive.reviewedBy": null,
+          "stepFive.reviewedAt": null,
+          "stepFive.rejectionReason": null,
+        },
+        $max: {
+          completedSteps: 5, // ✅ prevents rollback
+        },
+      },
+      {
+        new: true,
+        session,
+      }
+    );
+
+    console.log(candidate, "candidate");
+
+    if (!candidate) {
+      throw new Error("Failed to submit the step four form");
+    }
+
+    await session.commitTransaction();
+
+    return { success: true };
+  } catch (error) {
+    await session.abortTransaction();
+    return handleError(error) as ErrorResponse;
+  } finally {
+    session.endSession();
+  }
+}
+
+export async function candidateRegStepSixAction(
+  params: ICandidateRegStepSixParams
+): Promise<ActionResponse> {
+  const validationResult = await action({
+    params,
+    schema: CandidRegSixSchema,
+    authorize: true,
+  });
+
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+
+  const { references } = validationResult.params!;
+
+  if (!references.length) {
+    throw new Error("At least one reference is required");
+  }
+
+  const normalizedReferences = references.map((ref) => ({
+    companyName: ref.companyName,
+    position: ref.position,
+    contactName: ref.contactName,
+    address: ref.address,
+    postCode: ref.postCode,
+    phoneNo: ref.phoneNo,
+    email: ref.email,
+    employmentStartDate: ref.employmentStartDate
+      ? ref.employmentStartDate.toISOString()
+      : null,
+    employmentEndDate: ref.employmentEndDate
+      ? ref.employmentEndDate.toISOString()
+      : null,
+    approachability: ref.approachability,
+  }));
+
+  const userId = validationResult?.session?.user?.id;
+
+  if (!userId) {
+    return handleError(new Error("Unauthorized")) as ErrorResponse;
+  }
+
+  const session = await mongoose.startSession();
+
+  try {
+    session.startTransaction();
+
+    const candidate = await Candidate.findOneAndUpdate(
+      {
+        userId,
+        completedSteps: { $gte: 5 }, // ✅ step five completed
+        $or: [
+          { "stepSix.status": { $exists: false } },
+          { "stepSix.status": { $in: ["pending", "rejected"] } },
+        ],
+      },
+      {
+        $set: {
+          "stepSix.data": {
+            references: normalizedReferences,
+          },
+          "stepSix.isCompleted": true,
+          "stepSix.status": "pending",
+          "stepSix.reviewedBy": null,
+          "stepSix.reviewedAt": null,
+          "stepSix.rejectionReason": null,
+        },
+        $max: {
+          completedSteps: 6, // ✅ prevents rollback
+        },
+      },
+      {
+        new: true,
+        session,
+      }
+    );
+
+    console.log(candidate, "candidate");
+
+    if (!candidate) {
+      throw new Error(
+        "Step Six cannot be submitted. Please complete previous step or this step is locked."
+      );
+    }
+
+    await session.commitTransaction();
+
+    return { success: true };
+  } catch (error) {
+    await session.abortTransaction();
+    return handleError(error) as ErrorResponse;
+  } finally {
+    session.endSession();
+  }
+}
+
+export async function candidateRegStepSevenAction(
+  params: ICandidateRegStepSevenParams
+): Promise<ActionResponse> {
+  const validationResult = await action({
+    params,
+    schema: CandidRegSevenSchema,
+    authorize: true,
+  });
+
+  console.log(validationResult);
+  return { success: true };
+}
 
 export async function candidateRegStepEightAction() {}
 

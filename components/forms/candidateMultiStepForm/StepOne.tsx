@@ -46,6 +46,7 @@ const StepOne = () => {
 
   async function onSubmit(values: z.infer<typeof CandidRegOneSchema>) {
     startTransition(async () => {
+      // upload image to s3 bucket and get url
       let postImageURL = "";
       try {
         if (values.pictureOfYourself && values.pictureOfYourself.length > 0) {
@@ -77,6 +78,7 @@ const StepOne = () => {
         console.log(error);
       }
 
+      // submitting the form with uploaded image url
       const result = await candidateRegStepOneAction({
         ...values,
         pictureOfYourself: postImageURL,

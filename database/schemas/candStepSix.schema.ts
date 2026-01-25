@@ -16,7 +16,7 @@ const refereeTemplate = {
 
 export const candStepSixSchema = new Schema(
   {
-    data: [refereeTemplate, refereeTemplate],
+    data: { references: [refereeTemplate, refereeTemplate] },
     isCompleted: {
       type: Boolean,
       default: false,
