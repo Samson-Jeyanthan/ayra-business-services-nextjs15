@@ -129,6 +129,9 @@ const StepOne = () => {
             form={form}
             inputName="dob"
             formLabel="Date of Birth"
+            disableFunc={(date: Date) =>
+              date < new Date("1920-01-01") || date > new Date()
+            }
           />
         </div>
         <FormInput

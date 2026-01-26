@@ -83,7 +83,7 @@ export type TPopupCalendar = {
   formDescription?: string;
   prevValue?: string;
   className?: string;
-  disableFunc?: () => boolean;
+  disableFunc?: (date: Date) => boolean;
 };
 
 export type TStageURLProps = {

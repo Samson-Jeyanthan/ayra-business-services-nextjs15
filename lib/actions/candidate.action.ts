@@ -669,8 +669,62 @@ export async function candidateRegStepSevenAction(
     authorize: true,
   });
 
-  console.log(validationResult);
-  return { success: true };
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+
+  const { preferences, preferredStartedTimeWindow } = validationResult.params!;
+
+  const session = await mongoose.startSession();
+
+  const userId = validationResult?.session?.user?.id;
+
+  try {
+    session.startTransaction();
+
+    const candidate = await Candidate.findOneAndUpdate(
+      {
+        userId,
+        completedSteps: { $gte: 6 }, // ✅ step four completed
+        $or: [
+          { "stepSeven.status": { $exists: false } },
+          { "stepSeven.status": { $in: ["pending", "rejected"] } },
+        ],
+      },
+      {
+        $set: {
+          "stepSeven.data": {
+            preferences,
+            preferredStartedTimeWindow,
+          },
+          "stepSeven.isCompleted": true,
+          "stepSeven.status": "pending",
+          "stepSeven.reviewedBy": null,
+          "stepSeven.reviewedAt": null,
+          "stepSeven.rejectionReason": null,
+        },
+        $max: {
+          completedSteps: 7, // ✅ prevents rollback
+        },
+      },
+      {
+        new: true,
+        session,
+      }
+    );
+    if (!candidate) {
+      throw new Error("Failed to submit the step four form");
+    }
+
+    await session.commitTransaction();
+
+    return { success: true };
+  } catch (error) {
+    await session.abortTransaction();
+    return handleError(error) as ErrorResponse;
+  } finally {
+    session.endSession();
+  }
 }
 
 export async function candidateRegStepEightAction() {}

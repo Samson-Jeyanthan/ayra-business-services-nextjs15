@@ -48,11 +48,6 @@ export const candStepSevenSchema = new Schema(
             },
           },
         ],
-        validate: {
-          validator: (v: unknown[]) => v.length <= 1,
-          message: "Only one preference object is allowed",
-        },
-        required: true,
       },
 
       preferredStartedTimeWindow: {

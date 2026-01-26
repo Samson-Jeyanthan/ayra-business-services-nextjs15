@@ -61,8 +61,7 @@ const PopupCalendar = ({
                 selected={field.value}
                 onSelect={field.onChange}
                 disabled={
-                  disableFunc ||
-                  ((date) => date > new Date() || date < new Date("1900-01-01"))
+                  disableFunc && ((date: Date) => date < new Date("1926-01-01"))
                 }
                 captionLayout="dropdown"
               />

@@ -33,7 +33,7 @@ const TimeInput = ({
               id="time-picker"
               step="1"
               {...field}
-              value={field.value ? field.value : "00:00:00"}
+              value={field.value ? field.value : "10:00:00"}
               onChange={field.onChange}
               ref={field.ref}
               className="no-focus !bg-light-700 !border !border-solid !border-light-500 !text-light-100 !rounded-full !px-3 !py-2 !w-full !h-12"

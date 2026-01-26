@@ -114,13 +114,13 @@ const StepSeven = () => {
   });
 
   async function onSubmit(values: z.infer<typeof CandidRegSevenSchema>) {
+    console.log(form.formState.errors.preferences?.message);
     startTransition(async () => {
-      console.log(values);
       const result = await candidateRegStepSevenAction(values);
       console.log(result, "results on server side");
       if (result.success) {
         toast.success("Form has been submitted");
-        redirect("/candidate-registration/step-seven");
+        redirect("/candidate-registration/step-eight");
       } else {
         toast.error("Form submission failed");
       }
@@ -170,6 +170,16 @@ const StepSeven = () => {
           </div>
         ))}
 
+        {form.formState.errors.preferences?.[0]?.preferredShiftPatterns
+          ?.message && (
+          <p className="text-red-600 text-xs">
+            {
+              form.formState.errors.preferences[0].preferredShiftPatterns
+                .message
+            }
+          </p>
+        )}
+
         <div className="w-1/2">
           <TimeInput
             form={form}
@@ -178,6 +188,12 @@ const StepSeven = () => {
             formLabel="Preferred Start Time Window"
           />
         </div>
+
+        {form.formState.errors.preferences?.[0]?.message && (
+          <p className="text-red-600 text-xs">
+            {form.formState.errors.preferences[0].message}
+          </p>
+        )}
 
         <footer className="flex w-full gap-4 justify-between">
           <Button

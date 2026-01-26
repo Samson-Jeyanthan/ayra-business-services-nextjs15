@@ -232,49 +232,69 @@ export const CandidRegSixSchema = z.object({
 export const CandidRegSevenSchema = z.object({
   preferences: z
     .array(
-      z.object({
-        adrTanks: z.boolean(),
-        adrPackages: z.boolean(),
-        bullTanker: z.boolean(),
-        carTransporters: z.boolean(),
-        container: z.boolean(),
-        curtainSideOrTautliner: z.boolean(),
-        doubleDecker: z.boolean(),
-        flatBedOrLowLoader: z.boolean(),
-        freezer: z.boolean(),
-        fridge: z.boolean(),
-        gravityPumpOrCompressor: z.boolean(),
-        handBall: z.boolean(),
-        haibGrab: z.boolean(),
-        hookLift: z.boolean(),
-        leftHandDrive: z.boolean(),
-        moffat: z.boolean(),
-        multiDrop: z.boolean(),
-        nonHazTankers: z.boolean(),
-        pallestised: z.boolean(),
-        pdpPetrol: z.boolean(),
-        rollCages: z.boolean(),
-        ropingAndSheeting: z.boolean(),
-        shunting: z.boolean(),
-        bitumen: z.boolean(),
-        tailLift: z.boolean(),
-        tipper: z.boolean(),
-        tramping: z.boolean(),
-        trunking: z.boolean(),
-        tug: z.boolean(),
-        vaccumTankers: z.boolean(),
-        wagAndDrag: z.boolean(),
-        walkingFloors: z.boolean(),
-        // it is a Zod object
-        preferredShiftPatterns: z.object({
-          days: z.boolean(),
-          nights: z.boolean(),
-          nightsOut: z.boolean(),
-          tramper: z.boolean(),
-        }),
-      })
+      z
+        .object({
+          adrTanks: z.boolean(),
+          adrPackages: z.boolean(),
+          bullTanker: z.boolean(),
+          carTransporters: z.boolean(),
+          container: z.boolean(),
+          curtainSideOrTautliner: z.boolean(),
+          doubleDecker: z.boolean(),
+          flatBedOrLowLoader: z.boolean(),
+          freezer: z.boolean(),
+          fridge: z.boolean(),
+          gravityPumpOrCompressor: z.boolean(),
+          handBall: z.boolean(),
+          haibGrab: z.boolean(),
+          hookLift: z.boolean(),
+          leftHandDrive: z.boolean(),
+          moffat: z.boolean(),
+          multiDrop: z.boolean(),
+          nonHazTankers: z.boolean(),
+          pallestised: z.boolean(),
+          pdpPetrol: z.boolean(),
+          rollCages: z.boolean(),
+          ropingAndSheeting: z.boolean(),
+          shunting: z.boolean(),
+          bitumen: z.boolean(),
+          tailLift: z.boolean(),
+          tipper: z.boolean(),
+          tramping: z.boolean(),
+          trunking: z.boolean(),
+          tug: z.boolean(),
+          vaccumTankers: z.boolean(),
+          wagAndDrag: z.boolean(),
+          walkingFloors: z.boolean(),
+          // it is a Zod object
+          preferredShiftPatterns: z.object({
+            days: z.boolean(),
+            nights: z.boolean(),
+            nightsOut: z.boolean(),
+            tramper: z.boolean(),
+          }),
+        })
+        // ✅ At least one JOB preference
+        .refine(
+          (data) => {
+            const { ...jobPrefs } = data;
+            return Object.values(jobPrefs).some(Boolean);
+          },
+          {
+            message: "Select at least one job preference",
+            path: ["jobPrefs"], // 👈 attach to preferences[0]
+          }
+        )
+        // ✅ At least one SHIFT pattern
+        .refine(
+          (data) => Object.values(data.preferredShiftPatterns).some(Boolean),
+          {
+            message: "Select at least one shift pattern",
+            path: ["preferredShiftPatterns"],
+          }
+        )
     )
-    .max(1),
+    .max(1, "Only one preference object is allowed"),
   preferredStartedTimeWindow: z.string(),
 });
 
