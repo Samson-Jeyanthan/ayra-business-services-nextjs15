@@ -9,13 +9,11 @@
   --color-primary: #c9f51c;
   --color-light-900: #ffffff;
   --color-light-800: #fefffb;
-  --color-light-700: #e6e6e6;
+  --color-light-700: #f2f1ed;
   --color-light-600: #f2f1ed;
-  --color-light-500: #bcbcbc;
-  --color-light-400: #939393;
-  --color-light-300: #787765;
-  --color-light-200: #535353;
-  --color-light-100: #0c0c0c;
+  --color-light-500: #787765;
+  --color-light-400: #535353;
+  --color-light-300: #0c0c0c;
 
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -54,13 +52,11 @@
   --primary: #c9f51c;
   --light-900: #ffffff;
   --light-800: #fefffb;
-  --light-700: #e6e6e6;
+  --light-700: #f2f1ed;
   --light-600: #f2f1ed;
-  --light-500: #bcbcbc;
-  --light-400: #939393;
-  --light-300: #787765;
-  --light-200: #535353;
-  --light-100: #0c0c0c;
+  --light-500: #787765;
+  --light-400: #535353;
+  --light-300: #0c0c0c;
 
   --radius: 0.625rem;
   --card: oklch(1 0 0);
@@ -160,73 +156,5 @@
 
   .no-focus-blue {
     @apply ring-0 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 outline-none;
-  }
-
-  .b-test {
-    @apply !border !border-solid !border-red-400;
-  }
-}
-
-@layer components {
-  .footer-title {
-    @apply text-lg font-semibold text-light-100;
-  }
-
-  .footer-links-group {
-    @apply flex flex-col gap-4 text-sm mt-6 text-light-400;
-  }
-
-  .primary-btn {
-    @apply !flex !gap-4 !items-center !bg-light-100 !rounded-full !text-light-800 !h-12 !px-6 !font-semibold !text-base !min-w-[140px] !max-w-max !cursor-pointer;
-  }
-
-  .primary-btn-custom {
-    @apply !bg-light-100 !text-light-800 !font-semibold !rounded-full !text-base !min-w-[140px] !max-w-[520px] !w-full !cursor-pointer !h-12 !px-6;
-  }
-
-  .secondary-btn {
-    @apply !flex !gap-4 !items-center !bg-transparent border border-light-100 border-solid !rounded-full text-light-100 !min-w-[140px] !h-12 !px-6 !font-semibold !text-base !cursor-pointer;
-  }
-
-  .secondary-btn-custom {
-    @apply flex gap-4 items-center border border-light-100 border-solid rounded-full text-light-100 font-semibold;
-  }
-
-  .primary-btn-light {
-    @apply !flex !gap-7 !bg-light-900 text-light-100 !h-12 !px-6 !text-base !font-semibold !rounded-full !items-center  !cursor-pointer;
-  }
-
-  .heading-2 {
-    @apply capitalize text-5xl font-semibold tracking-tight;
-  }
-
-  .heading-3 {
-    @apply text-4xl font-semibold;
-  }
-
-  /* Form utility classes */
-
-  .candidate-form-contents {
-    @apply flex w-full gap-20 justify-between items-start;
-  }
-
-  .multi-form-wrapper {
-    @apply flex flex-col gap-8 w-full min-h-[58vh];
-  }
-
-  .form-img-input-wrapper {
-    @apply flex flex-col gap-2 font-medium;
-  }
-
-  .form-semibold {
-    @apply font-semibold;
-  }
-
-  .req-wrapper {
-    @apply flex gap-1 flex-wrap;
-  }
-
-  .form-sub-title {
-    @apply mt-3 text-2xl font-semibold border-b pb-4 w-1/2 border-solid border-light-500;
   }
 }
