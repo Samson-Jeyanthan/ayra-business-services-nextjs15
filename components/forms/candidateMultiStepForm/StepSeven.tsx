@@ -14,38 +14,40 @@ import { candidateRegStepSevenAction } from "@/lib/actions/candidate.action";
 import { toast } from "sonner";
 
 const CANDIDATE_PREFERENCES_STEP_SEVEN = {
-  adrTanks: false,
-  adrPackages: false,
-  bullTanker: false,
-  carTransporters: false,
-  container: false,
-  curtainSideOrTautliner: false,
-  doubleDecker: false,
-  flatBedOrLowLoader: false,
-  freezer: false,
-  fridge: false,
-  gravityPumpOrCompressor: false,
-  handBall: false,
-  haibGrab: false,
-  hookLift: false,
-  leftHandDrive: false,
-  moffat: false,
-  multiDrop: false,
-  nonHazTankers: false,
-  pallestised: false,
-  pdpPetrol: false,
-  rollCages: false,
-  ropingAndSheeting: false,
-  shunting: false,
-  bitumen: false,
-  tailLift: false,
-  tipper: false,
-  tramping: false,
-  trunking: false,
-  tug: false,
-  vaccumTankers: false,
-  wagAndDrag: false,
-  walkingFloors: false,
+  jobPrefs: {
+    adrTanks: false,
+    adrPackages: false,
+    bullTanker: false,
+    carTransporters: false,
+    container: false,
+    curtainSideOrTautliner: false,
+    doubleDecker: false,
+    flatBedOrLowLoader: false,
+    freezer: false,
+    fridge: false,
+    gravityPumpOrCompressor: false,
+    handBall: false,
+    haibGrab: false,
+    hookLift: false,
+    leftHandDrive: false,
+    moffat: false,
+    multiDrop: false,
+    nonHazTankers: false,
+    pallestised: false,
+    pdpPetrol: false,
+    rollCages: false,
+    ropingAndSheeting: false,
+    shunting: false,
+    bitumen: false,
+    tailLift: false,
+    tipper: false,
+    tramping: false,
+    trunking: false,
+    tug: false,
+    vaccumTankers: false,
+    wagAndDrag: false,
+    walkingFloors: false,
+  },
   preferredShiftPatterns: {
     days: false,
     nights: false,
@@ -55,38 +57,44 @@ const CANDIDATE_PREFERENCES_STEP_SEVEN = {
 };
 
 const PREFERENCE_SWITCHES = [
-  { label: "ADR Tanks", name: "adrTanks" },
-  { label: "ADR Packages", name: "adrPackages" },
-  { label: "Bull Tanker", name: "bullTanker" },
-  { label: "Car Transporters", name: "carTransporters" },
-  { label: "Container", name: "container" },
-  { label: "Curtain Side / Tautliner", name: "curtainSideOrTautliner" },
-  { label: "Double Decker", name: "doubleDecker" },
-  { label: "Flatbed / Low Loader", name: "flatBedOrLowLoader" },
-  { label: "Freezer", name: "freezer" },
-  { label: "Fridge", name: "fridge" },
-  { label: "Gravity Pump / Compressor", name: "gravityPumpOrCompressor" },
-  { label: "Hand Ball", name: "handBall" },
-  { label: "HIAB / Grab", name: "haibGrab" },
-  { label: "Hook Lift", name: "hookLift" },
-  { label: "Left Hand Drive", name: "leftHandDrive" },
-  { label: "Moffat", name: "moffat" },
-  { label: "Multi Drop", name: "multiDrop" },
-  { label: "Non-Haz Tankers", name: "nonHazTankers" },
-  { label: "Pallestised", name: "pallestised" },
-  { label: "PDP Petrol", name: "pdpPetrol" },
-  { label: "Roll Cages", name: "rollCages" },
-  { label: "Roping & Sheeting", name: "ropingAndSheeting" },
-  { label: "Shunting", name: "shunting" },
-  { label: "Bitumen", name: "bitumen" },
-  { label: "Tail Lift", name: "tailLift" },
-  { label: "Tipper", name: "tipper" },
-  { label: "Tramping", name: "tramping" },
-  { label: "Trunking", name: "trunking" },
-  { label: "Tug", name: "tug" },
-  { label: "Vacuum Tankers", name: "vaccumTankers" },
-  { label: "Wag & Drag", name: "wagAndDrag" },
-  { label: "Walking Floors", name: "walkingFloors" },
+  { label: "ADR Tanks", name: "jobPrefs.adrTanks" },
+  { label: "ADR Packages", name: "jobPrefs.adrPackages" },
+  { label: "Bull Tanker", name: "jobPrefs.bullTanker" },
+  { label: "Car Transporters", name: "jobPrefs.carTransporters" },
+  { label: "Container", name: "jobPrefs.container" },
+  {
+    label: "Curtain Side / Tautliner",
+    name: "jobPrefs.curtainSideOrTautliner",
+  },
+  { label: "Double Decker", name: "jobPrefs.doubleDecker" },
+  { label: "Flatbed / Low Loader", name: "jobPrefs.flatBedOrLowLoader" },
+  { label: "Freezer", name: "jobPrefs.freezer" },
+  { label: "Fridge", name: "jobPrefs.fridge" },
+  {
+    label: "Gravity Pump / Compressor",
+    name: "jobPrefs.gravityPumpOrCompressor",
+  },
+  { label: "Hand Ball", name: "jobPrefs.handBall" },
+  { label: "HIAB / Grab", name: "jobPrefs.haibGrab" },
+  { label: "Hook Lift", name: "jobPrefs.hookLift" },
+  { label: "Left Hand Drive", name: "jobPrefs.leftHandDrive" },
+  { label: "Moffat", name: "jobPrefs.moffat" },
+  { label: "Multi Drop", name: "jobPrefs.multiDrop" },
+  { label: "Non-Haz Tankers", name: "jobPrefs.nonHazTankers" },
+  { label: "Pallestised", name: "jobPrefs.pallestised" },
+  { label: "PDP Petrol", name: "jobPrefs.pdpPetrol" },
+  { label: "Roll Cages", name: "jobPrefs.rollCages" },
+  { label: "Roping & Sheeting", name: "jobPrefs.ropingAndSheeting" },
+  { label: "Shunting", name: "jobPrefs.shunting" },
+  { label: "Bitumen", name: "jobPrefs.bitumen" },
+  { label: "Tail Lift", name: "jobPrefs.tailLift" },
+  { label: "Tipper", name: "jobPrefs.tipper" },
+  { label: "Tramping", name: "jobPrefs.tramping" },
+  { label: "Trunking", name: "jobPrefs.trunking" },
+  { label: "Tug", name: "jobPrefs.tug" },
+  { label: "Vacuum Tankers", name: "jobPrefs.vaccumTankers" },
+  { label: "Wag & Drag", name: "jobPrefs.wagAndDrag" },
+  { label: "Walking Floors", name: "jobPrefs.walkingFloors" },
 
   // --- Nested shift patterns ---
   { label: "Shift Pattern • Days", name: "preferredShiftPatterns.days" },
@@ -104,7 +112,7 @@ const StepSeven = () => {
     resolver: zodResolver(CandidRegSevenSchema),
     defaultValues: {
       preferences: [CANDIDATE_PREFERENCES_STEP_SEVEN],
-      preferredStartedTimeWindow: "",
+      preferredStartedTimeWindow: "10:00:00",
     },
   });
 
@@ -114,7 +122,6 @@ const StepSeven = () => {
   });
 
   async function onSubmit(values: z.infer<typeof CandidRegSevenSchema>) {
-    console.log(form.formState.errors.preferences?.message);
     startTransition(async () => {
       const result = await candidateRegStepSevenAction(values);
       console.log(result, "results on server side");
@@ -150,6 +157,12 @@ const StepSeven = () => {
                   inputName={`preferences.${fieldIndex}.${item.name}`}
                 />
               )
+            )}
+
+            {form.formState.errors.preferences?.[0]?.jobPrefs?.message && (
+              <p className="text-red-600 text-xs">
+                {form.formState.errors.preferences[0].jobPrefs.message}
+              </p>
             )}
 
             {/* Preferred Shift Pattern Section */}
@@ -188,12 +201,6 @@ const StepSeven = () => {
             formLabel="Preferred Start Time Window"
           />
         </div>
-
-        {form.formState.errors.preferences?.[0]?.message && (
-          <p className="text-red-600 text-xs">
-            {form.formState.errors.preferences[0].message}
-          </p>
-        )}
 
         <footer className="flex w-full gap-4 justify-between">
           <Button

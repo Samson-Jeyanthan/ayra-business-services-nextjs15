@@ -694,7 +694,7 @@ export async function candidateRegStepSevenAction(
       {
         $set: {
           "stepSeven.data": {
-            preferences,
+            preferences: preferences[0],
             preferredStartedTimeWindow,
           },
           "stepSeven.isCompleted": true,
