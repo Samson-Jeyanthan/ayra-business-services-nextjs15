@@ -5,8 +5,8 @@ import {
 import { getStageNumber } from "@/lib/functions/client.functions";
 import { TStageURLProps } from "@/types/utils.types";
 
-const CandidateRegistration = async ({ params }: TStageURLProps) => {
-  const resolvedParams = await params;
+const CandidateRegistration = ({ params }: TStageURLProps) => {
+  const resolvedParams = params;
   const currentStage = getStageNumber({
     stepNo: resolvedParams.stepNo,
     isCandidStep: true,
