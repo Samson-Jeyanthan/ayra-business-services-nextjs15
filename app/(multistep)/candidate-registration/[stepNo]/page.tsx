@@ -4,14 +4,9 @@ import {
 } from "@/constants";
 import { getStageNumber } from "@/lib/functions/client.functions";
 
-type PageProps = {
-  params: { stepNo: string };
-};
-
-const CandidateRegistration = ({ params }: PageProps) => {
-  const resolvedParams = params;
+const CandidateRegistration = ({ params }: { params: { stepNo: string } }) => {
   const currentStage = getStageNumber({
-    stepNo: resolvedParams.stepNo,
+    stepNo: params.stepNo,
     isCandidStep: true,
   });
   const CurrentForm = CANDIDATE_MULTISTEP_FORMS[currentStage.no]?.form;
