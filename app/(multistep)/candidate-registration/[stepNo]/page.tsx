@@ -3,9 +3,12 @@ import {
   CANDIDATE_MULTISTEP_STAGES,
 } from "@/constants";
 import { getStageNumber } from "@/lib/functions/client.functions";
-import { TStageURLProps } from "@/types/utils.types";
 
-const CandidateRegistration = ({ params }: TStageURLProps) => {
+type PageProps = {
+  params: { stepNo: string };
+};
+
+const CandidateRegistration = ({ params }: PageProps) => {
   const resolvedParams = params;
   const currentStage = getStageNumber({
     stepNo: resolvedParams.stepNo,
