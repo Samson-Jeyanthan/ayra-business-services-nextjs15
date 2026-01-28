@@ -172,23 +172,23 @@ export const CandidRegFourSchema = z.object({
 });
 
 export const CandidRegFiveSchema = z.object({
-  drivingLicenceNo: z.string(),
-  drivingLicenseShareCode: z.string(),
+  drivingLicenceNo: z.string().min(5, "Driving licence number is required"),
+  drivingLicenseShareCode: z.string().min(3, "Share code is required"),
   drivingLicense: z.object({
-    frontPic: z.custom<File[]>().optional(),
-    backPic: z.custom<File[]>().optional(),
+    frontPic: z.custom<File[]>(),
+    backPic: z.custom<File[]>(),
   }),
   cpcCard: z.object({
-    frontPic: z.custom<File[]>().optional(),
-    backPic: z.custom<File[]>().optional(),
+    frontPic: z.custom<File[]>(),
+    backPic: z.custom<File[]>(),
   }),
   digitalDrivingTachographCard: z.object({
-    frontPic: z.custom<File[]>().optional(),
-    backPic: z.custom<File[]>().optional(),
+    frontPic: z.custom<File[]>(),
+    backPic: z.custom<File[]>(),
   }),
   allInOne: z.object({
-    frontPic: z.custom<File[]>().optional(),
-    backPic: z.custom<File[]>().optional(),
+    frontPic: z.custom<File[]>(),
+    backPic: z.custom<File[]>(),
   }),
   motorIncidents: z.object({
     currentDrivingEndorsement: z.string({
@@ -294,28 +294,70 @@ export const CandidRegSevenSchema = z.object({
 });
 
 export const CandidRegEightSchema = z.object({
-  drivingLicenseInfo: z.boolean(),
-  payInfo: z.boolean(),
-  contactInfo: z.boolean(),
-  medicalInfo: z.boolean(),
-  criminalConvictionsInfo: z.boolean(),
-  rightToWorkInfo: z.boolean(),
-});
-
-export const CandidRegNineSchema = z.object({
-  nationalInsuranceNo: z.string(),
-  sex: z.string(),
-  p45File: z.custom<File[]>(),
-  employeeStatus: z.string(),
-  studentLoans: z.object({
-    dontHaveLoan: z.boolean(),
-    haveLoan: z.boolean(),
-    havePlanOneLoan: z.boolean(),
-    havePlanTwoLoan: z.boolean(),
-    havePlanFourLoan: z.boolean(),
-    havePostgraduateLoan: z.boolean(),
+  drivingLicenseInfo: z.boolean().refine(Boolean, {
+    message: "Driving license info permission is required",
+  }),
+  payInfo: z.boolean().refine(Boolean, {
+    message: "Pay info permission is required",
+  }),
+  contactInfo: z.boolean().refine(Boolean, {
+    message: "Contact info permission is required",
+  }),
+  medicalInfo: z.boolean().refine(Boolean, {
+    message: "Medical info permission is required",
+  }),
+  criminalConvictionsInfo: z.boolean().refine(Boolean, {
+    message: "Criminal convictions info permission is required",
+  }),
+  rightToWorkInfo: z.boolean().refine(Boolean, {
+    message: "Right to work info permission is required",
   }),
 });
+
+export const CandidRegNineSchema = z
+  .object({
+    nationalInsuranceNo: z.string().min(1, "NI number is required"),
+    sex: z.enum(["male", "female"], {
+      message: "Sex is required",
+    }),
+    p45File: z.custom<File[]>().optional(),
+    employeeStatus: z.string().min(1, "Employee status is required"),
+    studentLoans: z.object({
+      dontHaveLoan: z.boolean(),
+      haveLoan: z.boolean(),
+      havePlanOneLoan: z.boolean(),
+      havePlanTwoLoan: z.boolean(),
+      havePlanFourLoan: z.boolean(),
+      havePostgraduateLoan: z.boolean(),
+    }),
+    signature: z.string().optional(),
+  })
+  .superRefine((data, ctx) => {
+    const loans = data.studentLoans;
+
+    const { dontHaveLoan, ...loanPlans } = loans;
+
+    const hasAnyLoanPlan = Object.values(loanPlans).some(Boolean);
+
+    // ❌ nothing selected
+    if (!dontHaveLoan && !hasAnyLoanPlan) {
+      ctx.addIssue({
+        path: ["studentLoans"],
+        message: "Select at least one option",
+        code: z.ZodIssueCode.custom,
+      });
+    }
+
+    // ❌ conflicting selection
+    if (dontHaveLoan && hasAnyLoanPlan) {
+      ctx.addIssue({
+        path: ["studentLoans"],
+        message:
+          "You cannot select 'Don't have a loan' together with loan plans",
+        code: z.ZodIssueCode.custom,
+      });
+    }
+  });
 
 export const GetCandidateRegInfoSchema = z.object({
   userId: z.string(),

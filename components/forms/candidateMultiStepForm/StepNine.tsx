@@ -8,13 +8,19 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { CandidRegNineSchema } from "@/lib/validations";
 import Required from "@/components/shared/common/Required";
+import { redirect } from "next/navigation";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import { useTransition } from "react";
+import { toast } from "sonner";
+import { candidateRegStepNineAction } from "@/lib/actions/candidate.action";
 
 const StepNine = () => {
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof CandidRegNineSchema>>({
     resolver: zodResolver(CandidRegNineSchema),
     defaultValues: {
       nationalInsuranceNo: "",
-      sex: "",
+      sex: undefined,
       p45File: [],
       employeeStatus: "",
       studentLoans: {
@@ -30,6 +36,20 @@ const StepNine = () => {
 
   async function onSubmit(values: z.infer<typeof CandidRegNineSchema>) {
     console.log(values);
+    startTransition(async () => {
+      const result = await candidateRegStepNineAction({
+        ...values,
+        p45File: "",
+        signature: "",
+      });
+      console.log(result, "results on server side");
+      if (result.success) {
+        toast.success("Form has been submitted");
+        // redirect("/candidate-registration/step-eight");
+      } else {
+        toast.error("Form submission failed");
+      }
+    });
   }
 
   return (
@@ -109,10 +129,30 @@ const StepNine = () => {
           />
           <p>Please tick all that Apply</p>
         </div>
+
+        {form.formState.errors.studentLoans?.message && (
+          <p className="text-red-600 text-xs -mt-4">
+            {form.formState.errors.studentLoans.message}
+          </p>
+        )}
+
         <footer className="flex w-full gap-4 justify-between">
-          <Button className="secondary-btn">Back</Button>
-          <Button className="primary-btn" type="submit">
-            Next
+          <Button
+            type="button"
+            className="secondary-btn"
+            onClick={() => redirect("/candidate-registration/step-eight")}
+          >
+            Back
+          </Button>
+          <Button className="primary-btn" type="submit" disabled={isPending}>
+            {isPending ? (
+              <>
+                <ReloadIcon className="mr-2 size-4 animate-spin" />
+                <span>Submitting</span>
+              </>
+            ) : (
+              <>Submit</>
+            )}
           </Button>
         </footer>
       </form>

@@ -173,7 +173,7 @@ interface ICandidateRegStepEightParams {
 
 interface ICandidateRegStepNineParams {
   nationalInsuranceNo: string;
-  sex: string;
+  sex: "male" | "female";
   p45File: string;
   employeeStatus: string;
   studentLoans: {
@@ -184,6 +184,7 @@ interface ICandidateRegStepNineParams {
     havePlanFourLoan: boolean;
     havePostgraduateLoan: boolean;
   };
+  signature: string;
 }
 
 interface IGetCandidateRegInfoParams {

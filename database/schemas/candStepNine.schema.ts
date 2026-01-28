@@ -17,6 +17,7 @@ export const candStepNineSchema = new Schema(
         havePlanFourLoan: { type: Boolean },
         havePostgraduateLoan: { type: Boolean },
       },
+      signature: { type: String },
     },
     isCompleted: {
       type: Boolean,

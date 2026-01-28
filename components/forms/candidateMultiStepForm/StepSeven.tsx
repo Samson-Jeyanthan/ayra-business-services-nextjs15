@@ -112,7 +112,7 @@ const StepSeven = () => {
     resolver: zodResolver(CandidRegSevenSchema),
     defaultValues: {
       preferences: [CANDIDATE_PREFERENCES_STEP_SEVEN],
-      preferredStartedTimeWindow: "10:00:00",
+      preferredStartedTimeWindow: "11:00:00",
     },
   });
 
