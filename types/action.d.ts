@@ -115,38 +115,40 @@ interface ICandidateRegStepSixParams {
 }
 
 interface IPreferenceTemplate {
-  adrTanks: boolean;
-  adrPackages: boolean;
-  bullTanker: boolean;
-  carTransporters: boolean;
-  container: boolean;
-  curtainSideOrTautliner: boolean;
-  doubleDecker: boolean;
-  flatBedOrLowLoader: boolean;
-  freezer: boolean;
-  fridge: boolean;
-  gravityPumpOrCompressor: boolean;
-  handBall: boolean;
-  haibGrab: boolean;
-  hookLift: boolean;
-  leftHandDrive: boolean;
-  moffat: boolean;
-  multiDrop: boolean;
-  nonHazTankers: boolean;
-  pallestised: boolean;
-  pdpPetrol: boolean;
-  rollCages: boolean;
-  ropingAndSheeting: boolean;
-  shunting: boolean;
-  bitumen: boolean;
-  tailLift: boolean;
-  tipper: boolean;
-  tramping: boolean;
-  trunking: boolean;
-  tug: boolean;
-  vaccumTankers: boolean;
-  wagAndDrag: boolean;
-  walkingFloors: boolean;
+  jobPrefs: {
+    adrTanks: boolean;
+    adrPackages: boolean;
+    bullTanker: boolean;
+    carTransporters: boolean;
+    container: boolean;
+    curtainSideOrTautliner: boolean;
+    doubleDecker: boolean;
+    flatBedOrLowLoader: boolean;
+    freezer: boolean;
+    fridge: boolean;
+    gravityPumpOrCompressor: boolean;
+    handBall: boolean;
+    haibGrab: boolean;
+    hookLift: boolean;
+    leftHandDrive: boolean;
+    moffat: boolean;
+    multiDrop: boolean;
+    nonHazTankers: boolean;
+    pallestised: boolean;
+    pdpPetrol: boolean;
+    rollCages: boolean;
+    ropingAndSheeting: boolean;
+    shunting: boolean;
+    bitumen: boolean;
+    tailLift: boolean;
+    tipper: boolean;
+    tramping: boolean;
+    trunking: boolean;
+    tug: boolean;
+    vaccumTankers: boolean;
+    wagAndDrag: boolean;
+    walkingFloors: boolean;
+  };
   preferredShiftPatterns: {
     days: boolean;
     nights: boolean;
@@ -171,7 +173,7 @@ interface ICandidateRegStepEightParams {
 
 interface ICandidateRegStepNineParams {
   nationalInsuranceNo: string;
-  sex: string;
+  sex: "male" | "female";
   p45File: string;
   employeeStatus: string;
   studentLoans: {
@@ -182,6 +184,7 @@ interface ICandidateRegStepNineParams {
     havePlanFourLoan: boolean;
     havePostgraduateLoan: boolean;
   };
+  signature: string;
 }
 
 interface IGetCandidateRegInfoParams {

@@ -172,23 +172,23 @@ export const CandidRegFourSchema = z.object({
 });
 
 export const CandidRegFiveSchema = z.object({
-  drivingLicenceNo: z.string(),
-  drivingLicenseShareCode: z.string(),
+  drivingLicenceNo: z.string().min(5, "Driving licence number is required"),
+  drivingLicenseShareCode: z.string().min(3, "Share code is required"),
   drivingLicense: z.object({
-    frontPic: z.custom<File[]>().optional(),
-    backPic: z.custom<File[]>().optional(),
+    frontPic: z.custom<File[]>(),
+    backPic: z.custom<File[]>(),
   }),
   cpcCard: z.object({
-    frontPic: z.custom<File[]>().optional(),
-    backPic: z.custom<File[]>().optional(),
+    frontPic: z.custom<File[]>(),
+    backPic: z.custom<File[]>(),
   }),
   digitalDrivingTachographCard: z.object({
-    frontPic: z.custom<File[]>().optional(),
-    backPic: z.custom<File[]>().optional(),
+    frontPic: z.custom<File[]>(),
+    backPic: z.custom<File[]>(),
   }),
   allInOne: z.object({
-    frontPic: z.custom<File[]>().optional(),
-    backPic: z.custom<File[]>().optional(),
+    frontPic: z.custom<File[]>(),
+    backPic: z.custom<File[]>(),
   }),
   motorIncidents: z.object({
     currentDrivingEndorsement: z.string({
@@ -234,39 +234,40 @@ export const CandidRegSevenSchema = z.object({
     .array(
       z
         .object({
-          adrTanks: z.boolean(),
-          adrPackages: z.boolean(),
-          bullTanker: z.boolean(),
-          carTransporters: z.boolean(),
-          container: z.boolean(),
-          curtainSideOrTautliner: z.boolean(),
-          doubleDecker: z.boolean(),
-          flatBedOrLowLoader: z.boolean(),
-          freezer: z.boolean(),
-          fridge: z.boolean(),
-          gravityPumpOrCompressor: z.boolean(),
-          handBall: z.boolean(),
-          haibGrab: z.boolean(),
-          hookLift: z.boolean(),
-          leftHandDrive: z.boolean(),
-          moffat: z.boolean(),
-          multiDrop: z.boolean(),
-          nonHazTankers: z.boolean(),
-          pallestised: z.boolean(),
-          pdpPetrol: z.boolean(),
-          rollCages: z.boolean(),
-          ropingAndSheeting: z.boolean(),
-          shunting: z.boolean(),
-          bitumen: z.boolean(),
-          tailLift: z.boolean(),
-          tipper: z.boolean(),
-          tramping: z.boolean(),
-          trunking: z.boolean(),
-          tug: z.boolean(),
-          vaccumTankers: z.boolean(),
-          wagAndDrag: z.boolean(),
-          walkingFloors: z.boolean(),
-          // it is a Zod object
+          jobPrefs: z.object({
+            adrTanks: z.boolean(),
+            adrPackages: z.boolean(),
+            bullTanker: z.boolean(),
+            carTransporters: z.boolean(),
+            container: z.boolean(),
+            curtainSideOrTautliner: z.boolean(),
+            doubleDecker: z.boolean(),
+            flatBedOrLowLoader: z.boolean(),
+            freezer: z.boolean(),
+            fridge: z.boolean(),
+            gravityPumpOrCompressor: z.boolean(),
+            handBall: z.boolean(),
+            haibGrab: z.boolean(),
+            hookLift: z.boolean(),
+            leftHandDrive: z.boolean(),
+            moffat: z.boolean(),
+            multiDrop: z.boolean(),
+            nonHazTankers: z.boolean(),
+            pallestised: z.boolean(),
+            pdpPetrol: z.boolean(),
+            rollCages: z.boolean(),
+            ropingAndSheeting: z.boolean(),
+            shunting: z.boolean(),
+            bitumen: z.boolean(),
+            tailLift: z.boolean(),
+            tipper: z.boolean(),
+            tramping: z.boolean(),
+            trunking: z.boolean(),
+            tug: z.boolean(),
+            vaccumTankers: z.boolean(),
+            wagAndDrag: z.boolean(),
+            walkingFloors: z.boolean(),
+          }),
           preferredShiftPatterns: z.object({
             days: z.boolean(),
             nights: z.boolean(),
@@ -275,16 +276,10 @@ export const CandidRegSevenSchema = z.object({
           }),
         })
         // ✅ At least one JOB preference
-        .refine(
-          (data) => {
-            const { ...jobPrefs } = data;
-            return Object.values(jobPrefs).some(Boolean);
-          },
-          {
-            message: "Select at least one job preference",
-            path: ["jobPrefs"], // 👈 attach to preferences[0]
-          }
-        )
+        .refine((data) => Object.values(data.jobPrefs).some(Boolean), {
+          message: "Select at least one preference",
+          path: ["jobPrefs"],
+        })
         // ✅ At least one SHIFT pattern
         .refine(
           (data) => Object.values(data.preferredShiftPatterns).some(Boolean),
@@ -299,28 +294,70 @@ export const CandidRegSevenSchema = z.object({
 });
 
 export const CandidRegEightSchema = z.object({
-  drivingLicenseInfo: z.boolean(),
-  payInfo: z.boolean(),
-  contactInfo: z.boolean(),
-  medicalInfo: z.boolean(),
-  criminalConvictionsInfo: z.boolean(),
-  rightToWorkInfo: z.boolean(),
-});
-
-export const CandidRegNineSchema = z.object({
-  nationalInsuranceNo: z.string(),
-  sex: z.string(),
-  p45File: z.custom<File[]>(),
-  employeeStatus: z.string(),
-  studentLoans: z.object({
-    dontHaveLoan: z.boolean(),
-    haveLoan: z.boolean(),
-    havePlanOneLoan: z.boolean(),
-    havePlanTwoLoan: z.boolean(),
-    havePlanFourLoan: z.boolean(),
-    havePostgraduateLoan: z.boolean(),
+  drivingLicenseInfo: z.boolean().refine(Boolean, {
+    message: "Driving license info permission is required",
+  }),
+  payInfo: z.boolean().refine(Boolean, {
+    message: "Pay info permission is required",
+  }),
+  contactInfo: z.boolean().refine(Boolean, {
+    message: "Contact info permission is required",
+  }),
+  medicalInfo: z.boolean().refine(Boolean, {
+    message: "Medical info permission is required",
+  }),
+  criminalConvictionsInfo: z.boolean().refine(Boolean, {
+    message: "Criminal convictions info permission is required",
+  }),
+  rightToWorkInfo: z.boolean().refine(Boolean, {
+    message: "Right to work info permission is required",
   }),
 });
+
+export const CandidRegNineSchema = z
+  .object({
+    nationalInsuranceNo: z.string().min(1, "NI number is required"),
+    sex: z.enum(["male", "female"], {
+      message: "Sex is required",
+    }),
+    p45File: z.custom<File[]>().optional(),
+    employeeStatus: z.string().min(1, "Employee status is required"),
+    studentLoans: z.object({
+      dontHaveLoan: z.boolean(),
+      haveLoan: z.boolean(),
+      havePlanOneLoan: z.boolean(),
+      havePlanTwoLoan: z.boolean(),
+      havePlanFourLoan: z.boolean(),
+      havePostgraduateLoan: z.boolean(),
+    }),
+    signature: z.string().optional(),
+  })
+  .superRefine((data, ctx) => {
+    const loans = data.studentLoans;
+
+    const { dontHaveLoan, ...loanPlans } = loans;
+
+    const hasAnyLoanPlan = Object.values(loanPlans).some(Boolean);
+
+    // ❌ nothing selected
+    if (!dontHaveLoan && !hasAnyLoanPlan) {
+      ctx.addIssue({
+        path: ["studentLoans"],
+        message: "Select at least one option",
+        code: z.ZodIssueCode.custom,
+      });
+    }
+
+    // ❌ conflicting selection
+    if (dontHaveLoan && hasAnyLoanPlan) {
+      ctx.addIssue({
+        path: ["studentLoans"],
+        message:
+          "You cannot select 'Don't have a loan' together with loan plans",
+        code: z.ZodIssueCode.custom,
+      });
+    }
+  });
 
 export const GetCandidateRegInfoSchema = z.object({
   userId: z.string(),
@@ -329,18 +366,20 @@ export const GetCandidateRegInfoSchema = z.object({
 // client multistep form schema
 
 export const CliRegOneSchema = z.object({
-  companyLegalName: z.string(),
+  companyLegalName: z.string().min(1, { message: "Company name is required" }),
   tradingAs: z.string(),
-  companyRegistrationNo: z.string(),
+  companyRegistrationNo: z.string().min(3, {
+    message: "Company registration number is required",
+  }),
   vatNo: z.string(),
   registeredBusinessAddress: z.object({
-    street: z.string(),
-    city: z.string(),
-    country: z.string(),
-    postCode: z.string(),
+    street: z.string().min(1, { message: "Street is required" }),
+    city: z.string().min(1, { message: "City is required" }),
+    country: z.string().min(1, { message: "Country is required" }),
+    postCode: z.string().min(1, { message: "Post code is required" }),
   }),
-  companyWebsite: z.string(),
-  industry: z.string(),
+  companyWebsite: z.string().optional(),
+  industry: z.string().min(1, { message: "Industry is required" }),
 });
 
 export const CliRegTwoSchema = z.object({

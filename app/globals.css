@@ -229,4 +229,12 @@
   .form-sub-title {
     @apply mt-3 text-2xl font-semibold border-b pb-4 w-1/2 border-solid border-light-500;
   }
+
+  .profile-heading {
+    @apply text-2xl font-semibold w-full p-3 bg-light-500 text-black;
+  }
+
+  .card-img {
+    @apply w-72 h-40 rounded-2xl object-cover border border-solid border-light-500;
+  }
 }

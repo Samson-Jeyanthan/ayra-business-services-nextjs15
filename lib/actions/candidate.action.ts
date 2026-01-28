@@ -5,8 +5,10 @@ import mongoose from "mongoose";
 import action from "../handlers/action";
 import {
   CandidateReqSchema,
+  CandidRegEightSchema,
   CandidRegFiveSchema,
   CandidRegFourSchema,
+  CandidRegNineSchema,
   CandidRegOneSchema,
   CandidRegSevenSchema,
   CandidRegSixSchema,
@@ -98,6 +100,8 @@ export async function createCandidateRequestAction(
     session.endSession();
   }
 }
+
+// candidate registration multistep form actions
 
 export async function candidateRegStepOneAction(
   params: ICandidateRegStepOneParams
@@ -679,6 +683,8 @@ export async function candidateRegStepSevenAction(
 
   const userId = validationResult?.session?.user?.id;
 
+  console.log(preferences[0]);
+
   try {
     session.startTransaction();
 
@@ -694,7 +700,7 @@ export async function candidateRegStepSevenAction(
       {
         $set: {
           "stepSeven.data": {
-            preferences,
+            preferences: preferences[0],
             preferredStartedTimeWindow,
           },
           "stepSeven.isCompleted": true,
@@ -727,13 +733,185 @@ export async function candidateRegStepSevenAction(
   }
 }
 
-export async function candidateRegStepEightAction() {}
+export async function candidateRegStepEightAction(
+  params: ICandidateRegStepEightParams
+): Promise<ActionResponse> {
+  const validationResult = await action({
+    params,
+    schema: CandidRegEightSchema,
+    authorize: true,
+  });
 
-export async function candidateRegStepNineAction() {}
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+
+  const {
+    drivingLicenseInfo,
+    payInfo,
+    contactInfo,
+    medicalInfo,
+    criminalConvictionsInfo,
+    rightToWorkInfo,
+  } = validationResult.params!;
+
+  const userId = validationResult?.session?.user?.id;
+
+  if (!userId) {
+    return handleError(new Error("Unauthorized")) as ErrorResponse;
+  }
+
+  const session = await mongoose.startSession();
+
+  try {
+    session.startTransaction();
+
+    const candidate = await Candidate.findOneAndUpdate(
+      {
+        userId,
+        completedSteps: { $gte: 7 }, // ✅ step seven completed
+        $or: [
+          { "stepEight.status": { $exists: false } },
+          { "stepEight.status": { $in: ["pending", "rejected"] } },
+        ],
+      },
+      {
+        $set: {
+          "stepEight.data": {
+            drivingLicenseInfo,
+            payInfo,
+            contactInfo,
+            medicalInfo,
+            criminalConvictionsInfo,
+            rightToWorkInfo,
+          },
+          "stepEight.isCompleted": true,
+          "stepEight.status": "pending",
+          "stepEight.reviewedBy": null,
+          "stepEight.reviewedAt": null,
+          "stepEight.rejectionReason": null,
+        },
+        $max: {
+          completedSteps: 8, // ✅ prevents rollback
+        },
+      },
+      {
+        new: true,
+        session,
+      }
+    );
+
+    if (!candidate) {
+      throw new Error(
+        "Step Eight cannot be submitted. Please complete step one or this step is locked."
+      );
+    }
+
+    await session.commitTransaction();
+
+    return { success: true };
+  } catch (error) {
+    await session.abortTransaction();
+    return handleError(error) as ErrorResponse;
+  } finally {
+    session.endSession();
+  }
+}
+
+export async function candidateRegStepNineAction(
+  params: ICandidateRegStepNineParams
+): Promise<ActionResponse> {
+  // server side validation omit & refine
+  const CandidRegNineServerSchema = CandidRegNineSchema.omit({
+    p45File: true,
+  }).extend({
+    p45File: z.string().optional(),
+  });
+
+  const validationResult = await action({
+    params,
+    schema: CandidRegNineServerSchema,
+    authorize: true,
+  });
+
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+
+  const {
+    nationalInsuranceNo,
+    sex,
+    p45File,
+    employeeStatus,
+    studentLoans,
+    signature,
+  } = validationResult.params!;
+
+  const userId = validationResult?.session?.user?.id;
+
+  if (!userId) {
+    return handleError(new Error("Unauthorized")) as ErrorResponse;
+  }
+
+  const session = await mongoose.startSession();
+
+  try {
+    session.startTransaction();
+
+    const candidate = await Candidate.findOneAndUpdate(
+      {
+        userId,
+        completedSteps: { $gte: 8 }, // ✅ step eight completed
+        $or: [
+          { "stepNine.status": { $exists: false } },
+          { "stepNine.status": { $in: ["pending", "rejected"] } },
+        ],
+      },
+      {
+        $set: {
+          "stepNine.data": {
+            nationalInsuranceNo,
+            sex,
+            p45File,
+            employeeStatus,
+            studentLoans,
+            signature,
+          },
+          "stepNine.isCompleted": true,
+          "stepNine.status": "pending",
+          "stepNine.reviewedBy": null,
+          "stepNine.reviewedAt": null,
+          "stepNine.rejectionReason": null,
+        },
+        $max: {
+          completedSteps: 9, // ✅ prevents rollback
+        },
+      },
+      {
+        new: true,
+        session,
+      }
+    );
+
+    if (!candidate) {
+      throw new Error(
+        "Step Nine cannot be submitted. Please complete other steps or this step is locked."
+      );
+    }
+
+    await session.commitTransaction();
+    return { success: true };
+  } catch (error) {
+    await session.abortTransaction();
+    return handleError(error) as ErrorResponse;
+  } finally {
+    session.endSession();
+  }
+}
 
 export async function getCandidateRegInfoByUserId(
   params: IGetCandidateRegInfoParams
-): Promise<ActionResponse> {
+) {
   const validationResult = await action({
     params,
     schema: GetCandidateRegInfoSchema,
@@ -744,11 +922,22 @@ export async function getCandidateRegInfoByUserId(
     return handleError(validationResult) as ErrorResponse;
   }
 
+  const { userId } = validationResult.params!;
   const currentUserId = validationResult?.session?.user?.id;
+  const paramId = userId || currentUserId;
 
-  const candidateRegInfo = await Candidate.findOne({ userId: currentUserId });
+  if (!paramId) {
+    return {
+      success: false,
+      data: null,
+      error: { message: "User ID not found" },
+    };
+  }
 
-  console.log(candidateRegInfo, currentUserId);
+  const candidateRegInfo = await Candidate.findOne({ userId: paramId });
 
-  return { success: true, data: candidateRegInfo };
+  return {
+    success: true,
+    data: candidateRegInfo ? candidateRegInfo.toObject() : null,
+  };
 }

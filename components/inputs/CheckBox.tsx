@@ -32,10 +32,13 @@ const CheckBox = ({
           <FormControl>
             <div className="flex gap-4 items-center justify-start">
               <Checkbox
-                {...field}
-                checked={field.value}
-                onCheckedChange={(value) => field.onChange(value)}
-                ref={field.ref}
+                checked={!!field.value} // ✅ always boolean
+                onCheckedChange={(checked) => {
+                  const value = checked === true;
+                  console.log(`${inputName} changed →`, value); // ✅ DEBUG
+                  field.onChange(value);
+                }}
+                className="cursor-pointer"
               />
               <span className="text-sm font-medium">{checkboxLabel}</span>
             </div>
