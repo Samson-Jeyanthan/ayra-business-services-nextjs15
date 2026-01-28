@@ -1,5 +1,5 @@
 import {
-  CandidateEight,
+  // CandidateEight,
   CandidateFive,
   CandidateFour,
   CandidateNine,
@@ -20,7 +20,6 @@ const CandidateProfile = async () => {
   }
 
   const {
-    overallStatus,
     stepOne,
     stepTwo,
     stepThree,
@@ -28,7 +27,7 @@ const CandidateProfile = async () => {
     stepFive,
     stepSix,
     stepSeven,
-    stepEight,
+    // stepEight,
     stepNine,
   } = candidate;
 
@@ -42,7 +41,7 @@ const CandidateProfile = async () => {
         <CandidateFive data={stepFive?.data} />
         <CandidateSix data={stepSix?.data} />
         <CandidateSeven data={stepSeven?.data} />
-        <CandidateEight data={stepEight?.data} />
+        {/* <CandidateEight data={stepEight?.data} /> */}
         <CandidateNine data={stepNine?.data} />
       </section>
     </main>

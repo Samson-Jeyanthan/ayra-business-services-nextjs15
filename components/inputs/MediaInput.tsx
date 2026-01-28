@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useMedia } from "@/lib/hooks/useMedia";
 import { IImageMediaProps } from "@/types/utils.types";
 import { CircleXIcon, Pencil } from "lucide-react";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 
 type Props = {
   fieldChange: (e: unknown) => void;
@@ -24,6 +24,8 @@ const MediaInput = ({
     index: 0,
   });
 
+  console.log(selectedItem, error, setMedia, setPreviousMedia);
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     handleImageInput({
       e,
@@ -34,11 +36,6 @@ const MediaInput = ({
     setSelectedItem({ isURL: false, index: 0 });
     fieldChange(e.target.files);
   };
-
-  // useEffect(() => {
-  //   fieldChange(media);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [media]);
 
   const handleInputBtn = () => {
     photoRef.current?.click();
