@@ -3,12 +3,16 @@ import {
   CANDIDATE_MULTISTEP_STAGES,
 } from "@/constants";
 import { getStageNumber } from "@/lib/functions/client.functions";
-import { TStageURLProps } from "@/types/utils.types";
 
-const CandidateRegistration = async ({ params }: TStageURLProps) => {
-  const resolvedParams = await params;
+const CandidateRegistration = async ({
+  params,
+}: {
+  params: Promise<{ stepNo: string }>;
+}) => {
+  const { stepNo } = await params;
+
   const currentStage = getStageNumber({
-    stepNo: resolvedParams.stepNo,
+    stepNo: stepNo,
     isCandidStep: true,
   });
   const CurrentForm = CANDIDATE_MULTISTEP_FORMS[currentStage.no]?.form;
