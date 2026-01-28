@@ -3,9 +3,9 @@ import { getStageNumber } from "@/lib/functions/client.functions";
 import { TStageURLProps } from "@/types/utils.types";
 
 const ClientRegistration = async ({ params }: TStageURLProps) => {
-  const resolvedParams = await params;
+  const { stepNo } = await params;
   const currentStage = getStageNumber({
-    stepNo: resolvedParams.stepNo,
+    stepNo: stepNo,
     isCandidStep: false,
   });
   const CurrentForm = CLIENT_MULTISTEP_FORMS[currentStage.no]?.form;

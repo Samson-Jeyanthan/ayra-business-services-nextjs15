@@ -4,9 +4,15 @@ import {
 } from "@/constants";
 import { getStageNumber } from "@/lib/functions/client.functions";
 
-const CandidateRegistration = ({ params }: { params: { stepNo: string } }) => {
+const CandidateRegistration = async ({
+  params,
+}: {
+  params: Promise<{ stepNo: string }>;
+}) => {
+  const { stepNo } = await params;
+
   const currentStage = getStageNumber({
-    stepNo: params.stepNo,
+    stepNo: stepNo,
     isCandidStep: true,
   });
   const CurrentForm = CANDIDATE_MULTISTEP_FORMS[currentStage.no]?.form;
