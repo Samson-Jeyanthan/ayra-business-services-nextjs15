@@ -1,0 +1,9 @@
+export { default as CandidateOne } from "./CandidateOne";
+export { default as CandidateTwo } from "./CandidateTwo";
+export { default as CandidateThree } from "./CandidateThree";
+export { default as CandidateFour } from "./CandidateFour";
+export { default as CandidateFive } from "./CandidateFive";
+export { default as CandidateSix } from "./CandidateSix";
+export { default as CandidateSeven } from "./CandidateSeven";
+export { default as CandidateEight } from "./CandidateEight";
+export { default as CandidateNine } from "./CandidateNine";

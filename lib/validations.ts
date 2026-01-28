@@ -366,18 +366,20 @@ export const GetCandidateRegInfoSchema = z.object({
 // client multistep form schema
 
 export const CliRegOneSchema = z.object({
-  companyLegalName: z.string(),
+  companyLegalName: z.string().min(1, { message: "Company name is required" }),
   tradingAs: z.string(),
-  companyRegistrationNo: z.string(),
+  companyRegistrationNo: z.string().min(3, {
+    message: "Company registration number is required",
+  }),
   vatNo: z.string(),
   registeredBusinessAddress: z.object({
-    street: z.string(),
-    city: z.string(),
-    country: z.string(),
-    postCode: z.string(),
+    street: z.string().min(1, { message: "Street is required" }),
+    city: z.string().min(1, { message: "City is required" }),
+    country: z.string().min(1, { message: "Country is required" }),
+    postCode: z.string().min(1, { message: "Post code is required" }),
   }),
-  companyWebsite: z.string(),
-  industry: z.string(),
+  companyWebsite: z.string().optional(),
+  industry: z.string().min(1, { message: "Industry is required" }),
 });
 
 export const CliRegTwoSchema = z.object({

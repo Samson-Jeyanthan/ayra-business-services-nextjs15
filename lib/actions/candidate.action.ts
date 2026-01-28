@@ -911,7 +911,7 @@ export async function candidateRegStepNineAction(
 
 export async function getCandidateRegInfoByUserId(
   params: IGetCandidateRegInfoParams
-): Promise<ActionResponse> {
+) {
   const validationResult = await action({
     params,
     schema: GetCandidateRegInfoSchema,
@@ -923,20 +923,21 @@ export async function getCandidateRegInfoByUserId(
   }
 
   const { userId } = validationResult.params!;
-
   const currentUserId = validationResult?.session?.user?.id;
+  const paramId = userId || currentUserId;
 
-  let paramId: string | undefined = "";
-
-  if (userId) {
-    paramId = userId;
-  } else {
-    paramId = currentUserId;
+  if (!paramId) {
+    return {
+      success: false,
+      data: null,
+      error: { message: "User ID not found" },
+    };
   }
 
   const candidateRegInfo = await Candidate.findOne({ userId: paramId });
 
-  console.log(candidateRegInfo, currentUserId);
-
-  return { success: true, data: candidateRegInfo };
+  return {
+    success: true,
+    data: candidateRegInfo ? candidateRegInfo.toObject() : null,
+  };
 }

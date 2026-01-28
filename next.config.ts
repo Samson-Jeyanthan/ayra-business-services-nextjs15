@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
         hostname: "static.vecteezy.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "local-techflow-bucket.s3.ap-south-1.amazonaws.com",
+        port: "",
+      },
     ],
   },
 };
