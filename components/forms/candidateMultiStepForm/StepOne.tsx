@@ -29,7 +29,7 @@ const StepOne = () => {
       title: "",
       firstName: "",
       lastName: "",
-      dob: null,
+      dob: undefined,
       homeAddress: "",
       town: "",
       postCode: "",

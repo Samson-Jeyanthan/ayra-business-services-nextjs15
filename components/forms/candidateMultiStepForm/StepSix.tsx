@@ -22,8 +22,8 @@ const refereeTemplate = {
   postCode: "",
   phoneNo: "",
   email: "",
-  employmentStartDate: null,
-  employmentEndDate: null,
+  employmentStartDate: undefined,
+  employmentEndDate: undefined,
   approachability: false,
 };
 
