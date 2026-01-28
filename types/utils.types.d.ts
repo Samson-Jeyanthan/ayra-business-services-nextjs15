@@ -87,7 +87,7 @@ export type TPopupCalendar = {
 };
 
 export type TStageURLProps = {
-  params: { stepNo: string };
+  params: Promise<{ stepNo: string }>;
 };
 
 export type IImageMediaProps = {
