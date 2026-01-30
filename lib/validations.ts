@@ -384,18 +384,28 @@ export const CliRegOneSchema = z.object({
 
 export const CliRegTwoSchema = z.object({
   primaryContact: z.object({
-    fullName: z.string(),
-    jobTitle: z.string(),
-    address: z.string(),
-    email: z.string(),
-    phoneNo: z.string(),
+    fullName: z.string().min(1, "Primary contact full name is required"),
+    jobTitle: z.string().min(1, "Primary contact job title is required"),
+    address: z.string().min(1, "Primary contact address is required"),
+    email: z
+      .email("Primary contact email must be a valid email address")
+      .min(1, "Primary contact email is required"),
+    phoneNo: z
+      .string()
+      .min(1, "Primary contact phone number is required")
+      .regex(/^\+?[0-9]{7,15}$/, "Primary contact phone number is invalid"),
   }),
   sameAsPrimary: z.boolean(),
   billingContact: z.object({
-    fullName: z.string(),
-    address: z.string(),
-    email: z.string(),
-    phoneNo: z.string(),
+    fullName: z.string().min(1, "Billing contact full name is required"),
+    address: z.string().min(1, "Billing contact address is required"),
+    email: z
+      .email("Billing contact email must be a valid email address")
+      .min(1, "Billing contact email is required"),
+    phoneNo: z
+      .string()
+      .min(1, "Billing contact phone number is required")
+      .regex(/^\+?[0-9]{7,15}$/, "Billing contact phone number is invalid"),
   }),
 });
 

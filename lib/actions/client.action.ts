@@ -2,10 +2,15 @@
 
 import mongoose from "mongoose";
 import handleError from "../handlers/error";
-import { ClientReqSchema } from "../validations";
+import {
+  CliRegOneSchema,
+  CliRegTwoSchema,
+  ClientReqSchema,
+} from "../validations";
 import User from "@/database/user.model";
 import action from "../handlers/action";
 import CliRequest from "@/database/cliRequest.model";
+import Client from "@/database/client.model";
 
 export async function createClientRequestAction(
   params: IClientRequestParams
@@ -74,5 +79,101 @@ export async function createClientRequestAction(
     return handleError(error) as ErrorResponse;
   } finally {
     session.endSession();
+  }
+}
+
+// client registration multistep form actions
+
+export async function clientRegStepOneAction(
+  params: IClientRegStepOneParams
+): Promise<ActionResponse> {
+  const validationResult = await action({
+    params,
+    schema: CliRegOneSchema,
+    authorize: true,
+  });
+
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+
+  const {
+    companyLegalName,
+    tradingAs,
+    companyRegistrationNo,
+    vatNo,
+    registeredBusinessAddress,
+    companyWebsite,
+    industry,
+  } = validationResult.params!;
+
+  const session = await mongoose.startSession();
+  const userId = validationResult?.session?.user?.id;
+
+  if (!userId) {
+    return handleError(new Error("Unauthorized")) as ErrorResponse;
+  }
+
+  try {
+    session.startTransaction();
+
+    const [cliRegOne] = await Client.create([
+      {
+        userId,
+        stepOne: {
+          data: {
+            companyLegalName,
+            tradingAs,
+            companyRegistrationNo,
+            vatNo,
+            registeredBusinessAddress,
+            companyWebsite,
+            industry,
+          },
+          isCompleted: true,
+          status: "pending",
+          reviewedBy: null,
+          reviewedAt: null,
+          rejectionReason: null,
+        },
+        completedSteps: 1,
+      },
+    ]);
+
+    if (!cliRegOne) {
+      throw new Error("Failed to submit the step one form");
+    }
+
+    await session.commitTransaction();
+
+    return { success: true };
+  } catch (error) {
+    await session.abortTransaction();
+    return handleError(error) as ErrorResponse;
+  } finally {
+    session.endSession();
+  }
+}
+
+export async function clientRegStepTwoAction(params: IClientRegStepTwoParams) {
+  const validationResult = await action({
+    params,
+    schema: CliRegTwoSchema,
+    authorize: true,
+  });
+
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+
+  const { primaryContact, sameAsPrimary, billingContact } =
+    validationResult.params!;
+
+  console.log(primaryContact, sameAsPrimary, billingContact);
+
+  const userId = validationResult?.session?.user?.id;
+
+  if (!userId) {
+    return handleError(new Error("Unauthorized")) as ErrorResponse;
   }
 }

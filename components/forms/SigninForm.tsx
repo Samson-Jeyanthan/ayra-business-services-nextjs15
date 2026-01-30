@@ -7,13 +7,12 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignInSchema } from "@/lib/validations";
-import Link from "next/link";
-import ROUTES from "@/constants/routes";
 import { toast } from "sonner";
 import { signInWithCredentials } from "@/lib/actions/auth.actions";
 import { useTransition } from "react";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 
 const SigninForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -29,23 +28,40 @@ const SigninForm = () => {
     startTransition(async () => {
       const result = await signInWithCredentials(values);
 
-      console.log(result, "result");
+      if (!result.success || !result.data) return;
 
-      if (result.success) {
-        toast.success("You have signed up successfully");
+      const { userType, completedSteps } = result.data;
 
-        redirect("/candidate-registration/step-one");
-      } else {
-        toast("Sign-in failed", {
-          description: `${result?.error?.message}`,
-        });
+      toast.success("You have signed in successfully");
+
+      // ---- CANDIDATE (9 steps) ----
+      if (userType === "candidate") {
+        if (completedSteps && completedSteps >= 9) {
+          redirect("/candidate-profile");
+        } else {
+          redirect(
+            `/candidate-registration/step-${completedSteps && completedSteps + 1}`
+          );
+        }
+        return;
+      }
+      // ---- CLIENT (5 steps) ----
+      if (userType === "client") {
+        if (completedSteps && completedSteps >= 5) {
+          redirect("/client-profile");
+        } else {
+          redirect(
+            `/client-registration/step-${completedSteps && completedSteps + 1}`
+          );
+        }
+        return;
       }
     });
   }
 
   return (
     <div className="w-2/5 flex flex-col items-center justify-center">
-      <h1 className="text-5xl font-bold">AYRABS</h1>
+      <Image src="/images/ayrabs-logo.png" alt="logo" width={180} height={32} />
       <h3 className="font-semibold text-2xl mt-5">Login to your account</h3>
       <Form {...form}>
         <form
@@ -75,11 +91,12 @@ const SigninForm = () => {
             )}
           </Button>
 
-          <div className="flex gap-2 text-sm ">
-            <p>Don&apos;t have an account?</p>
-            <Link href={ROUTES.SIGN_UP} className="font-semibold text-sky-700">
-              Signup
-            </Link>
+          <div className="flex flex-col gap-2 text-sm ">
+            <p className="font-semibold">Don&apos;t have an account?</p>
+            <span className="text-sm">
+              Please request registration on our website if you’re looking for
+              staff or looking for work.
+            </span>
           </div>
         </form>
       </Form>

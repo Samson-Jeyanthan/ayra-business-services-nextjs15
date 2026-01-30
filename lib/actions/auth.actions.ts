@@ -2,13 +2,16 @@
 
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
-import User from "@/database/user.model";
-import { signIn } from "@/auth";
+import User, { IUserDoc } from "@/database/user.model";
+import { signIn, signOut } from "@/auth";
 
 import action from "../handlers/action";
 import handleError from "../handlers/error";
 import { SignInSchema, SignUpSchema } from "../validations";
 import { NotFoundError } from "../http-errors";
+import { api } from "../api";
+import Client from "@/database/client.model";
+import Candidate from "@/database/candidate.model";
 
 export async function signUpWithCredentials(
   params: AuthCredentials
@@ -65,19 +68,33 @@ export async function signUpWithCredentials(
       redirect: false,
     });
 
-    return { success: true };
+    const userData = await getUserByIdAction(user._id.toString());
+
+    return {
+      success: true,
+      data: JSON.parse(JSON.stringify(userData.userType)),
+    };
   } catch (error) {
     await session.abortTransaction();
-
     return handleError(error) as ErrorResponse;
   } finally {
     await session.endSession();
   }
 }
 
+type SignInData = {
+  success: boolean;
+  userType?: "candidate" | "client";
+  completedSteps?: number;
+  error?: {
+    message: string;
+    details?: Record<string, string[]>;
+  };
+};
+
 export async function signInWithCredentials(
   params: Pick<AuthCredentials, "email" | "password">
-): Promise<ActionResponse> {
+): Promise<ActionResponse<SignInData>> {
   const validationResult = await action({ params, schema: SignInSchema });
 
   if (validationResult instanceof Error) {
@@ -88,25 +105,62 @@ export async function signInWithCredentials(
 
   try {
     const existingUser = await User.findOne({ email });
-
-    console.log(existingUser, "exisiting_user auth_action");
-
     if (!existingUser) throw new NotFoundError("User");
 
     const passwordMatch = await bcrypt.compare(password, existingUser.password);
-
     if (!passwordMatch) throw new Error("Password does not match");
 
-    const res = await signIn("credentials", {
+    let completedSteps = 0;
+    let userData = null;
+
+    if (existingUser.userType === "client") {
+      userData = await Client.findOne({ userId: existingUser._id.toString() });
+      completedSteps = userData?.completedSteps || 0;
+    } else if (existingUser.userType === "candidate") {
+      userData = await Candidate.findOne({
+        userId: existingUser._id.toString(),
+      });
+      completedSteps = userData?.completedSteps || 0;
+    }
+
+    await signIn("credentials", {
       email,
       password,
       redirect: false,
     });
 
-    console.log(res, "response of auth signin");
+    const finalData = {
+      userType: existingUser.userType,
+      completedSteps,
+    };
 
-    return { success: true };
+    return { success: true, data: JSON.parse(JSON.stringify(finalData)) };
   } catch (error) {
     return handleError(error) as ErrorResponse;
   }
 }
+
+export async function signOutAction() {
+  await signOut();
+}
+
+export const getUserByIdAction = async (id?: string) => {
+  if (!id) {
+    throw new NotFoundError("User");
+  }
+  const response = (await api.users.getById(id)) as ActionResponse<IUserDoc>;
+  if (!response.data) {
+    throw new NotFoundError("User");
+  }
+  return response.data;
+};
+
+// export const getUserStatusAction = async (id: string) => {
+//   if (!id) {
+//     throw new NotFoundError("User");
+//   }
+//   const userData = await Client.findOne({
+//     userId: id,
+//   });
+//   return;
+// };

@@ -1,8 +1,6 @@
 import bcrypt from "bcryptjs";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-
-import { IAccountDoc } from "./database/account.model";
 import { IUserDoc } from "./database/user.model";
 import { SignInSchema } from "./lib/validations";
 import { api } from "./lib/api";
@@ -19,7 +17,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           // const { data: existingAccount } = (await api.accounts.getByProvider(
           //   email
           // )) as ActionResponse<IAccountDoc>;
-
           // if (!existingAccount) return null;
 
           const { data: existingUser } = (await api.users.getByEmail(
@@ -37,13 +34,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             existingUser.password!
           );
 
-          console.log(existingUser, "this is a test");
-
           if (isValidPassword) {
             return {
-              id: existingUser._id,
               name: existingUser.username,
               email: existingUser.email,
+              id: existingUser._id,
               userType: existingUser.userType,
             };
           }
@@ -64,11 +59,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           account.type === "credentials"
             ? token.email!
             : account.providerAccountId
-        )) as ActionResponse<IAccountDoc>;
+        )) as ActionResponse<IUserDoc>;
 
         if (!success || !existingAccount) return token;
 
-        const userId = existingAccount.userId;
+        const userId = existingAccount._id;
 
         if (userId) token.sub = userId.toString();
       }
@@ -100,9 +95,3 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
   },
 });
-
-export const getUserByIdAction = async (id: string) => {
-  const { data } = (await api.users.getById(id)) as ActionResponse<IUserDoc>;
-
-  return data?._id;
-};

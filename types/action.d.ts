@@ -190,3 +190,37 @@ interface ICandidateRegStepNineParams {
 interface IGetCandidateRegInfoParams {
   userId?: string | undefined;
 }
+
+//  client registration
+
+interface IClientRegStepOneParams {
+  companyLegalName: string;
+  tradingAs: string;
+  companyRegistrationNo: string;
+  vatNo: string;
+  registeredBusinessAddress: {
+    street: string;
+    city: string;
+    country: string;
+    postCode: string;
+  };
+  companyWebsite?: string;
+  industry: string;
+}
+
+interface IClientRegStepTwoParams {
+  primaryContact: {
+    fullName: string;
+    jobTitle: string;
+    address: string;
+    email: string;
+    phoneNo: string;
+  };
+  sameAsPrimary: boolean;
+  billingContact: {
+    fullName: string;
+    address: string;
+    email: string;
+    phoneNo: string;
+  };
+}

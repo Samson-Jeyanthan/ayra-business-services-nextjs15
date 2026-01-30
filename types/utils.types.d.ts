@@ -28,6 +28,7 @@ export type TFormInput = {
   formLabel: string;
   placeholder?: string;
   formDescription?: string;
+  disabled?: boolean;
 };
 
 export type TTextArea = {

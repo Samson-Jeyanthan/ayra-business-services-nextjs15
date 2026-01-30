@@ -36,7 +36,15 @@ const Hero = () => {
           </Link>
         </div>
       </section>
-      <section className="w-1/2">images</section>
+      <section className="w-1/2 flex-center">
+        <Image
+          src="/images/shell-cards.png"
+          alt="shell-img"
+          width={900}
+          height={900}
+          className="w-[55%] h-auto object-cover rounded-4xl"
+        />
+      </section>
     </div>
   );
 };

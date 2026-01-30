@@ -7,12 +7,12 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignUpSchema } from "@/lib/validations";
-import Link from "next/link";
-import ROUTES from "@/constants/routes";
 import { useTransition } from "react";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { signUpWithCredentials } from "@/lib/actions/auth.actions";
 import { toast } from "sonner";
+import Image from "next/image";
+// import { redirect } from "next/navigation";
 
 const SignupForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -28,20 +28,25 @@ const SignupForm = () => {
   async function onSubmit(values: z.infer<typeof SignUpSchema>) {
     startTransition(async () => {
       const result = await signUpWithCredentials(values);
-
-      console.log(result, "result");
-
+      console.log(result, "signup-result");
       if (result.success) {
         toast.success("You have signed up successfully");
+        // if (result.data.userType === "client") {
+        //   redirect("/client-registration/step-one");
+        // } else {
+        //   redirect("/candidate-registration/step-one");
+        // }
       } else {
-        toast.error("Sign-up failed");
+        toast.error("Sign-up failed", {
+          description: `${result?.error?.message}`,
+        });
       }
     });
   }
 
   return (
     <div className="w-2/5 flex flex-col items-center justify-center">
-      <h1 className="text-5xl font-bold">AYRABS</h1>
+      <Image src="/images/ayrabs-logo.png" alt="logo" width={180} height={32} />
       <h3 className="font-semibold text-2xl mt-5">Create an Account</h3>
       <Form {...form}>
         <form
@@ -76,13 +81,6 @@ const SignupForm = () => {
               <>Sign Up</>
             )}
           </Button>
-
-          <div className="flex gap-2 text-sm">
-            <p>Already have an account?</p>
-            <Link href={ROUTES.SIGN_IN} className="font-semibold text-sky-700">
-              Signin
-            </Link>
-          </div>
         </form>
       </Form>
     </div>
