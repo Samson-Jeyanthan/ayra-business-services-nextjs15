@@ -30,7 +30,14 @@ const Navbar = ({ isLogin }: { isLogin: boolean }) => {
     <nav
       className={`${scrollNav ? "bg-light-900 shadow-md shadow-gray-900/5" : "bg-transparent"} flex sticky top-0 px-14 items-center -mt-20 z-50 justify-between p-4`}
     >
-      <Image src="/images/ayrabs-logo.png" alt="logo" width={130} height={32} />
+      <Link href="/">
+        <Image
+          src="/images/ayrabs-logo.png"
+          alt="logo"
+          width={130}
+          height={32}
+        />
+      </Link>
       <div className="flex gap-6">
         {NAV_LINKS.map((item) => {
           return (

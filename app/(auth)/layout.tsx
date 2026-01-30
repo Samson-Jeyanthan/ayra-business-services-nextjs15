@@ -7,15 +7,15 @@ const AuthLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await auth();
   console.log(session);
 
-  if (session) {
-    const user = await getUserByIdAction(session?.user?.id);
+  // if (session) {
+  //   const user = await getUserByIdAction(session?.user?.id);
 
-    if (user?.userType === "client") {
-      redirect("/client-profile");
-    } else {
-      redirect("/candidate-profile");
-    }
-  }
+  //   if (user?.userType === "client") {
+  //     redirect("/client-profile");
+  //   } else {
+  //     redirect("/candidate-profile");
+  //   }
+  // }
 
   return (
     <main className="relative flex min-h-screen items-center justify-center w-full flex-col scroll-smooth">

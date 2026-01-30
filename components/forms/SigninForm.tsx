@@ -28,14 +28,33 @@ const SigninForm = () => {
     startTransition(async () => {
       const result = await signInWithCredentials(values);
 
-      if (result.success) {
-        toast.success("You have signed up successfully");
+      if (!result.success || !result.data) return;
 
-        // redirect("/candidate-registration/step-one");
-      } else {
-        toast("Sign-in failed", {
-          description: `${result?.error?.message}`,
-        });
+      const { userType, completedSteps } = result.data;
+
+      toast.success("You have signed in successfully");
+
+      // ---- CANDIDATE (9 steps) ----
+      if (userType === "candidate") {
+        if (completedSteps && completedSteps >= 9) {
+          redirect("/candidate-profile");
+        } else {
+          redirect(
+            `/candidate-registration/step-${completedSteps && completedSteps + 1}`
+          );
+        }
+        return;
+      }
+      // ---- CLIENT (5 steps) ----
+      if (userType === "client") {
+        if (completedSteps && completedSteps >= 5) {
+          redirect("/client-profile");
+        } else {
+          redirect(
+            `/client-registration/step-${completedSteps && completedSteps + 1}`
+          );
+        }
+        return;
       }
     });
   }

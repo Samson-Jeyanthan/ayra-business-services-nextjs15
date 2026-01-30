@@ -7,13 +7,12 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignUpSchema } from "@/lib/validations";
-import Link from "next/link";
-import ROUTES from "@/constants/routes";
 import { useTransition } from "react";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { signUpWithCredentials } from "@/lib/actions/auth.actions";
 import { toast } from "sonner";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 
 const SignupForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -29,13 +28,18 @@ const SignupForm = () => {
   async function onSubmit(values: z.infer<typeof SignUpSchema>) {
     startTransition(async () => {
       const result = await signUpWithCredentials(values);
-
       console.log(result, "result");
-
       if (result.success) {
         toast.success("You have signed up successfully");
+        // if (result.data.userType === "client") {
+        //   redirect("/client-registration/step-one");
+        // } else {
+        //   redirect("/candidate-registration/step-one");
+        // }
       } else {
-        toast.error("Sign-up failed");
+        toast.error("Sign-up failed", {
+          description: `${result?.error?.message}`,
+        });
       }
     });
   }
@@ -77,13 +81,6 @@ const SignupForm = () => {
               <>Sign Up</>
             )}
           </Button>
-
-          <div className="flex gap-2 text-sm">
-            <p>Already have an account?</p>
-            <Link href={ROUTES.SIGN_IN} className="font-semibold text-sky-700">
-              Signin
-            </Link>
-          </div>
         </form>
       </Form>
     </div>

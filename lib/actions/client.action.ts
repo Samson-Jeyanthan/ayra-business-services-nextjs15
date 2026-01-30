@@ -169,6 +169,8 @@ export async function clientRegStepTwoAction(params: IClientRegStepTwoParams) {
   const { primaryContact, sameAsPrimary, billingContact } =
     validationResult.params!;
 
+  console.log(primaryContact, sameAsPrimary, billingContact);
+
   const userId = validationResult?.session?.user?.id;
 
   if (!userId) {
