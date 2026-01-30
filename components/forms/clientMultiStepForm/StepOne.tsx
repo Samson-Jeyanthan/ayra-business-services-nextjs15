@@ -7,8 +7,14 @@ import { Form } from "@/components/ui/form";
 import { CliRegOneSchema } from "@/lib/validations";
 import { FormInput } from "@/components/inputs";
 import { Button } from "@/components/ui/button";
+import { useTransition } from "react";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
+import { clientRegStepOneAction } from "@/lib/actions/client.action";
 
 const StepOne = () => {
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof CliRegOneSchema>>({
     resolver: zodResolver(CliRegOneSchema),
     defaultValues: {
@@ -30,10 +36,16 @@ const StepOne = () => {
   async function onSubmit(values: z.infer<typeof CliRegOneSchema>) {
     console.log(values);
 
-    //     const result = await createClientStepOneAction(values);
-    //     if (result.success) {
-    //       console.log(result)
-    // }
+    startTransition(async () => {
+      const result = await clientRegStepOneAction(values);
+      console.log(result, "results on server side");
+      if (result.success) {
+        toast.success("Form has been submitted");
+        redirect("/client-registration/step-two");
+      } else {
+        toast.error("Form submission failed");
+      }
+    });
   }
 
   return (
@@ -116,8 +128,15 @@ const StepOne = () => {
         </div>
 
         <footer className="flex w-full gap-4 justify-end">
-          <Button className="primary-btn" type="submit">
-            Next
+          <Button className="primary-btn" type="submit" disabled={isPending}>
+            {isPending ? (
+              <>
+                <ReloadIcon className="mr-2 size-4 animate-spin" />
+                <span>Next</span>
+              </>
+            ) : (
+              <>Next</>
+            )}
           </Button>
         </footer>
       </form>

@@ -2,13 +2,14 @@
 
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
-import User from "@/database/user.model";
+import User, { IUserDoc } from "@/database/user.model";
 import { signIn } from "@/auth";
 
 import action from "../handlers/action";
 import handleError from "../handlers/error";
 import { SignInSchema, SignUpSchema } from "../validations";
 import { NotFoundError } from "../http-errors";
+import { api } from "../api";
 
 export async function signUpWithCredentials(
   params: AuthCredentials
@@ -89,24 +90,40 @@ export async function signInWithCredentials(
   try {
     const existingUser = await User.findOne({ email });
 
-    console.log(existingUser, "exisiting_user auth_action");
-
     if (!existingUser) throw new NotFoundError("User");
 
     const passwordMatch = await bcrypt.compare(password, existingUser.password);
 
     if (!passwordMatch) throw new Error("Password does not match");
 
-    const res = await signIn("credentials", {
+    await signIn("credentials", {
       email,
       password,
       redirect: false,
     });
-
-    console.log(res, "response of auth signin");
 
     return { success: true };
   } catch (error) {
     return handleError(error) as ErrorResponse;
   }
 }
+
+export async function signOut() {
+  await signIn("credentials", {
+    redirect: false,
+  });
+}
+
+export const getUserByIdAction = async (id?: string) => {
+  if (!id) {
+    throw new NotFoundError("User");
+  }
+
+  const response = (await api.users.getById(id)) as ActionResponse<IUserDoc>;
+
+  if (!response.data) {
+    throw new NotFoundError("User");
+  }
+
+  return response.data;
+};

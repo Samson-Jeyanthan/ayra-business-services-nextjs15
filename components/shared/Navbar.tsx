@@ -4,8 +4,9 @@ import { NAV_LINKS } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
 
-const Navbar = () => {
+const Navbar = ({ isLogin }: { isLogin: boolean }) => {
   const [scrollNav, setScrollNav] = useState(false);
 
   const changeNav = () => {
@@ -40,9 +41,18 @@ const Navbar = () => {
         })}
       </div>
 
-      <Link href="/sign-in" className="secondary-btn-custom h-10 px-6 text-sm">
-        Sign In
-      </Link>
+      {isLogin ? (
+        <Button className="secondary-btn-custom h-10 px-6 text-sm !rounded-full bg-white">
+          Logout
+        </Button>
+      ) : (
+        <Link
+          href="/sign-up"
+          className="secondary-btn-custom h-10 px-6 text-sm"
+        >
+          Sign Up
+        </Link>
+      )}
     </nav>
   );
 };

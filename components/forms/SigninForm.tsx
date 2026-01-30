@@ -29,12 +29,10 @@ const SigninForm = () => {
     startTransition(async () => {
       const result = await signInWithCredentials(values);
 
-      console.log(result, "result");
-
       if (result.success) {
         toast.success("You have signed up successfully");
 
-        redirect("/candidate-registration/step-one");
+        // redirect("/candidate-registration/step-one");
       } else {
         toast("Sign-in failed", {
           description: `${result?.error?.message}`,
