@@ -12,7 +12,7 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 import { signUpWithCredentials } from "@/lib/actions/auth.actions";
 import { toast } from "sonner";
 import Image from "next/image";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 
 const SignupForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -28,7 +28,7 @@ const SignupForm = () => {
   async function onSubmit(values: z.infer<typeof SignUpSchema>) {
     startTransition(async () => {
       const result = await signUpWithCredentials(values);
-      console.log(result, "result");
+      console.log(result, "signup-result");
       if (result.success) {
         toast.success("You have signed up successfully");
         // if (result.data.userType === "client") {

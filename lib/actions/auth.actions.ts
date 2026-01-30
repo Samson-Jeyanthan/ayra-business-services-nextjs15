@@ -70,8 +70,6 @@ export async function signUpWithCredentials(
 
     const userData = await getUserByIdAction(user._id.toString());
 
-    console.log(JSON.parse(JSON.stringify(userData.userType)));
-
     return {
       success: true,
       data: JSON.parse(JSON.stringify(userData.userType)),

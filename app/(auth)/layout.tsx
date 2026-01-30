@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
-import { getUserByIdAction } from "@/lib/actions/auth.actions";
-import { redirect } from "next/navigation";
+// import { getUserByIdAction } from "@/lib/actions/auth.actions";
+// import { redirect } from "next/navigation";
 import React from "react";
 
 const AuthLayout = async ({ children }: { children: React.ReactNode }) => {
