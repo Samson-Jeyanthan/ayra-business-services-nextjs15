@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import {
   // CandidateEight,
   CandidateFive,
@@ -10,10 +11,19 @@ import {
   CandidateTwo,
 } from "@/components/profile";
 import { getCandidateRegInfoByUserId } from "@/lib/actions/candidate.action";
+import { redirect } from "next/navigation";
 
 const CandidateProfile = async () => {
+  const session = await auth();
+
+  if (!session) {
+    redirect("/");
+  }
+
   const response = await getCandidateRegInfoByUserId({ userId: "" });
   const candidate = response?.data;
+
+  console.log(response);
 
   if (!candidate) {
     return <p>No candidate info found.</p>;

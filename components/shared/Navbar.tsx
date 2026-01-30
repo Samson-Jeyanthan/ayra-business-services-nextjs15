@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
+import { signOutAction } from "@/lib/actions/auth.actions";
 
 const Navbar = ({ isLogin }: { isLogin: boolean }) => {
   const [scrollNav, setScrollNav] = useState(false);
@@ -20,6 +21,10 @@ const Navbar = ({ isLogin }: { isLogin: boolean }) => {
   useEffect(() => {
     window.addEventListener("scroll", changeNav);
   }, []);
+
+  // const handleSignOut = async () => {
+  //   await signOut();
+  // };
 
   return (
     <nav
@@ -42,15 +47,24 @@ const Navbar = ({ isLogin }: { isLogin: boolean }) => {
       </div>
 
       {isLogin ? (
-        <Button className="secondary-btn-custom h-10 px-6 text-sm !rounded-full bg-white">
-          Logout
-        </Button>
+        <form
+          action={async () => {
+            await signOutAction();
+          }}
+        >
+          <Button
+            type="submit"
+            className="secondary-btn-custom h-10 px-6 text-sm rounded-full bg-white cursor-pointer"
+          >
+            <span className="text-dark300_light900 max-lg:hidden">Logout</span>
+          </Button>
+        </form>
       ) : (
         <Link
-          href="/sign-up"
+          href="/sign-in"
           className="secondary-btn-custom h-10 px-6 text-sm"
         >
-          Sign Up
+          Sign in
         </Link>
       )}
     </nav>

@@ -165,4 +165,13 @@ export async function clientRegStepTwoAction(params: IClientRegStepTwoParams) {
   if (validationResult instanceof Error) {
     return handleError(validationResult) as ErrorResponse;
   }
+
+  const { primaryContact, sameAsPrimary, billingContact } =
+    validationResult.params!;
+
+  const userId = validationResult?.session?.user?.id;
+
+  if (!userId) {
+    return handleError(new Error("Unauthorized")) as ErrorResponse;
+  }
 }

@@ -17,6 +17,7 @@ const FormInput = ({
   inputType,
   formLabel,
   formDescription,
+  disabled,
 }: TFormInput) => {
   return (
     <FormField
@@ -38,6 +39,7 @@ const FormInput = ({
                     : e.target.value
                 )
               }
+              disabled={disabled || false}
               className="no-focus !bg-light-700 !border !border-solid !border-light-500 !text-light-100 !rounded-full !px-3 !py-2 !w-full !h-12"
             />
           </FormControl>

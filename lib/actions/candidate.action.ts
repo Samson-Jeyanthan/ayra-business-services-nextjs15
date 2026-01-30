@@ -924,7 +924,7 @@ export async function getCandidateRegInfoByUserId(
 
   const { userId } = validationResult.params!;
   const currentUserId = validationResult?.session?.user?.id;
-  const paramId = userId || currentUserId;
+  const paramId = userId ? userId : currentUserId;
 
   if (!paramId) {
     return {

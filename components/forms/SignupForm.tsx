@@ -13,6 +13,7 @@ import { useTransition } from "react";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { signUpWithCredentials } from "@/lib/actions/auth.actions";
 import { toast } from "sonner";
+import Image from "next/image";
 
 const SignupForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -41,7 +42,7 @@ const SignupForm = () => {
 
   return (
     <div className="w-2/5 flex flex-col items-center justify-center">
-      <h1 className="text-5xl font-bold">AYRABS</h1>
+      <Image src="/images/ayrabs-logo.png" alt="logo" width={180} height={32} />
       <h3 className="font-semibold text-2xl mt-5">Create an Account</h3>
       <Form {...form}>
         <form

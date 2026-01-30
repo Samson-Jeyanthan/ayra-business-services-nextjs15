@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { CliRegTwoSchema } from "@/lib/validations";
 import { CheckBox, FormInput } from "@/components/inputs";
+import { useEffect } from "react";
 
 const StepTwo = () => {
   const form = useForm<z.infer<typeof CliRegTwoSchema>>({
@@ -19,7 +20,7 @@ const StepTwo = () => {
         phoneNo: "",
         address: "",
       },
-      sameAsPrimary: true,
+      sameAsPrimary: false,
       billingContact: {
         fullName: "",
         address: "",
@@ -28,6 +29,18 @@ const StepTwo = () => {
       },
     },
   });
+
+  const sameAsPrimary = form.watch("sameAsPrimary");
+  const primaryContact = form.watch("primaryContact");
+
+  useEffect(() => {
+    if (sameAsPrimary) {
+      form.setValue("billingContact.fullName", primaryContact.fullName);
+      form.setValue("billingContact.email", primaryContact.email);
+      form.setValue("billingContact.phoneNo", primaryContact.phoneNo);
+      form.setValue("billingContact.address", primaryContact.address);
+    }
+  }, [sameAsPrimary, primaryContact, form]);
 
   async function onSubmit(values: z.infer<typeof CliRegTwoSchema>) {
     console.log(values);
@@ -88,6 +101,7 @@ const StepTwo = () => {
             inputName="billingContact.fullName"
             formLabel="Full Name"
             inputType="text"
+            disabled={sameAsPrimary}
           />
           <div className="flex gap-4">
             <FormInput
@@ -95,12 +109,14 @@ const StepTwo = () => {
               inputName="billingContact.email"
               formLabel="Email"
               inputType="email"
+              disabled={sameAsPrimary}
             />
             <FormInput
               form={form}
               inputName="billingContact.phoneNo"
               formLabel="Phone Number"
               inputType="text"
+              disabled={sameAsPrimary}
             />
           </div>
           <FormInput
@@ -108,6 +124,7 @@ const StepTwo = () => {
             inputName="billingContact.address"
             formLabel="Address"
             inputType="text"
+            disabled={sameAsPrimary}
           />
         </div>
         <footer className="flex w-full gap-4 justify-between">

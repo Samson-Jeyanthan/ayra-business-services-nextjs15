@@ -3,7 +3,7 @@
 import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
 import User, { IUserDoc } from "@/database/user.model";
-import { signIn } from "@/auth";
+import { signIn, signOut } from "@/auth";
 
 import action from "../handlers/action";
 import handleError from "../handlers/error";
@@ -108,10 +108,8 @@ export async function signInWithCredentials(
   }
 }
 
-export async function signOut() {
-  await signIn("credentials", {
-    redirect: false,
-  });
+export async function signOutAction() {
+  await signOut();
 }
 
 export const getUserByIdAction = async (id?: string) => {
