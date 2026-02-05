@@ -70,7 +70,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return token;
     },
 
-    async signIn({ user, profile, account }) {
+    async signIn({
+      user,
+      // profile,
+      account,
+    }) {
       if (account?.type === "credentials") return true;
       if (!account || !user) return false;
 

@@ -5,18 +5,18 @@ import { Schema } from "mongoose";
 export const cliStepOneSchema = new Schema(
   {
     data: {
-      companyLegalName: String,
-      tradingAs: String,
-      companyRegistrationNo: String,
-      vatNo: String,
+      companyLegalName: { type: String },
+      tradingAs: { type: String },
+      companyRegistrationNo: { type: String },
+      vatNo: { type: String },
       registeredBusinessAddress: {
-        street: String,
-        city: String,
-        country: String,
-        postCode: String,
+        street: { type: String },
+        city: { type: String },
+        country: { type: String },
+        postCode: { type: String },
       },
-      companyWebsite: String,
-      industry: String,
+      companyWebsite: { type: String },
+      industry: { type: String },
     },
     isCompleted: {
       type: Boolean,

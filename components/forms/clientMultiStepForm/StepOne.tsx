@@ -41,7 +41,7 @@ const StepOne = () => {
       console.log(result, "results on server side");
       if (result.success) {
         toast.success("Form has been submitted");
-        redirect("/client-registration/step-two");
+        redirect("/client-registration/step-2");
       } else {
         toast.error("Form submission failed");
       }
@@ -122,7 +122,7 @@ const StepOne = () => {
           <FormInput
             form={form}
             inputName="industry"
-            formLabel="Industry"
+            formLabel="Industry / Sector"
             inputType="text"
           />
         </div>

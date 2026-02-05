@@ -330,7 +330,7 @@ export async function candidateRegStepThreeAction(
 
     if (!candidate) {
       throw new Error(
-        "Step three cannot be submitted. Please complete step one or this step is locked."
+        "Step three cannot be submitted. Please complete previous steps or this step is locked."
       );
     }
 

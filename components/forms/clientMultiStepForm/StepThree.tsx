@@ -12,8 +12,14 @@ import {
   RadioButton,
   TextArea,
 } from "@/components/inputs";
+import { useTransition } from "react";
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
+import { clientRegStepThreeAction } from "@/lib/actions/client.action";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 const StepThree = () => {
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof CliRegThreeSchema>>({
     resolver: zodResolver(CliRegThreeSchema),
     defaultValues: {
@@ -21,21 +27,22 @@ const StepThree = () => {
         jobTitle: "",
         department: "",
         reportingTo: "",
-        locationOfWork: "",
+        locationOfWork: undefined,
+        ifHybridDays: "",
       },
       employmentTerms: {
         typeOfPosition: "",
-        startDate: "",
-        endDate: "",
-        workingTimeType: "",
+        startDate: undefined,
+        endDate: undefined,
+        workingTimeType: undefined,
         workingHours: "",
         workSchedule: "",
       },
       compensations: {
-        salaryRangeFrom: 0,
-        salaryRangeTo: 0,
-        hourlyRate: 0,
-        isBonusCommission: false,
+        salaryRangeFrom: "",
+        salaryRangeTo: "",
+        hourlyRate: "",
+        isBonusCommission: undefined,
         ifYesBonusCommission: "",
         keyBenefitsOffered: "",
       },
@@ -50,7 +57,16 @@ const StepThree = () => {
   });
 
   async function onSubmit(values: z.infer<typeof CliRegThreeSchema>) {
-    console.log(values);
+    startTransition(async () => {
+      const result = await clientRegStepThreeAction(values);
+      console.log(result, "results on server side");
+      if (result.success) {
+        toast.success("Form has been submitted");
+        redirect("/client-registration/step-4");
+      } else {
+        toast.error("Form submission failed");
+      }
+    });
   }
 
   return (
@@ -100,15 +116,15 @@ const StepThree = () => {
         <div className="w-1/2">
           <FormInput
             form={form}
-            inputName="jobInformation.ifYesHybrid"
+            inputName="jobInformation.ifHybridDays"
             formLabel="If yes, please specify days in office"
             inputType="text"
           />
         </div>
-        <h3>Employment Terms</h3>
+        <h3 className="form-sub-title">Employment Terms</h3>
         <RadioButton
           form={form}
-          inputName="jobInformation.employmentTerms.typeOfPosition"
+          inputName="employmentTerms.typeOfPosition"
           formLabel="Type of Position"
           options={[
             {
@@ -129,22 +145,22 @@ const StepThree = () => {
             },
           ]}
         />
-        <div className="flex gap-4">
+        <div className="flex gap-4 items-start">
           <PopupCalendar
             form={form}
             formLabel="Desired Start Date"
-            inputName="jobInformation.employmentTerms.startDate"
+            inputName="employmentTerms.startDate"
           />
           <PopupCalendar
             form={form}
-            formLabel="Desired End Date"
-            inputName="jobInformation.employmentTerms.endDate"
+            formLabel="For Temporary/Contract roles, specify duration or end date"
+            inputName="employmentTerms.endDate"
           />
         </div>
-        <h3>Working Hours</h3>
+        <h3 className="form-sub-title">Working Hours</h3>
         <RadioButton
           form={form}
-          inputName="jobInformation.employmentTerms.workingTimeType"
+          inputName="employmentTerms.workingTimeType"
           formLabel="Working Time Type"
           options={[
             {
@@ -160,54 +176,54 @@ const StepThree = () => {
         <div className="flex gap-4">
           <FormInput
             form={form}
-            inputName="jobInformation.employmentTerms.workingHours"
+            inputName="employmentTerms.workingHours"
             formLabel="Please specify hours per days or week"
             inputType="text"
             formDescription="e.g. 37.5 hours/days"
           />
           <FormInput
             form={form}
-            inputName="jobInformation.employmentTerms.workSchedule"
+            inputName="employmentTerms.workSchedule"
             formLabel="Work Schedule"
             inputType="text"
             formDescription="e.g. Mon-Fri, 9am-5pm"
           />
         </div>
-        <h3>Compensation & Benefits</h3>
+        <h3 className="form-sub-title">Compensation & Benefits</h3>
         <div className="flex gap-4 items-start">
           <FormInput
             form={form}
-            inputName="jobInformation.compensations.salaryRangeFrom"
+            inputName="compensations.salaryRangeFrom"
             formLabel="Salary Range From £"
-            inputType="number"
+            inputType="text"
             formDescription="Annual"
           />
           <FormInput
             form={form}
-            inputName="jobInformation.compensations.salaryRangTo"
+            inputName="compensations.salaryRangeTo"
             formLabel="To £"
-            inputType="number"
+            inputType="text"
             formDescription=""
           />
         </div>
         <FormInput
           form={form}
-          inputName="jobInformation.compensations.hourlyRate"
+          inputName="compensations.hourlyRate"
           formLabel="Hourly/Daily Rate £"
-          inputType="number"
-          formDescription="for Temp/Contract"
+          inputType="text"
+          formDescription="e.g. for Temp/Contract - £10 per Hour"
         />
         <RadioButton
           form={form}
-          inputName="jobInformation.compensations.isBonusCommission"
+          inputName="compensations.isBonusCommission"
           formLabel="Is there any Bonus/Commission"
           options={[
             {
-              _id: "yes",
+              _id: "true",
               name: "Yes",
             },
             {
-              _id: "no",
+              _id: "false",
               name: "No",
             },
           ]}
@@ -215,47 +231,63 @@ const StepThree = () => {
         <div className="w-1/2">
           <FormInput
             form={form}
-            inputName="jobInformation.compensations.ifYesBonusCommission"
+            inputName="compensations.ifYesBonusCommission"
             formLabel="If yes, please provide details below"
             inputType="text"
           />
         </div>
         <TextArea
           form={form}
-          inputName="jobInformation.compensations.keyBenefitsOffered"
+          inputName="compensations.keyBenefitsOffered"
           formLabel="Key Benefits Offered"
           formDescription="e.g., Pension scheme, private medical, life insurance, etc."
           maxLength={400}
         />
-        <h3>Role & Candidate Profile</h3>
+        <h3 className="form-sub-title">Role & Candidate Profile</h3>
         <TextArea
           form={form}
-          inputName="jobInformation.roleAndCandidateProfile.mainResponsibilities"
+          inputName="roleAndCandidateProfile.mainResponsibilities"
           formLabel="Main Responsibilities & Duties of the Role"
           formDescription="Please be as detailed as possible"
           maxLength={400}
         />
         <TextArea
           form={form}
-          inputName="jobInformation.roleAndCandidateProfile.essentialSkills"
+          inputName="roleAndCandidateProfile.essentialSkills"
           formLabel="Essential Skills & Experience (Non Negotiable)"
           maxLength={400}
         />
         <TextArea
           form={form}
-          inputName="jobInformation.roleAndCandidateProfile.desirableSkills"
+          inputName="roleAndCandidateProfile.desirableSkills"
           formLabel="Desirable Skills & Experience (Nice to have)"
           maxLength={400}
         />
         <TextArea
           form={form}
-          inputName="jobInformation.roleAndCandidateProfile.requiredQualifications"
+          inputName="roleAndCandidateProfile.requiredQualifications"
           formLabel="Required Qualifications / Certifications"
+          maxLength={400}
+        />
+        <TextArea
+          form={form}
+          inputName="roleAndCandidateProfile.keySoftSkills"
+          formLabel="Key Soft Skills"
+          formDescription="e.g., Communication, team player, leadership, problem-solving"
           maxLength={400}
         />
         <footer className="flex w-full gap-4 justify-between">
           <Button className="secondary-btn">Back</Button>
-          <Button className="primary-btn">Next</Button>
+          <Button className="primary-btn" type="submit" disabled={isPending}>
+            {isPending ? (
+              <>
+                <ReloadIcon className="mr-2 size-4 animate-spin" />
+                <span>Next</span>
+              </>
+            ) : (
+              <>Next</>
+            )}
+          </Button>
         </footer>
       </form>
     </Form>

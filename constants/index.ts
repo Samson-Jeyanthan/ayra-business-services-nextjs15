@@ -215,7 +215,7 @@ export const ADMIN_SIDEBAR_LINKS: IAdminSidebarLinks[] = [
 ];
 
 export interface IMultiStepStages {
-  stepName: string;
+  stepName: string | number;
   description: string;
 }
 

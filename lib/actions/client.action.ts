@@ -3,7 +3,10 @@
 import mongoose from "mongoose";
 import handleError from "../handlers/error";
 import {
+  CliRegFiveSchema,
+  CliRegFourSchema,
   CliRegOneSchema,
+  CliRegThreeSchema,
   CliRegTwoSchema,
   ClientReqSchema,
 } from "../validations";
@@ -169,11 +172,302 @@ export async function clientRegStepTwoAction(params: IClientRegStepTwoParams) {
   const { primaryContact, sameAsPrimary, billingContact } =
     validationResult.params!;
 
-  console.log(primaryContact, sameAsPrimary, billingContact);
+  const userId = validationResult?.session?.user?.id;
+
+  if (!userId) {
+    return handleError(new Error("Unauthorized")) as ErrorResponse;
+  }
+
+  const session = await mongoose.startSession();
+
+  try {
+    session.startTransaction();
+
+    const client = await Client.findOneAndUpdate(
+      {
+        userId,
+        completedSteps: { $gte: 1 }, // ✅ step one completed
+        $or: [
+          { "stepTwo.status": { $exists: false } },
+          { "stepTwo.status": { $in: ["pending", "rejected"] } },
+        ],
+      },
+      {
+        $set: {
+          "stepTwo.data": {
+            primaryContact,
+            sameAsPrimary,
+            billingContact,
+          },
+          "stepTwo.isCompleted": true,
+          "stepTwo.status": "pending",
+          "stepTwo.reviewedBy": null,
+          "stepTwo.reviewedAt": null,
+          "stepTwo.rejectionReason": null,
+        },
+        $max: {
+          completedSteps: 2, // ✅ prevents rollback
+        },
+      },
+      {
+        new: true,
+        session,
+      }
+    );
+
+    console.log(client, "client");
+
+    if (!client) {
+      throw new Error(
+        "Step two cannot be submitted. Please complete step one or this step is locked."
+      );
+    }
+
+    await session.commitTransaction();
+    return { success: true };
+  } catch (error) {
+    await session.abortTransaction();
+    return handleError(error) as ErrorResponse;
+  } finally {
+    session.endSession();
+  }
+}
+
+export async function clientRegStepThreeAction(
+  params: IClientRegStepThreeParams
+): Promise<ActionResponse> {
+  const validationResult = await action({
+    params,
+    schema: CliRegThreeSchema,
+    authorize: true,
+  });
+
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+
+  const {
+    jobInformation,
+    employmentTerms,
+    compensations,
+    roleAndCandidateProfile,
+  } = validationResult.params!;
 
   const userId = validationResult?.session?.user?.id;
 
   if (!userId) {
     return handleError(new Error("Unauthorized")) as ErrorResponse;
+  }
+
+  const session = await mongoose.startSession();
+
+  try {
+    session.startTransaction();
+
+    const client = await Client.findOneAndUpdate(
+      {
+        userId,
+        completedSteps: { $gte: 2 }, // ✅ step two completed
+        $or: [
+          { "stepThree.status": { $exists: false } },
+          { "stepThree.status": { $in: ["pending", "rejected"] } },
+        ],
+      },
+      {
+        $set: {
+          "stepThree.data": {
+            jobInformation,
+            employmentTerms,
+            compensations,
+            roleAndCandidateProfile,
+          },
+          "stepThree.isCompleted": true,
+          "stepThree.status": "pending",
+          "stepThree.reviewedBy": null,
+          "stepThree.reviewedAt": null,
+          "stepThree.rejectionReason": null,
+        },
+        $max: {
+          completedSteps: 3, // ✅ prevents rollback
+        },
+      },
+      {
+        new: true,
+        session,
+      }
+    );
+
+    console.log(client, "client");
+
+    if (!client) {
+      throw new Error(
+        "Step three cannot be submitted. Please complete previous steps or this step is locked."
+      );
+    }
+
+    await session.commitTransaction();
+
+    return { success: true };
+  } catch (error) {
+    await session.abortTransaction();
+    return handleError(error) as ErrorResponse;
+  } finally {
+    session.endSession();
+  }
+}
+
+export async function clientRegStepFourAction(
+  params: IClientRegStepFourParams
+) {
+  const validationResult = await action({
+    params,
+    schema: CliRegFourSchema,
+    authorize: true,
+  });
+
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+
+  const { intendedInterviewProcess, deadlineForCandidate } =
+    validationResult.params!;
+
+  const userId = validationResult?.session?.user?.id;
+
+  if (!userId) {
+    return handleError(new Error("Unauthorized")) as ErrorResponse;
+  }
+
+  const session = await mongoose.startSession();
+
+  try {
+    session.startTransaction();
+
+    const client = await Client.findOneAndUpdate(
+      {
+        userId,
+        completedSteps: { $gte: 3 }, // ✅ step two completed
+        $or: [
+          { "stepFour.status": { $exists: false } },
+          { "stepFour.status": { $in: ["pending", "rejected"] } },
+        ],
+      },
+      {
+        $set: {
+          "stepFour.data": {
+            intendedInterviewProcess,
+            deadlineForCandidate,
+          },
+          "stepFour.isCompleted": true,
+          "stepFour.status": "pending",
+          "stepFour.reviewedBy": null,
+          "stepFour.reviewedAt": null,
+          "stepFour.rejectionReason": null,
+        },
+        $max: {
+          completedSteps: 4, // ✅ prevents rollback
+        },
+      },
+      {
+        new: true,
+        session,
+      }
+    );
+
+    console.log(client, "client");
+
+    if (!client) {
+      throw new Error(
+        "Step four cannot be submitted. Please complete previous steps or this step is locked."
+      );
+    }
+
+    await session.commitTransaction();
+
+    return { success: true };
+  } catch (error) {
+    await session.abortTransaction();
+    return handleError(error) as ErrorResponse;
+  } finally {
+    session.endSession();
+  }
+}
+
+export async function clientRegStepFiveAction(
+  params: IClientRegStepFiveParams
+) {
+  const validationResult = await action({
+    params,
+    schema: CliRegFiveSchema,
+    authorize: true,
+  });
+
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+
+  const { authorizedPersonName, jobTitle, signature, date } =
+    validationResult.params!;
+
+  const userId = validationResult?.session?.user?.id;
+
+  if (!userId) {
+    return handleError(new Error("Unauthorized")) as ErrorResponse;
+  }
+
+  const session = await mongoose.startSession();
+
+  try {
+    session.startTransaction();
+
+    const client = await Client.findOneAndUpdate(
+      {
+        userId,
+        completedSteps: { $gte: 4 }, // ✅ step two completed
+        $or: [
+          { "stepFive.status": { $exists: false } },
+          { "stepFive.status": { $in: ["pending", "rejected"] } },
+        ],
+      },
+      {
+        $set: {
+          "stepFive.data": {
+            authorizedPersonName,
+            jobTitle,
+            signature,
+            date,
+          },
+          "stepFive.isCompleted": true,
+          "stepFive.status": "pending",
+          "stepFive.reviewedBy": null,
+          "stepFive.reviewedAt": null,
+          "stepFive.rejectionReason": null,
+        },
+        $max: {
+          completedSteps: 5, // ✅ prevents rollback
+        },
+      },
+      {
+        new: true,
+        session,
+      }
+    );
+
+    console.log(client, "client");
+
+    if (!client) {
+      throw new Error(
+        "Step five cannot be submitted. Please complete previous steps or this step is locked."
+      );
+    }
+
+    await session.commitTransaction();
+
+    return { success: true };
+  } catch (error) {
+    await session.abortTransaction();
+    return handleError(error) as ErrorResponse;
+  } finally {
+    session.endSession();
   }
 }

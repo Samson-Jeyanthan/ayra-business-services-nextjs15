@@ -411,44 +411,79 @@ export const CliRegTwoSchema = z.object({
 
 export const CliRegThreeSchema = z.object({
   jobInformation: z.object({
-    jobTitle: z.string(),
-    department: z.string(),
-    reportingTo: z.string(),
-    locationOfWork: z.string(),
+    jobTitle: z.string().min(2, "Job title is required"),
+    department: z.string().min(1, "Department is required"),
+    reportingTo: z.string().min(1, "Reporting to is required"),
+    locationOfWork: z.enum(["remote", "hybrid", "onsite"], {
+      message: "Please select the work location (Remote, Hybrid, or Onsite)",
+    }),
+    ifHybridDays: z.string().optional(),
   }),
-  employmentTerms: {
-    typeOfPosition: z.string(),
-    startDate: z.string(),
-    endDate: z.string(),
-    workingTimeType: z.string(),
-    workingHours: z.string(),
-    workSchedule: z.string(),
-  },
-  compensations: {
-    salaryRangeFrom: z.number(),
-    salaryRangTo: z.number(),
-    hourlyRate: z.number(),
-    isBonusCommission: z.boolean(),
-    ifYesBonusCommission: z.string(),
-    keyBenefitsOffered: z.string(),
-  },
-  roleAndCandidateProfile: {
-    mainResponsibilities: z.string(),
-    essentialSkills: z.string(),
-    desirableSkills: z.string(),
-    requiredQualifications: z.string(),
-    keySoftSkills: z.string(),
-  },
+  employmentTerms: z.object({
+    typeOfPosition: z.string().min(1, "Please specify the type of position"),
+    startDate: z
+      .date()
+      .nullable()
+      .refine((date) => date !== null, {
+        message: "Please select a start date",
+      }),
+    endDate: z.date().nullable().optional(),
+    workingTimeType: z.enum(["fullTime", "partTime"], {
+      message: "Please select whether the role is full-time or part-time",
+    }),
+    workingHours: z.string().min(1, "Please specify the working hours"),
+    workSchedule: z.string().min(1, "Please describe the work schedule"),
+  }),
+  compensations: z.object({
+    salaryRangeFrom: z
+      .string()
+      .min(1, "Please enter the minimum salary")
+      .regex(/^[0-9]+$/, "Salary must contain only numbers"),
+    salaryRangeTo: z
+      .string()
+      .min(1, "Please enter the maximum salary")
+      .regex(/^[0-9]+$/, "Salary must contain only numbers"),
+    hourlyRate: z.string().optional(),
+    isBonusCommission: z.enum(["true", "false"], {
+      message: "Please specify whether bonuses or commissions are offered",
+    }),
+    ifYesBonusCommission: z.string().optional(),
+    keyBenefitsOffered: z
+      .string()
+      .min(1, "Please list the key benefits offered for this role"),
+  }),
+  roleAndCandidateProfile: z.object({
+    mainResponsibilities: z
+      .string()
+      .min(1, "Please describe the main responsibilities of the role"),
+    essentialSkills: z
+      .string()
+      .min(1, "Please list the essential skills required"),
+    desirableSkills: z.string().min(1, "Please list the desirable skills"),
+    requiredQualifications: z
+      .string()
+      .min(1, "Please specify the required qualifications"),
+    keySoftSkills: z
+      .string()
+      .min(1, "Please mention the key soft skills required"),
+  }),
 });
 
 export const CliRegFourSchema = z.object({
-  intendedInterviewProcess: z.string(),
-  deadlineForCandidate: z.date(),
+  intendedInterviewProcess: z
+    .string()
+    .min(10, "Please describe the interview process clearly"),
+  deadlineForCandidate: z.date().nullable(),
 });
 
 export const CliRegFiveSchema = z.object({
-  authorizedPersonName: z.string(),
-  jobTitle: z.string(),
-  signature: z.string(),
-  date: z.date(),
+  authorizedPersonName: z.string().min(1, "Authorized person name is required"),
+  jobTitle: z.string().min(1, "Job title is required"),
+  signature: z.string().optional(),
+  date: z
+    .date()
+    .nullable()
+    .refine((val) => val !== null, {
+      message: "Date of birth is required.",
+    }),
 });
