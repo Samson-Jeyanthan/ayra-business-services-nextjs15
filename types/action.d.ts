@@ -224,3 +224,48 @@ interface IClientRegStepTwoParams {
     phoneNo: string;
   };
 }
+
+interface IClientRegStepThreeParams {
+  jobInformation: {
+    jobTitle: string;
+    department: string;
+    reportingTo: string;
+    locationOfWork: string;
+    ifHybridDays?: string;
+  };
+  employmentTerms: {
+    typeOfPosition: string;
+    startDate: date;
+    endDate?: date;
+    workingTimeType: string;
+    workingHours: string;
+    workSchedule: string;
+  };
+  compensations: {
+    salaryRangeFrom: string;
+    salaryRangeTo: string;
+    hourlyRate?: string;
+    isBonusCommission: "true" | "false";
+    ifYesBonusCommission?: string;
+    keyBenefitsOffered: string;
+  };
+  roleAndCandidateProfile: {
+    mainResponsibilities: string;
+    essentialSkills: string;
+    desirableSkills: string;
+    requiredQualifications: string;
+    keySoftSkills: string;
+  };
+}
+
+interface IClientRegStepFourParams {
+  intendedInterviewProcess: string;
+  deadlineForCandidate: date;
+}
+
+interface IClientRegStepFiveParams {
+  authorizedPersonName: string;
+  jobTitle: string;
+  signature?: string;
+  date: date;
+}

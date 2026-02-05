@@ -32,7 +32,7 @@ const StepTwo = () => {
       console.log(result, "results on server side");
       if (result.success) {
         toast.success("Form has been submitted");
-        redirect("/candidate-registration/step-three");
+        redirect("/candidate-registration/step-3");
       } else {
         toast.error("Form submission failed");
       }

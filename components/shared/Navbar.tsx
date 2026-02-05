@@ -22,9 +22,9 @@ const Navbar = ({ isLogin }: { isLogin: boolean }) => {
     window.addEventListener("scroll", changeNav);
   }, []);
 
-  // const handleSignOut = async () => {
-  //   await signOut();
-  // };
+  const handleSignOut = async () => {
+    await signOutAction();
+  };
 
   return (
     <nav
@@ -54,11 +54,7 @@ const Navbar = ({ isLogin }: { isLogin: boolean }) => {
       </div>
 
       {isLogin ? (
-        <form
-          action={async () => {
-            await signOutAction();
-          }}
-        >
+        <form action={handleSignOut}>
           <Button
             type="submit"
             className="secondary-btn-custom h-10 px-6 text-sm rounded-full bg-white cursor-pointer"

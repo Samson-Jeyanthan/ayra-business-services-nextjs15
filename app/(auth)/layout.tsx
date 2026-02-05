@@ -5,7 +5,7 @@ import React from "react";
 
 const AuthLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await auth();
-  console.log(session);
+  console.log(session, "authlayout-session");
 
   // if (session) {
   //   const user = await getUserByIdAction(session?.user?.id);

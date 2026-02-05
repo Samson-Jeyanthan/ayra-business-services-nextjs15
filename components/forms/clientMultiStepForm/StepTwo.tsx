@@ -7,9 +7,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { CliRegTwoSchema } from "@/lib/validations";
 import { CheckBox, FormInput } from "@/components/inputs";
-import { useEffect } from "react";
+import { useEffect, useTransition } from "react";
+import { clientRegStepTwoAction } from "@/lib/actions/client.action";
+import { redirect } from "next/navigation";
+import { toast } from "sonner";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 const StepTwo = () => {
+  const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof CliRegTwoSchema>>({
     resolver: zodResolver(CliRegTwoSchema),
     defaultValues: {
@@ -43,7 +48,16 @@ const StepTwo = () => {
   }, [sameAsPrimary, primaryContact, form]);
 
   async function onSubmit(values: z.infer<typeof CliRegTwoSchema>) {
-    console.log(values);
+    startTransition(async () => {
+      const result = await clientRegStepTwoAction(values);
+      console.log(result, "results on server side");
+      if (result.success) {
+        toast.success("Form has been submitted");
+        redirect("/client-registration/step-3");
+      } else {
+        toast.error("Form submission failed");
+      }
+    });
   }
 
   return (
@@ -52,7 +66,12 @@ const StepTwo = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-8"
       >
-        <h3 className="form-sub-title">Primary Contact</h3>
+        <h3 className="form-sub-title">
+          Primary Contact
+          <span className="text-base">
+            For day-to-day correspondence regarding this role
+          </span>
+        </h3>
         <div className="flex flex-col gap-4">
           <FormInput
             form={form}
@@ -68,7 +87,7 @@ const StepTwo = () => {
               inputType="text"
             />
           </div>
-          <div className="flex gap-4">
+          <div className="flex gap-4 items-start">
             <FormInput
               form={form}
               inputName="primaryContact.email"
@@ -94,7 +113,10 @@ const StepTwo = () => {
           checkboxLabel="Same as Primary Contact"
           inputName="sameAsPrimary"
         />
-        <h3 className="form-sub-title">Billing Address</h3>
+        <h3 className="form-sub-title">
+          Billing Address
+          <span className="text-base">For invoices and payment queries</span>
+        </h3>
         <div className="flex flex-col gap-4">
           <FormInput
             form={form}
@@ -129,7 +151,16 @@ const StepTwo = () => {
         </div>
         <footer className="flex w-full gap-4 justify-between">
           <Button className="secondary-btn">Back</Button>
-          <Button className="primary-btn">Next</Button>
+          <Button className="primary-btn" type="submit" disabled={isPending}>
+            {isPending ? (
+              <>
+                <ReloadIcon className="mr-2 size-4 animate-spin" />
+                <span>Next</span>
+              </>
+            ) : (
+              <>Next</>
+            )}
+          </Button>
         </footer>
       </form>
     </Form>
