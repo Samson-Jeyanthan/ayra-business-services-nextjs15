@@ -7,3 +7,8 @@ export { default as CandidateSix } from "./CandidateSix";
 export { default as CandidateSeven } from "./CandidateSeven";
 export { default as CandidateEight } from "./CandidateEight";
 export { default as CandidateNine } from "./CandidateNine";
+export { default as ClientOne } from "./ClientOne";
+export { default as ClientTwo } from "./ClientTwo";
+export { default as ClientThree } from "./ClientThree";
+export { default as ClientFour } from "./ClientFour";
+export { default as ClientFive } from "./ClientFive";

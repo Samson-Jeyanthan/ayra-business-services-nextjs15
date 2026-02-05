@@ -7,7 +7,7 @@ export const cliStepFiveSchema = new Schema(
     data: {
       authorizedPersonName: { type: String, required: true },
       jobTitle: { type: String, required: true },
-      signature: { type: String, required: false },
+      signature: { type: String },
       date: { type: String, required: true },
     },
     isCompleted: {

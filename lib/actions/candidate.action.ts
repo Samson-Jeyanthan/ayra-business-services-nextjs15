@@ -14,7 +14,7 @@ import {
   CandidRegSixSchema,
   CandidRegThreeSchema,
   CandidRegTwoSchema,
-  GetCandidateRegInfoSchema,
+  GetUserRegInfoSchema,
 } from "../validations";
 import User from "@/database/user.model";
 import CandiRequest from "@/database/candiRequest.model";
@@ -910,11 +910,11 @@ export async function candidateRegStepNineAction(
 }
 
 export async function getCandidateRegInfoByUserId(
-  params: IGetCandidateRegInfoParams
+  params: IGetUserRegInfoParams
 ) {
   const validationResult = await action({
     params,
-    schema: GetCandidateRegInfoSchema,
+    schema: GetUserRegInfoSchema,
     authorize: true,
   });
 

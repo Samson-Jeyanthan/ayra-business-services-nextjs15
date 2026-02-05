@@ -1,14 +1,14 @@
 import { auth } from "@/auth";
 import {
-  // CandidateEight,
-  CandidateFive,
-  CandidateFour,
-  CandidateNine,
   CandidateOne,
-  CandidateSeven,
-  CandidateSix,
-  CandidateThree,
   CandidateTwo,
+  CandidateThree,
+  CandidateFour,
+  CandidateFive,
+  CandidateSix,
+  CandidateSeven,
+  // CandidateEight,
+  CandidateNine,
 } from "@/components/profile";
 import { getCandidateRegInfoByUserId } from "@/lib/actions/candidate.action";
 import { redirect } from "next/navigation";

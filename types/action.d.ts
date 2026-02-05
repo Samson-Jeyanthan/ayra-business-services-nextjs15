@@ -187,7 +187,7 @@ interface ICandidateRegStepNineParams {
   signature: string;
 }
 
-interface IGetCandidateRegInfoParams {
+interface IGetUserRegInfoParams {
   userId?: string | undefined;
 }
 
