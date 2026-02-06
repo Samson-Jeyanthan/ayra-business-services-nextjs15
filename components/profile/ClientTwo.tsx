@@ -21,16 +21,45 @@ const ClientTwo = ({ data }: IParams) => {
   return (
     <section className="w-full flex flex-col gap-4">
       <h3 className="profile-heading">Contact Information</h3>
-      <div>
-        <p>{data.primaryContact.fullName}</p>
-        <p>{data.primaryContact.jobTitle}</p>
-        <p>{data.primaryContact.address}</p>
-        <p>{data.primaryContact.email}</p>
-        <p>{data.primaryContact.phoneNo}</p>
-        <p>{data.billingContact.fullName}</p>
-        <p>{data.billingContact.address}</p>
-        <p>{data.billingContact.email}</p>
-        <p>{data.billingContact.phoneNo}</p>
+      <div className="flex flex-col gap-1">
+        <p className="profile-detail-subheading">Primary Contact:</p>
+        <div className="flex-items-start">
+          <p className="profile-detail-label">Full Name:</p>
+          <p className="profile-detail">{data.primaryContact.fullName}</p>
+        </div>
+        <div className="flex-items-start">
+          <p className="profile-detail-label">Job Titile:</p>
+          <p className="profile-detail">{data.primaryContact.jobTitle}</p>
+        </div>
+        <div className="flex-items-start">
+          <p className="profile-detail-label">Address:</p>
+          <p className="profile-detail">{data.primaryContact.address}</p>
+        </div>
+        <div className="flex-items-start">
+          <p className="profile-detail-label">Email:</p>
+          <p className="profile-detail">{data.primaryContact.email}</p>
+        </div>
+        <div className="flex-items-start">
+          <p className="profile-detail-label">Phone No:</p>
+          <p className="profile-detail">{data.primaryContact.phoneNo}</p>
+        </div>
+        <p className="profile-detail-subheading">Billing Contact:</p>
+        <div className="flex-items-start">
+          <p className="profile-detail-label">Full Name:</p>
+          <p className="profile-detail">{data.billingContact.fullName}</p>
+        </div>
+        <div className="flex-items-start">
+          <p className="profile-detail-label">Address:</p>
+          <p className="profile-detail">{data.billingContact.address}</p>
+        </div>
+        <div className="flex-items-start">
+          <p className="profile-detail-label">Email:</p>
+          <p className="profile-detail">{data.billingContact.email}</p>
+        </div>
+        <div className="flex-items-start">
+          <p className="profile-detail-label">Phone No:</p>
+          <p className="profile-detail">{data.billingContact.phoneNo}</p>
+        </div>
       </div>
     </section>
   );

@@ -154,6 +154,10 @@
     @apply flex justify-end items-center;
   }
 
+  .flex-items-start {
+    @apply flex items-start;
+  }
+
   .no-focus {
     @apply ring-0 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 outline-none;
   }
@@ -231,10 +235,22 @@
   }
 
   .profile-heading {
-    @apply text-2xl font-semibold w-full p-3 bg-light-500 text-black;
+    @apply text-2xl font-semibold w-full p-3 bg-light-700 text-black;
   }
 
   .card-img {
     @apply w-72 h-40 rounded-2xl object-cover border border-solid border-light-500;
+  }
+
+  .profile-detail-subheading {
+    @apply font-semibold pb-2 my-2 border-b w-64 border-solid border-light-400;
+  }
+
+  .profile-detail-label {
+    @apply font-medium text-light-200 w-64;
+  }
+
+  .profile-detail {
+    @apply font-medium capitalize;
   }
 }
