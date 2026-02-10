@@ -46,7 +46,7 @@ const ClientForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="mt-4 space-y-8 w-3/10 flex flex-col items-center"
+        className="mt-4 space-y-8 w-full md:w-3/10 flex flex-col items-center"
       >
         <div className="flex gap-2 w-full">
           <FormInput

@@ -9,6 +9,7 @@ import {
   CliRegThreeSchema,
   CliRegTwoSchema,
   ClientReqSchema,
+  GetUserRegInfoSchema,
 } from "../validations";
 import User from "@/database/user.model";
 import action from "../handlers/action";
@@ -470,4 +471,39 @@ export async function clientRegStepFiveAction(
   } finally {
     session.endSession();
   }
+}
+
+export async function getClientRegInfoByUserId(params: IGetUserRegInfoParams) {
+  const validationResult = await action({
+    params,
+    schema: GetUserRegInfoSchema,
+    authorize: true,
+  });
+
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+
+  const { userId } = validationResult.params!;
+  const currentUserId = validationResult?.session?.user?.id;
+  const paramId = userId ? userId : currentUserId;
+
+  if (!paramId) {
+    return {
+      success: false,
+      data: null,
+      error: { message: "User ID not found" },
+    };
+  }
+
+  const clientRegInfo = await Client.findOne({ userId: paramId })
+    .select("+stepThree")
+    .lean();
+
+  console.log(clientRegInfo, "client.actions.ts");
+
+  return {
+    success: true,
+    data: clientRegInfo ? clientRegInfo : null,
+  };
 }

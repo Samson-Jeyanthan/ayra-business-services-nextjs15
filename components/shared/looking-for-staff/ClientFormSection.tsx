@@ -5,9 +5,9 @@ const ClientFormSection = () => {
   return (
     <div
       id="client-form"
-      className="flex items-start justify-center w-full p-20 gap-20"
+      className="flex flex-col md:flex-row items-start justify-center w-full p-10 md:p-20 gap-20"
     >
-      <div className="flex flex-col items-center gap-10 w-[35%]">
+      <div className="flex flex-col items-center gap-10 w-full md:w-[35%]">
         <h3 className="heading-3 text-center w-9/10">
           Partner with Us to Find the Right Staff
         </h3>

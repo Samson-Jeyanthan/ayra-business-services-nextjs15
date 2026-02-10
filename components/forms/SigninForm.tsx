@@ -13,6 +13,7 @@ import { useTransition } from "react";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { redirect } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 
 const SigninForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -60,13 +61,13 @@ const SigninForm = () => {
   }
 
   return (
-    <div className="w-2/5 flex flex-col items-center justify-center">
+    <div className="z-10 -mt-50 md:mt-0 bg-white rounded-2xl p-10 md:p-0 w-full md:w-2/5 flex flex-col items-center justify-center">
       <Image src="/images/ayrabs-logo.png" alt="logo" width={180} height={32} />
       <h3 className="font-semibold text-2xl mt-5">Login to your account</h3>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 rounded-2xl items-center w-5/8 mt-5"
+          className="flex flex-col gap-4 rounded-2xl items-center w-8/10 md:w-5/8 mt-5"
         >
           <FormInput
             form={form}
@@ -93,10 +94,18 @@ const SigninForm = () => {
 
           <div className="flex flex-col gap-2 text-sm ">
             <p className="font-semibold">Don&apos;t have an account?</p>
-            <span className="text-sm">
-              Please request registration on our website if you’re looking for
-              staff or looking for work.
-            </span>
+            <div className="text-sm">
+              Please request registration on our website if you’re
+              <Link href="/looking-for-staff" className="underline">
+                {" "}
+                looking for staff{" "}
+              </Link>
+              or
+              <Link href="/looking-for-work" className="underline">
+                {" "}
+                looking for work
+              </Link>
+            </div>
           </div>
         </form>
       </Form>

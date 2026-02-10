@@ -48,7 +48,7 @@ const CandidateForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="mt-4 space-y-8 w-8/10 flex flex-col items-center"
+        className="mt-4 space-y-8 w-full md:w-8/10 flex flex-col items-center"
       >
         <div className="candidate-form-contents">
           <FormInput

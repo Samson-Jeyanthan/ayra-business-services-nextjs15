@@ -359,7 +359,7 @@ export const CandidRegNineSchema = z
     }
   });
 
-export const GetCandidateRegInfoSchema = z.object({
+export const GetUserRegInfoSchema = z.object({
   userId: z.string(),
 });
 

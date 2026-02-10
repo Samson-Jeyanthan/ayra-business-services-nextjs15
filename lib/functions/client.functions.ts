@@ -43,3 +43,13 @@ export function getStageNumber({
     }
   }
 }
+
+export function formatDateToReadable(dateInput: string | Date): string {
+  const date = typeof dateInput === "string" ? new Date(dateInput) : dateInput;
+
+  if (isNaN(date.getTime())) {
+    return "";
+  }
+
+  return date.toDateString();
+}

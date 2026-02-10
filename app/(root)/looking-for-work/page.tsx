@@ -25,7 +25,7 @@ const LookingForWork = () => {
       <CandidateFormSection />
       <ContactUs
         title="Join Ayra and steer your career in the right direction!"
-        titleClass="text-5xl font-semibold w-4/6"
+        titleClass="text-4xl md:text-5xl font-semibold w-full md:w-4/6"
       />
     </section>
   );

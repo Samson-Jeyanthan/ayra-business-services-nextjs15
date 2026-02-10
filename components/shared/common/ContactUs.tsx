@@ -9,7 +9,7 @@ const ContactUs = ({
   titleClass: string;
 }) => {
   return (
-    <div className="flex items-center h-48 p-14 justify-between bg-light-100 rounded-4xl w-[95%] bg-[url(/images/contact-us-bg.png)] bg-cover bg-local bg-no-repeat">
+    <div className="flex md:flex-row flex-col gap-6 items-center h-auto md:h-48 p-8 md:p-14 justify-between bg-light-100 rounded-4xl w-[95%] bg-[url(/images/contact-us-bg.png)] bg-cover bg-local bg-no-repeat">
       <h1
         className={`${titleClass} text-light-800 tracking-tight font-semibold`}
       >

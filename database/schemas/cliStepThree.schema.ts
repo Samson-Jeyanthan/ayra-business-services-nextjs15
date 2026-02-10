@@ -10,12 +10,12 @@ export const cliStepThreeSchema = new Schema(
         department: { type: String },
         reportingTo: { type: String },
         locationOfWork: { type: String },
-        ifHybridDays: { type: String, required: false },
+        ifHybridDays: { type: String },
       },
       employmentTerms: {
         typeOfPosition: { type: String },
         startDate: { type: String },
-        endDate: { type: String, required: false },
+        endDate: { type: String },
         workingTimeType: { type: String },
         workingHours: { type: String },
         workSchedule: { type: String },
@@ -23,13 +23,13 @@ export const cliStepThreeSchema = new Schema(
       compensations: {
         salaryRangeFrom: { type: String },
         salaryRangeTo: { type: String },
-        hourlyRate: { type: String, required: false },
+        hourlyRate: { type: String },
         isBonusCommission: {
           type: { type: Boolean },
           enum: ["true", "false"],
         },
-        ifYesBonusCommission: { type: String, required: false },
-        keyBenefitsOffered: { type: String, required: false },
+        ifYesBonusCommission: { type: String },
+        keyBenefitsOffered: { type: String },
       },
       roleAndCandidateProfile: {
         mainResponsibilities: { type: String },

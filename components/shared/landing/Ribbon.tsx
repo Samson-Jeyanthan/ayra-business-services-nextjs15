@@ -5,17 +5,20 @@ import React from "react";
 const Ribbon = () => {
   return (
     <div className="relative w-full h-72 -mt-14 overflow-hidden">
-      <div className="absolute top-3/6 left-3/6 w-[150%] h-10 bg-primary rotate-6 -translate-x-1/2 -translate-y-1/2 z-0" />
-      <div className="relative z-10 flex justify-center items-center py-5 shadow-xl mt-28 gap-6 md:gap-16 bg-primary text-light-1300">
+      <div className="absolute top-[55%] md:top-3/6 left-3/6 w-[150%] h-10 bg-primary rotate-[17deg] md:rotate-6 -translate-x-1/2 -translate-y-1/2 z-0" />
+      <div className="relative z-10 flex flex-wrap md:flex justify-center items-center py-5 shadow-xl mt-28 gap-4 md:gap-16 bg-primary text-light-1300">
         {RIBBON_NAMES.map((item, index) => (
           <React.Fragment key={item.name}>
-            <p className="whitespace-nowrap text-lg font-medium">{item.name}</p>
+            <p className="whitespace-nowrap text-sm md:text-lg font-medium">
+              {item.name}
+            </p>
             {index !== RIBBON_NAMES.length - 1 && (
               <Image
                 src="/svgs/star.svg"
                 alt="Ribbon Logo"
                 width={26}
                 height={26}
+                className="size-4 md:size-6"
               />
             )}
           </React.Fragment>
