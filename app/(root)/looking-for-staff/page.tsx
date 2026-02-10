@@ -37,7 +37,7 @@ const LookingForStaff = () => {
       <Description />
       <ContactUs
         title="Ready to experience the Ayra difference and drive your business forward?"
-        titleClass="text-5xl font-semibold w-4/6"
+        titleClass="text-4xl md:text-5xl font-semibold w-full md:w-4/6"
       />
     </section>
   );

@@ -3,9 +3,10 @@
 import { NAV_LINKS } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "../ui/button";
 import { signOutAction } from "@/lib/actions/auth.actions";
+import MobileNavbar from "./MobileNavbar";
 
 const Navbar = ({ isLogin }: { isLogin: boolean }) => {
   const [scrollNav, setScrollNav] = useState(false);
@@ -38,7 +39,8 @@ const Navbar = ({ isLogin }: { isLogin: boolean }) => {
           height={32}
         />
       </Link>
-      <div className="flex gap-6">
+
+      <div className="hidden md:flex gap-6">
         {NAV_LINKS.map((item) => {
           return (
             <Link
@@ -53,23 +55,29 @@ const Navbar = ({ isLogin }: { isLogin: boolean }) => {
         })}
       </div>
 
-      {isLogin ? (
-        <form action={handleSignOut}>
-          <Button
-            type="submit"
-            className="secondary-btn-custom h-10 px-6 text-sm rounded-full bg-white cursor-pointer"
+      <div className="hidden md:flex w-auto">
+        {isLogin ? (
+          <form action={handleSignOut}>
+            <Button
+              type="submit"
+              className="secondary-btn-custom h-10 px-6 text-sm rounded-full bg-white cursor-pointer"
+            >
+              <span className="text-dark300_light900 max-lg:hidden">
+                Logout
+              </span>
+            </Button>
+          </form>
+        ) : (
+          <Link
+            href="/sign-in"
+            className="secondary-btn-custom h-10 px-6 text-sm"
           >
-            <span className="text-dark300_light900 max-lg:hidden">Logout</span>
-          </Button>
-        </form>
-      ) : (
-        <Link
-          href="/sign-in"
-          className="secondary-btn-custom h-10 px-6 text-sm"
-        >
-          Sign in
-        </Link>
-      )}
+            Sign in
+          </Link>
+        )}
+      </div>
+
+      <MobileNavbar isLogin={isLogin} />
     </nav>
   );
 };

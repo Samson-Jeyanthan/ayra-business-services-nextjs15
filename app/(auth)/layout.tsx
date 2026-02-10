@@ -18,7 +18,7 @@ const AuthLayout = async ({ children }: { children: React.ReactNode }) => {
   // }
 
   return (
-    <main className="relative flex min-h-screen items-center justify-center w-full flex-col scroll-smooth">
+    <main className="relative flex min-h-screen items-start md:items-center justify-center w-full flex-col scroll-smooth">
       {children}
     </main>
   );

@@ -211,7 +211,7 @@
   /* Form utility classes */
 
   .candidate-form-contents {
-    @apply flex w-full gap-20 justify-between items-start;
+    @apply flex md:flex-row flex-col w-full gap-8 md:gap-20 justify-between items-start;
   }
 
   .multi-form-wrapper {

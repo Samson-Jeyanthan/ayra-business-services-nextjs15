@@ -36,7 +36,7 @@ const LandingPage = async () => {
       <div className="h-6 w-full bg-light-600" />
       <ContactUs
         title="Ready to work with us ?"
-        titleClass="text-7xl font-semibold"
+        titleClass="text-4xl md:text-7xl font-semibold"
       />
     </section>
   );
