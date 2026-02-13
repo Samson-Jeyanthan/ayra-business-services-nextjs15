@@ -9,13 +9,15 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
 
   console.log(session);
 
-  if (session) {
+  if (session !== null) {
     const user = await getUserByIdAction(session?.user?.id);
 
     if (user?.userType === "client") {
       userLink = "client";
-    } else {
+    } else if (user?.userType === "candidate") {
       userLink = "candidate";
+    } else if (user?.userType === "admin") {
+      userLink = "admin";
     }
   }
 

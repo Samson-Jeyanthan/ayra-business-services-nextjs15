@@ -145,14 +145,13 @@ export async function signOutAction() {
 }
 
 export const getUserByIdAction = async (id?: string) => {
-  if (!id) throw new Error("User ID is required");
-
-  const response = (await api.users.getById(id)) as ActionResponse<IUserDoc>;
-
-  if (!response?.data) {
+  if (!id) {
     throw new NotFoundError("User");
   }
-
+  const response = (await api.users.getById(id)) as ActionResponse<IUserDoc>;
+  if (!response.data) {
+    throw new NotFoundError("User");
+  }
   return response.data;
 };
 
