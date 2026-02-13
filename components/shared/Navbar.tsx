@@ -1,48 +1,28 @@
-"use client";
-
 import { NAV_LINKS } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import ProfileAvatar from "./common/ProfileAvatar";
 import MobileNavbar from "./MobileNavbar";
-import { Session } from "next-auth";
-// import { Button } from "../ui/button";
-// import { signOutAction } from "@/lib/actions/auth.actions";
+import { auth, signOut } from "@/auth";
+import { Button } from "../ui/button";
+// import { getUserAction } from "@/lib/actions/auth.actions";
+// import ProfileAvatar from "./common/ProfileAvatar";
 
-// import dynamic from "next/dynamic";
-// const MobileNavbar = dynamic(() => import("./MobileNavbar"), { ssr: false });
+const Navbar = async () => {
+  const session = await auth();
+  const scrollNav = true;
 
-const Navbar = ({
-  isLogin,
-  userName,
-  userLink,
-  session,
-}: {
-  isLogin: boolean;
-  userName?: string | null;
-  userLink: string;
-  session: Session | null;
-}) => {
-  console.log(isLogin, "islogin params");
-  console.log(session, "session params");
-  const [scrollNav, setScrollNav] = useState(false);
+  //   const userId = session?.user?.id;
+  //   let userLink = "";
 
-  const changeNav = () => {
-    if (window.scrollY >= 10) {
-      setScrollNav(true);
-    } else {
-      setScrollNav(false);
-    }
-  };
+  //   if (userId) {
+  //     const res = await getUserAction({ userId });
 
-  useEffect(() => {
-    window.addEventListener("scroll", changeNav);
-  }, []);
+  //     const user = res.success ? res.data?.user : null;
 
-  // const handleSignOut = async () => {
-  //   await signOutAction();
-  // };
+  //     if (user?.userType === "client") userLink = "client";
+  //     else if (user?.userType === "candidate") userLink = "candidate";
+  //     else if (user?.userType === "admin") userLink = "admin";
+  // }
 
   return (
     <nav
@@ -72,9 +52,24 @@ const Navbar = ({
         })}
       </div>
 
+      {/* <ProfileAvatar userName={ session?.user?.name } userLink={ userLink } /> */}
       <div className="hidden md:flex w-auto">
-        {isLogin ? (
-          <ProfileAvatar userName={userName} userLink={userLink} />
+        {session ? (
+          <form
+            action={async () => {
+              "use server";
+
+              await signOut();
+            }}
+            className="flex-center"
+          >
+            <Button
+              type="submit"
+              className="secondary-btn-custom h-10 px-6 text-sm rounded-full bg-white cursor-pointer"
+            >
+              <p className="text-dark300_light900">Logout</p>
+            </Button>
+          </form>
         ) : (
           <Link
             href="/sign-in"
@@ -85,20 +80,9 @@ const Navbar = ({
         )}
       </div>
 
-      <MobileNavbar isLogin={isLogin} />
+      <MobileNavbar />
     </nav>
   );
 };
 
 export default Navbar;
-
-{
-  /* <form action={handleSignOut}>
-              <Button
-                type="submit"
-                className="secondary-btn-custom h-10 px-6 text-sm rounded-full bg-white cursor-pointer"
-              >
-                <span className="text-dark300_light900">Logout</span>
- </Button>
-</form> */
-}

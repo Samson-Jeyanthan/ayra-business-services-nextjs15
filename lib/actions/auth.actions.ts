@@ -144,7 +144,7 @@ export async function signInWithCredentials(
 }
 
 export async function signOutAction() {
-  await signOut();
+  await signOut({ redirectTo: "/" });
 }
 
 export async function getUserAction(params: IGetUserParams): Promise<
@@ -167,6 +167,8 @@ export async function getUserAction(params: IGetUserParams): Promise<
     const user = await User.findById(userId);
 
     if (!user) throw new Error("User not found");
+
+    console.log(user, "user-in-getuseraction");
 
     return {
       success: true,
