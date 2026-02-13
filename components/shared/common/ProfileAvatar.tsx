@@ -1,6 +1,5 @@
-"use client";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { redirect } from "next/navigation";
 
 const ProfileAvatar = ({
   userName,
@@ -11,9 +10,9 @@ const ProfileAvatar = ({
 }) => {
   const handleProfileNavigate = () => {
     if (userLink === "client") {
-      window.location.href = "/client-profile";
+      redirect("/client-profile");
     } else if (userLink === "candidate") {
-      window.location.href = "/candidate-profile";
+      redirect("/candidate-profile");
     }
   };
 
