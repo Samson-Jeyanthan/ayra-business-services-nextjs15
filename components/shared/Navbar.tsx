@@ -4,12 +4,13 @@ import { NAV_LINKS } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import ProfileAvatar from "./common/ProfileAvatar";
+import MobileNavbar from "./MobileNavbar";
 // import { Button } from "../ui/button";
 // import { signOutAction } from "@/lib/actions/auth.actions";
-import dynamic from "next/dynamic";
-import ProfileAvatar from "./common/ProfileAvatar";
 
-const MobileNavbar = dynamic(() => import("./MobileNavbar"), { ssr: false });
+// import dynamic from "next/dynamic";
+// const MobileNavbar = dynamic(() => import("./MobileNavbar"), { ssr: false });
 
 const Navbar = ({
   isLogin,
