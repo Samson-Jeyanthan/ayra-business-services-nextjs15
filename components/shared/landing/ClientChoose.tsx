@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const ClientChoose = () => {
   return (
-    <section className="flex flex-col h-auto p-10 md:p-20 gap-10 bg-light-600">
+    <section className="flex flex-col h-auto p-8 md:p-20 gap-10 bg-light-600">
       <h1 className="heading-2">why our clients choose us?</h1>
       <p className="font-medium text-light-400 w-full md:w-1/2">
         At Ayra Business Services, we don’t just offer services — we deliver
@@ -15,7 +15,7 @@ const ClientChoose = () => {
         {WHY_CHOOSE.map((item) => (
           <div
             key={item.name}
-            className="flex flex-col min-w-1/4 w-auto gap-6 rounded-3xl bg-light-800 text-light-100 p-8"
+            className="flex flex-col min-w-1/4 w-auto gap-6 rounded-3xl bg-light-800 text-light-100 p-6 md:p-8"
           >
             <div className="flex gap-4">
               <Image
@@ -27,7 +27,9 @@ const ClientChoose = () => {
               />
               <h3 className="text-2xl font-semibold">{item.name}</h3>
             </div>
-            <p className="font-medium text-light-400">{item.description}</p>
+            <p className="font-medium text-sm md:text-base text-light-400">
+              {item.description}
+            </p>
           </div>
         ))}
       </div>

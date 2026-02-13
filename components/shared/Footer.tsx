@@ -6,7 +6,7 @@ import React from "react";
 const Footer = () => {
   return (
     <footer
-      className="flex flex-col gap-7 px-10 md:px-20 py-10 bg-light-900"
+      className="flex flex-col gap-7 p-5 md:p-10 md:px-20 bg-light-900"
       id="footer"
     >
       <div className="h-2 w-full flex bg-primary" />
@@ -63,7 +63,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="w-auto md:w-max">
+          <div className="w-auto md:w-max md:max-w-60">
             <h3 className="footer-title">Contact</h3>
             <ul className="footer-links-group">
               <li className="flex gap-2">
@@ -84,7 +84,7 @@ const Footer = () => {
                 />
                 info@ayrabs.com
               </li>
-              <li className="flex gap-2">
+              <li className="flex gap-2 items-start">
                 <Image
                   src="/svgs/location.svg"
                   alt="location"

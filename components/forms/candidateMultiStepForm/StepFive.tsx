@@ -237,12 +237,12 @@ const StepFive = () => {
         className="flex flex-col gap-8"
       >
         <div className="multi-form-wrapper">
-          <p>
+          <p className="text-sm md:text-base">
             Please ensure you provide{" "}
             <span className="form-semibold">CLEAR pictures, </span>
             as it is important we are able to read these documents
           </p>
-          <div className="w-full flex gap-4 items-start">
+          <div className="w-full flex flex-col md:flex-row gap-4 items-start">
             <FormInput
               form={form}
               inputName="drivingLicenceNo"
@@ -432,10 +432,10 @@ const StepFive = () => {
               )}
             />
           </div>
-          <h3 className="text-2xl font-bold w-[80%] pb-4 border-b border-solid border-b-gray-300">
+          <h3 className="text-2xl font-bold md:w-[80%] pb-4 border-b border-solid border-b-gray-300">
             Motor Incidents
           </h3>
-          <div className="w-[80%]">
+          <div className="md:w-[80%]">
             <TextArea
               form={form}
               inputName="motorIncidents.currentDrivingEndorsement"
@@ -479,7 +479,7 @@ const StepFive = () => {
             formLabel="Have you taken any illegal substances (drugs) in the last 6 months?"
             options={YES_NO_OPTIONS}
           />
-          <div className="w-[80%]">
+          <div className="md:w-[80%]">
             <TextArea
               form={form}
               inputName="motorIncidents.reasonForIllegalSubstance"
@@ -493,7 +493,7 @@ const StepFive = () => {
             formLabel="Do you agree to random drug and alcohol testing if required by either Resolute Logistics Recruitment or our clients if required?"
             options={YES_NO_OPTIONS}
           />
-          <div className="w-[80%]">
+          <div className="md:w-[80%]">
             <TextArea
               form={form}
               inputName="motorIncidents.reasonForNoRandomDrugTest"
@@ -507,7 +507,7 @@ const StepFive = () => {
             formLabel="Do you need to wear glasses to drive?"
             options={YES_NO_OPTIONS}
           />
-          <div className="w-1/2 pr-4">
+          <div className="md:w-1/2 pr-4">
             <PopupCalendar
               form={form}
               inputName="motorIncidents.lastEyeTestDate"

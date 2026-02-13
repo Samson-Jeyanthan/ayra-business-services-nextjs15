@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <div className="relative flex-col md:flex md:flex-row gap-16 w-full p-20 3xl:px-44 min-h-[calc(100vh-12.5rem)]">
+    <div className="relative flex-col flex md:flex-row gap-10 w-full pt-20 p-10 md:p-20 3xl:px-44 min-h-[calc(100vh-12.5rem)]">
       <Image
         src="/svgs/net.svg"
         alt="bg-net"
@@ -22,8 +22,11 @@ const Hero = () => {
           solutions for your workforce, your operations, and your brand. Partner
           with Ayra and unlock growth across every lane of your business.
         </p>
-        <div className="flex gap-5 items-start">
-          <Link href="/looking-for-staff" className="primary-btn">
+        <div className="flex flex-col w-full md:flex-row gap-5 items-start">
+          <Link
+            href="/looking-for-staff"
+            className="primary-btn md:!w-auto !w-full !max-w-full md:!max-w-auto cursor-pointer"
+          >
             Hire Staff
             <Image
               src="/svgs/arrow-right-white.svg"
@@ -32,7 +35,10 @@ const Hero = () => {
               width={20}
             />
           </Link>
-          <Link href="/looking-for-work" className="secondary-btn">
+          <Link
+            href="/looking-for-work"
+            className="secondary-btn md:!w-auto !w-full !max-w-full md:!max-w-auto cursor-pointer"
+          >
             Looking for Work
           </Link>
         </div>

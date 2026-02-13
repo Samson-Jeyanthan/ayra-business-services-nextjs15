@@ -43,7 +43,7 @@ const StepThree = () => {
         className="flex flex-col gap-8"
       >
         <div className="multi-form-wrapper">
-          <p className="font-semibold">
+          <p className="font-semibold text-sm md:text-base">
             Do you currently have a criminal caution or convictions which are
             not yet spent (i.e. unspent) under the terms of the Rehabilitation
             of Offenders Act 1974 (ROA 1974)?
@@ -63,7 +63,7 @@ const StepThree = () => {
               },
             ]}
           />
-          <p className="font-semibold">
+          <p className="font-semibold text-sm md:text-base">
             If you have answered &quot;Yes&quot;, please provide the offence
             dates, dates of conviction/caution, offence types and sentences
             recieved below

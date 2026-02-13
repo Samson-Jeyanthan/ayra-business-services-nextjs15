@@ -79,7 +79,7 @@ const StepTwo = () => {
             formLabel="Full Name"
             inputType="text"
           />
-          <div className="w-1/2">
+          <div className="md:w-1/2">
             <FormInput
               form={form}
               inputName="primaryContact.jobTitle"
@@ -87,7 +87,7 @@ const StepTwo = () => {
               inputType="text"
             />
           </div>
-          <div className="flex gap-4 items-start">
+          <div className="flex flex-col md:flex-row gap-4 items-start">
             <FormInput
               form={form}
               inputName="primaryContact.email"
@@ -125,7 +125,7 @@ const StepTwo = () => {
             inputType="text"
             disabled={sameAsPrimary}
           />
-          <div className="flex gap-4">
+          <div className="flex flex-col md:flex-row gap-4">
             <FormInput
               form={form}
               inputName="billingContact.email"

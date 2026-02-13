@@ -46,7 +46,7 @@ const StepEight = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-8"
       >
-        <p>
+        <p className="text-sm md:text-base">
           Adapt Logistics Recruitment provides work-finding services to its
           clients and work-seekers. We must process personal data (including
           sensitive personal data) so that we can provide these services. - in
@@ -101,7 +101,7 @@ const StepEight = () => {
           inputName="rightToWorkInfo"
           formDescription="Including but not limited to: Full Right to Work Check Documents, Passport, Right to Work Expiry. This includes sensitive personal data."
         />
-        <p>
+        <p className="text-sm md:text-base">
           Adapt Logistics recruitment is committed to a policy of equal
           oppurtunities for all work seekers and shall adhere to such a policy
           all time and will recieve on an on-going basis on all aspects of

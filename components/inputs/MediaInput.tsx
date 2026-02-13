@@ -53,7 +53,7 @@ const MediaInput = ({
 
       {media?.fileName === "" && (
         <div
-          className="flex-center border rounded-lg border-dashed border-light-400 p-6 py-14 text-sm cursor-pointer w-[80%] text-light-100/60"
+          className="flex-center border rounded-lg border-dashed border-light-400 p-6 py-14 text-sm cursor-pointer md:w-[80%] text-light-100/60"
           onClick={handleInputBtn}
         >
           Click here to upload the image

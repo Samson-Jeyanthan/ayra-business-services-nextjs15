@@ -73,7 +73,7 @@ const StepThree = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-8"
+        className="flex flex-col gap-5 md:gap-8"
       >
         <h3 className="form-sub-title">Job Information</h3>
         <FormInput
@@ -113,7 +113,7 @@ const StepThree = () => {
             },
           ]}
         />
-        <div className="w-1/2">
+        <div className="md:w-1/2">
           <FormInput
             form={form}
             inputName="jobInformation.ifHybridDays"
@@ -145,7 +145,7 @@ const StepThree = () => {
             },
           ]}
         />
-        <div className="flex gap-4 items-start">
+        <div className="flex flex-col md:flex-row gap-4 items-start">
           <PopupCalendar
             form={form}
             formLabel="Desired Start Date"
@@ -173,7 +173,7 @@ const StepThree = () => {
             },
           ]}
         />
-        <div className="flex gap-4">
+        <div className="flex flex-col md:flex-row gap-4">
           <FormInput
             form={form}
             inputName="employmentTerms.workingHours"
@@ -228,7 +228,7 @@ const StepThree = () => {
             },
           ]}
         />
-        <div className="w-1/2">
+        <div className="md:w-1/2">
           <FormInput
             form={form}
             inputName="compensations.ifYesBonusCommission"

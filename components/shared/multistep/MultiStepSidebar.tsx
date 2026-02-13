@@ -40,7 +40,6 @@ const MultiStepSidebar = ({
           "use server";
           await signOutAction();
         }}
-        // className="flex justify-center"
       >
         <Button
           type="submit"

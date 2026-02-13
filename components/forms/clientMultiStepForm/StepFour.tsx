@@ -50,7 +50,7 @@ const StepFour = () => {
             formDescription="e.g., 1st stage video call, 2nd stage in-person with task"
             maxLength={400}
           />
-          <div className="w-1/2">
+          <div className="md:w-1/2">
             <PopupCalendar
               form={form}
               formLabel="Deadline For Candidate"

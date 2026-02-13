@@ -23,7 +23,7 @@ import {
 // };
 
 const LandingPage = async () => {
-  // await test();
+  // await test();     // "next": "^16.2.0-canary.33",
 
   return (
     <section className="w-full flex flex-col min-h-screen items-center">

@@ -27,7 +27,7 @@ export default async function MultiStepLayout({
   return (
     <main className="relative flex justify-center w-full">
       <section className="w-full max-w-[90rem] flex gap-4">
-        <aside className="sticky top-0 z-0 py-12 min-h-screen max-h-screen ">
+        <aside className="sticky top-0 z-0 py-12 hidden md:flex flex-col min-h-screen max-h-screen ">
           <header>
             <Image
               src="/images/ayrabs-logo.png"
