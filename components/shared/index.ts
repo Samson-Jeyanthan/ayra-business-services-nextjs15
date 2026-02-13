@@ -22,3 +22,4 @@ export { default as Description } from "./looking-for-staff/Description";
 export { default as CandidateFormSection } from "./looking-for-work/CandidateFormSection";
 export { default as MultiStepSidebar } from "./multistep/MultiStepSidebar";
 export { default as Required } from "./common/Required";
+export { default as ProfileAvatar } from "./common/ProfileAvatar";

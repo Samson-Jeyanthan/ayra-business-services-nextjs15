@@ -61,7 +61,7 @@ const StepSix = () => {
         {fields.map((field, index) => (
           <div
             key={field.id}
-            className="rounded-lg border p-4 flex flex-col gap-4"
+            className="rounded-lg border md:p-4 flex flex-col gap-4"
           >
             <h2 className="font-semibold text-xl">Referee {index + 1}</h2>
 
@@ -85,7 +85,7 @@ const StepSix = () => {
               inputType="text"
             />
 
-            <div className="flex gap-4 items-center">
+            <div className="flex flex-col md:flex-row gap-4 items-center">
               <FormInput
                 form={form}
                 inputName={`references.${index}.address`}
@@ -101,7 +101,7 @@ const StepSix = () => {
               />
             </div>
 
-            <div className="flex gap-4 items-center">
+            <div className="flex flex-col md:flex-row gap-4 items-center">
               <FormInput
                 form={form}
                 inputName={`references.${index}.phoneNo`}
@@ -117,7 +117,7 @@ const StepSix = () => {
               />
             </div>
 
-            <div className="flex gap-4 items-center">
+            <div className="flex flex-col md:flex-row gap-4 items-center">
               <PopupCalendar
                 form={form}
                 inputName={`references.${index}.employmentStartDate`}

@@ -32,7 +32,7 @@ const TextArea = ({
           <FormControl>
             <Textarea
               {...field}
-              className="no-focus !h-40 resize-none !bg-light-700 !border !border-solid !border-light-500 !text-light-100 !rounded-lg !px-3 !py-2 text-sm"
+              className="no-focus h-48 md:!h-40 resize-none !bg-light-700 !border !border-solid !border-light-500 !text-light-100 !rounded-lg !px-3 !py-2 text-sm"
               maxLength={maxLength}
             />
           </FormControl>

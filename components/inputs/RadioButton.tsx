@@ -24,7 +24,7 @@ const RadioButton = ({
       name={inputName}
       render={({ field }) => (
         <FormItem className="w-full">
-          <FormLabel className="mb-1 font-semibold !text-light-100 leading-6 w-[80%]">
+          <FormLabel className="mb-1 font-semibold !text-light-100 leading-6 md:w-[80%]">
             {formLabel}
           </FormLabel>
           <FormControl>

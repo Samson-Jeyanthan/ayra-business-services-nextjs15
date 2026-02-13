@@ -127,7 +127,7 @@ const StepNine = () => {
             formLabel="You have a Postgraduate Loan"
             inputName="studentLoans.havePostgraduateLoan"
           />
-          <p>Please tick all that Apply</p>
+          <p className="text-sm md:text-base">Please tick all that Apply</p>
         </div>
 
         {form.formState.errors.studentLoans?.message && (

@@ -45,13 +45,13 @@ const SignupForm = () => {
   }
 
   return (
-    <div className="w-2/5 flex flex-col items-center justify-center">
+    <div className="z-10 -mt-40 md:mt-0 bg-white rounded-2xl p-8 md:p-0 w-full md:w-2/5 flex flex-col items-center justify-center border border-solid border-black">
       <Image src="/images/ayrabs-logo.png" alt="logo" width={180} height={32} />
       <h3 className="font-semibold text-2xl mt-5">Create an Account</h3>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 rounded-2xl items-center w-5/8 mt-5"
+          className="flex flex-col gap-4 rounded-2xl items-center w-full md:w-5/8 mt-5"
         >
           <FormInput
             form={form}

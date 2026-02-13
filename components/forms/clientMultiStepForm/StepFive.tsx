@@ -48,7 +48,7 @@ const StepFive = () => {
       >
         <div className="multi-form-wrapper">
           By signing below, you confirm that:
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 text-sm md:text-base">
             <p>
               1. The information provided in this form is accurate to the best
               of your knowledge.
@@ -84,10 +84,12 @@ const StepFive = () => {
               <PopupCalendar form={form} formLabel="Date" inputName="date" />
             </div>
           </div>
-          <p className="p-8 font-semibold text-center rounded-2xl border border-solid border-light-400 flex gap-3">
-            <PartyPopper />
-            Thank you for choosing Ayra Business Services. We will be in touch
-            shortly to confirm receipt and discuss the next steps.
+          <p className="p-4 md:p-8 font-semibold text-sm md:text-base text-left md:text-center rounded-2xl border border-solid border-light-400 flex gap-8 items-start justify-start">
+            <PartyPopper className="size-20 md:!size-10 flex items-start" />
+            <span>
+              Thank you for choosing Ayra Business Services. We will be in touch
+              shortly to confirm receipt and discuss the next steps.
+            </span>
           </p>
         </div>
         <footer className="flex w-full gap-4 justify-between">

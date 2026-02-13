@@ -58,7 +58,7 @@ const StepTwo = () => {
             inputType="text"
             formLabel="Relation to You"
           />
-          <div className="w-full flex gap-4 items-start">
+          <div className="w-full flex flex-col md:flex-row gap-6 md:gap-4 items-start">
             <FormInput
               form={form}
               inputName="kinMobileNo"

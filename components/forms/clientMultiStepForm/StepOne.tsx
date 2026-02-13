@@ -52,7 +52,7 @@ const StepOne = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-6"
+        className="flex flex-col gap-8"
       >
         <FormInput
           form={form}
@@ -66,7 +66,7 @@ const StepOne = () => {
           formLabel="Trading As (if different)"
           inputType="text"
         />
-        <div className="flex gap-4">
+        <div className="flex flex-col md:flex-row gap-4">
           <FormInput
             form={form}
             inputName="companyRegistrationNo"
@@ -88,7 +88,7 @@ const StepOne = () => {
             formLabel="Street"
             inputType="text"
           />
-          <div className="flex gap-4">
+          <div className="flex flex-col md:flex-row gap-4">
             <FormInput
               form={form}
               inputName="registeredBusinessAddress.city"
@@ -102,7 +102,7 @@ const StepOne = () => {
               inputType="text"
             />
           </div>
-          <div className="w-1/2">
+          <div className="md:w-1/2">
             <FormInput
               form={form}
               inputName="registeredBusinessAddress.postCode"
@@ -111,7 +111,7 @@ const StepOne = () => {
             />
           </div>
         </div>
-        <div className="flex w-full gap-4">
+        <div className="flex flex-col md:flex-row w-full gap-4">
           <FormInput
             form={form}
             inputName="companyWebsite"

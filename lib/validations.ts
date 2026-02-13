@@ -55,27 +55,33 @@ export const UserSchema = z.object({
 });
 
 export const ClientReqSchema = z.object({
-  firstName: z.string().min(3),
-  lastName: z.string().min(3),
-  companyName: z.string().min(3),
-  email: z.email(),
-  phoneNo: z.string().min(3),
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  companyName: z.string().min(1, "Company name is required"),
+  email: z.email().min(1, "Email is required"),
+  phoneNo: z.string().regex(/^\d{10,15}$/, {
+    message: "Mobile number must be 10–15 digits.",
+  }),
   message: z.string().min(3),
 });
 
 export const CandidateReqSchema = z.object({
-  firstName: z.string().min(3),
-  lastName: z.string().min(3),
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
   email: z
     .email({
       message: "Please enter a valid email address.",
     })
     .min(3, { message: "Email address is required" }),
-  phoneNo: z.string().min(3),
-  address: z.string().min(3),
-  prefferedRole: z.string().min(3),
-  prefferedEmploymentStatus: z.string().min(3),
-  typeOfWork: z.string().min(3),
+  phoneNo: z.string().regex(/^\d{10,15}$/, {
+    message: "Mobile number must be 10–15 digits.",
+  }),
+  address: z.string().min(3, "Address is required"),
+  prefferedRole: z.string().min(1, "Preffered role is required"),
+  prefferedEmploymentStatus: z
+    .string()
+    .min(1, "Preffered employment status is required"),
+  typeOfWork: z.string().min(1, "Type of work is required"),
 });
 
 export const AdminLoginSchema = z.object({

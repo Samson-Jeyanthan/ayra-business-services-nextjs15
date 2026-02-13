@@ -97,9 +97,9 @@ const StepOne = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-8"
+        className="flex flex-col gap-6 md:gap-8"
       >
-        <div className="w-full flex gap-4 items-start">
+        <div className="w-full flex flex-col md:flex-row gap-4 items-start">
           <Dropdown
             form={form}
             inputName="title"
@@ -109,7 +109,7 @@ const StepOne = () => {
               { _id: "mrs", name: "Mrs" },
               { _id: "miss", name: "Miss" },
             ]}
-            className="min-w-24 !w-24"
+            className="w-full md:min-w-24 md:!w-24"
           />
           <FormInput
             form={form}
@@ -124,7 +124,7 @@ const StepOne = () => {
             formLabel="Last Name"
           />
         </div>
-        <div className="w-1/2 pr-4">
+        <div className="md:w-1/2 md:pr-4">
           <PopupCalendar
             form={form}
             inputName="dob"
@@ -154,7 +154,7 @@ const StepOne = () => {
             formLabel="Post Code"
           />
         </div>
-        <div className="w-full flex gap-4">
+        <div className="w-full flex flex-col md:flex-row gap-4">
           <FormInput
             form={form}
             inputName="mobileNo"
@@ -168,7 +168,7 @@ const StepOne = () => {
             formLabel="Landline No"
           />
         </div>
-        <div className="w-1/2 pr-2">
+        <div className="md:w-1/2 pr-2">
           <FormInput
             form={form}
             inputName="email"

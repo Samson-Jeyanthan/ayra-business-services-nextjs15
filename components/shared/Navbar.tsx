@@ -4,15 +4,27 @@ import { NAV_LINKS } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { Button } from "../ui/button";
-import { signOutAction } from "@/lib/actions/auth.actions";
-import MobileNavbar from "./MobileNavbar";
+// import { Button } from "../ui/button";
+// import { signOutAction } from "@/lib/actions/auth.actions";
+import dynamic from "next/dynamic";
 
-const Navbar = ({ isLogin }: { isLogin: boolean }) => {
+const MobileNavbar = dynamic(() => import("./MobileNavbar"), { ssr: false });
+import ProfileAvatar from "./common/ProfileAvatar";
+
+const Navbar = ({
+  isLogin,
+  userName,
+  userLink,
+}: {
+  isLogin: boolean;
+  userName?: string | null;
+  userLink: string;
+}) => {
+  console.log(isLogin, "islogin params");
   const [scrollNav, setScrollNav] = useState(false);
 
   const changeNav = () => {
-    if (window.scrollY >= 80) {
+    if (window.scrollY >= 10) {
       setScrollNav(true);
     } else {
       setScrollNav(false);
@@ -23,13 +35,13 @@ const Navbar = ({ isLogin }: { isLogin: boolean }) => {
     window.addEventListener("scroll", changeNav);
   }, []);
 
-  const handleSignOut = async () => {
-    await signOutAction();
-  };
+  // const handleSignOut = async () => {
+  //   await signOutAction();
+  // };
 
   return (
     <nav
-      className={`${scrollNav ? "bg-light-900 shadow-md shadow-gray-900/5" : "bg-transparent"} flex sticky top-0 px-14 items-center -mt-20 z-50 justify-between p-4`}
+      className={`${scrollNav ? "bg-light-900 shadow-md shadow-gray-900/5" : "bg-transparent"} flex sticky top-0 px-10 md:px-14 items-center -mt-20 z-50 justify-between p-4`}
     >
       <Link href="/">
         <Image
@@ -37,6 +49,8 @@ const Navbar = ({ isLogin }: { isLogin: boolean }) => {
           alt="logo"
           width={130}
           height={32}
+          priority
+          unoptimized
         />
       </Link>
 
@@ -57,16 +71,7 @@ const Navbar = ({ isLogin }: { isLogin: boolean }) => {
 
       <div className="hidden md:flex w-auto">
         {isLogin ? (
-          <form action={handleSignOut}>
-            <Button
-              type="submit"
-              className="secondary-btn-custom h-10 px-6 text-sm rounded-full bg-white cursor-pointer"
-            >
-              <span className="text-dark300_light900 max-lg:hidden">
-                Logout
-              </span>
-            </Button>
-          </form>
+          <ProfileAvatar userName={userName} userLink={userLink} />
         ) : (
           <Link
             href="/sign-in"
@@ -83,3 +88,14 @@ const Navbar = ({ isLogin }: { isLogin: boolean }) => {
 };
 
 export default Navbar;
+
+{
+  /* <form action={handleSignOut}>
+              <Button
+                type="submit"
+                className="secondary-btn-custom h-10 px-6 text-sm rounded-full bg-white cursor-pointer"
+              >
+                <span className="text-dark300_light900">Logout</span>
+ </Button>
+</form> */
+}

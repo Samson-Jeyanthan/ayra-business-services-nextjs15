@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const SignIn = () => {
   return (
-    <section className="h-auto md:min-h-screen w-full flex items-start justify-start  flex-col-reverse md:flex-row gap-10 p-4">
+    <section className="h-auto md:min-h-screen w-full flex item-start justify-center md:justify-none md:items-none flex-col-reverse md:flex-row gap-10 p-4 border border-solid border-black bg-black">
       <SigninForm />
       <Image
         src="/images/work-hero-img-2.jpg"

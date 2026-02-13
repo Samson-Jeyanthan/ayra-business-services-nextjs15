@@ -25,7 +25,7 @@ const Aboutus = () => {
             alt="about-img"
             width={800}
             height={800}
-            className="w-full md:w-1/2 h-auto object-cover rounded-4xl"
+            className="w-full md:w-1/2 h-auto object-cover rounded-lg md:rounded-4xl"
           />
           <Image
             src="/images/green-progress-bar.png"

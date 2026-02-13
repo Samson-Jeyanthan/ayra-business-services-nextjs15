@@ -193,7 +193,7 @@ const StepSeven = () => {
           </p>
         )}
 
-        <div className="w-1/2">
+        <div className="md:w-1/2">
           <TimeInput
             form={form}
             inputName="preferredStartedTimeWindow"
