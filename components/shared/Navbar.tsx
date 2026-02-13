@@ -21,7 +21,6 @@ const Navbar = ({
   userName?: string | null;
   userLink: string;
 }) => {
-  console.log(isLogin, "islogin params");
   const [scrollNav, setScrollNav] = useState(false);
 
   const changeNav = () => {
