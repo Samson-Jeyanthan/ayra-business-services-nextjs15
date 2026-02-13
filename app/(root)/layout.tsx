@@ -1,24 +1,21 @@
 import React from "react";
 import { Footer, Navbar } from "@/components/shared";
 import { auth } from "@/auth";
-import { getUserByIdAction } from "@/lib/actions/auth.actions";
+import { getUserAction } from "@/lib/actions/auth.actions";
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await auth();
+  const userId = session ? session.user?.id : "";
   let userLink = "";
 
-  console.log(session);
+  if (userId) {
+    const res = await getUserAction({ userId });
 
-  if (session !== null) {
-    const user = await getUserByIdAction(session?.user?.id);
+    const user = res.success ? res.data?.user : null;
 
-    if (user?.userType === "client") {
-      userLink = "client";
-    } else if (user?.userType === "candidate") {
-      userLink = "candidate";
-    } else if (user?.userType === "admin") {
-      userLink = "admin";
-    }
+    if (user?.userType === "client") userLink = "client";
+    else if (user?.userType === "candidate") userLink = "candidate";
+    else if (user?.userType === "admin") userLink = "admin";
   }
 
   return (

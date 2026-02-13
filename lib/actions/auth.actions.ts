@@ -7,9 +7,12 @@ import { signIn, signOut } from "@/auth";
 
 import action from "../handlers/action";
 import handleError from "../handlers/error";
-import { SignInSchema, SignUpSchema } from "../validations";
+import {
+  GetUserRegInfoSchema,
+  SignInSchema,
+  SignUpSchema,
+} from "../validations";
 import { NotFoundError } from "../http-errors";
-import { api } from "../api";
 import Client from "@/database/client.model";
 import Candidate from "@/database/candidate.model";
 
@@ -68,11 +71,11 @@ export async function signUpWithCredentials(
       redirect: false,
     });
 
-    const userData = await getUserByIdAction(user._id.toString());
+    const userData = await getUserAction(user._id.toString());
 
     return {
       success: true,
-      data: JSON.parse(JSON.stringify(userData.userType)),
+      data: JSON.parse(JSON.stringify(userData.data?.user?.userType)),
     };
   } catch (error) {
     await session.abortTransaction();
@@ -144,23 +147,59 @@ export async function signOutAction() {
   await signOut();
 }
 
-export const getUserByIdAction = async (id?: string) => {
-  if (!id) {
-    throw new NotFoundError("User");
-  }
-  const response = (await api.users.getById(id)) as ActionResponse<IUserDoc>;
-  if (!response.data) {
-    throw new NotFoundError("User");
-  }
-  return response.data;
-};
+export async function getUserAction(params: IGetUserParams): Promise<
+  ActionResponse<{
+    user: IUserDoc;
+  }>
+> {
+  const validationResult = await action({
+    params,
+    schema: GetUserRegInfoSchema,
+  });
 
-// export const getUserStatusAction = async (id: string) => {
-//   if (!id) {
-//     throw new NotFoundError("User");
-//   }
-//   const userData = await Client.findOne({
-//     userId: id,
+  if (validationResult instanceof Error) {
+    return handleError(validationResult) as ErrorResponse;
+  }
+
+  const { userId } = validationResult.params!;
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) throw new Error("User not found");
+
+    return {
+      success: true,
+      data: {
+        user: JSON.parse(JSON.stringify(user)),
+      },
+    };
+  } catch (error) {
+    return handleError(error) as ErrorResponse;
+  }
+}
+
+// export async function getUserByIdAction(params: IGetUserParams) {
+//   const validationResult = await action({
+//     params,
+//     schema: GetUserRegInfoSchema,
+//     authorize: true,
 //   });
-//   return;
-// };
+
+//   if (validationResult instanceof Error) {
+//     return handleError(validationResult) as ErrorResponse;
+//   }
+
+//   const { userId } = validationResult.params!;
+
+//   const response = (await api.users.getById(
+//     userId
+//   )) as ActionResponse<IUserDoc>;
+
+//   console.log(response, "getUserByIdAction");
+
+//   return {
+//     success: true,
+//     // data: response ? response : null,
+//   };
+// }
