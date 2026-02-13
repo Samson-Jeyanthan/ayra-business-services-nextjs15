@@ -5,11 +5,13 @@ import { getUserAction } from "@/lib/actions/auth.actions";
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await auth();
-  const userId = session ? session.user?.id : "";
+  const userId = session?.user?.id;
   let userLink = "";
 
   if (userId) {
     const res = await getUserAction({ userId });
+
+    console.log(res, "res-of-layout-getuseraction");
 
     const user = res.success ? res.data?.user : null;
 
@@ -24,6 +26,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
         isLogin={session !== null ? true : false}
         userName={session?.user?.name}
         userLink={userLink}
+        session={session}
       />
       {children}
       <Footer />
