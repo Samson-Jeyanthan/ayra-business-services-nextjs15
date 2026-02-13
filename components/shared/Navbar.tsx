@@ -7,9 +7,9 @@ import React, { useEffect, useState } from "react";
 // import { Button } from "../ui/button";
 // import { signOutAction } from "@/lib/actions/auth.actions";
 import dynamic from "next/dynamic";
+import ProfileAvatar from "./common/ProfileAvatar";
 
 const MobileNavbar = dynamic(() => import("./MobileNavbar"), { ssr: false });
-import ProfileAvatar from "./common/ProfileAvatar";
 
 const Navbar = ({
   isLogin,
@@ -49,8 +49,6 @@ const Navbar = ({
           alt="logo"
           width={130}
           height={32}
-          priority
-          unoptimized
         />
       </Link>
 
