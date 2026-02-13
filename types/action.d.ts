@@ -191,6 +191,10 @@ interface IGetUserRegInfoParams {
   userId?: string | undefined;
 }
 
+interface IGetUserParams {
+  userId: string;
+}
+
 //  client registration
 
 interface IClientRegStepOneParams {
