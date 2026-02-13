@@ -6,6 +6,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import ProfileAvatar from "./common/ProfileAvatar";
 import MobileNavbar from "./MobileNavbar";
+import { Session } from "next-auth";
 // import { Button } from "../ui/button";
 // import { signOutAction } from "@/lib/actions/auth.actions";
 
@@ -16,12 +17,15 @@ const Navbar = ({
   isLogin,
   userName,
   userLink,
+  session,
 }: {
   isLogin: boolean;
   userName?: string | null;
   userLink: string;
+  session: Session | null;
 }) => {
   console.log(isLogin, "islogin params");
+  console.log(session, "session params");
   const [scrollNav, setScrollNav] = useState(false);
 
   const changeNav = () => {
