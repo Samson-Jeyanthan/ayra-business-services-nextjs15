@@ -6,6 +6,7 @@ import { SignInSchema } from "./lib/validations";
 import { api } from "./lib/api";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  trustHost: true,
   providers: [
     Credentials({
       async authorize(credentials) {
