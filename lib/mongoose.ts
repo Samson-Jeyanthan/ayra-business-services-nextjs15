@@ -4,52 +4,51 @@ import logger from "./logger";
 const MONGODB_URI = process.env.MONGODB_URI as string;
 
 if (!MONGODB_URI) {
-  throw new Error(
-    "Please define the MONGODB_URI environment variable inside .env.local"
-  );
+  throw new Error("MONGODB_URI is not defined");
 }
 
-// caching connection to avoid reconnection
 interface MongooseCache {
   conn: Mongoose | null;
   promise: Promise<Mongoose> | null;
 }
 
+// Extend globalThis type safely
 declare global {
-  var mongoose: MongooseCache;
+  var mongoose: MongooseCache | undefined;
 }
 
-let cached = global.mongoose;
+const globalWithMongoose = globalThis as typeof globalThis & {
+  mongoose?: MongooseCache;
+};
+
+let cached = globalWithMongoose.mongoose;
 
 if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
+  cached = globalWithMongoose.mongoose = {
+    conn: null,
+    promise: null,
+  };
 }
 
-// connect to database
 const dbConnect = async (): Promise<Mongoose> => {
-  if (cached.conn) {
-    logger.info("Reusing existing database connection");
-    return cached.conn;
+  if (cached!.conn) {
+    return cached!.conn;
   }
 
-  if (!cached.promise) {
-    cached.promise = mongoose
+  if (!cached!.promise) {
+    cached!.promise = mongoose
       .connect(MONGODB_URI, {
         dbName: "ayra_business_services",
+        bufferCommands: false,
       })
-      .then((result) => {
+      .then((mongoose) => {
         logger.info("Connected to MongoDB");
-        return result;
-      })
-      .catch((error) => {
-        logger.error("Error connecting to MongoDB: ", error);
-        return error;
+        return mongoose;
       });
   }
 
-  cached.conn = await cached.promise;
-
-  return cached.conn;
+  cached!.conn = await cached!.promise;
+  return cached!.conn;
 };
 
 export default dbConnect;
