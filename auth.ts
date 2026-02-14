@@ -4,6 +4,7 @@ import Credentials from "next-auth/providers/credentials";
 import { IUserDoc } from "./database/user.model";
 import { SignInSchema } from "./lib/validations";
 import { api } from "./lib/api";
+import dbConnect from "./lib/mongoose";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   trustHost: true,
@@ -19,6 +20,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           //   email
           // )) as ActionResponse<IAccountDoc>;
           // if (!existingAccount) return null;
+
+          await dbConnect();
 
           const { data: existingUser } = (await api.users.getByEmail(
             email
