@@ -11,7 +11,7 @@ const Footer = () => {
     >
       <div className="h-2 w-full flex bg-primary" />
       <div className="flex flex-col md:flex-row gap-8 md:gap-18 justify-between items-start px-5">
-        <div className="flex flex-col items-start gap-5 w-full md:w-[45%]">
+        <div className="flex flex-col items-start gap-5 w-full md:w-[40%]">
           <h1 className="font-semibold text-3xl">Ayra Business Services</h1>
           <p className="text-light-400">
             We don’t just fill vacancies or sell services—we build long-term
@@ -63,7 +63,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <div className="w-auto md:w-max md:max-w-60">
+          <div className="w-auto md:w-max md:max-w-68">
             <h3 className="footer-title">Contact</h3>
             <ul className="footer-links-group">
               <li className="flex gap-2">

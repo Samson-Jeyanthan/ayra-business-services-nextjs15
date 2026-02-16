@@ -29,7 +29,19 @@ const SigninForm = () => {
     startTransition(async () => {
       const result = await signInWithCredentials(values);
 
-      if (!result.success || !result.data) return;
+      console.log(result, "signin res");
+
+      if (!result.success || !result.data) {
+        toast.error(
+          result?.error?.message || "Failed to sign in. Please try again.",
+          {
+            description:
+              "Email not found or password is incorrect. Please check your credentials and try again.",
+            duration: 6000,
+          }
+        );
+        return;
+      }
 
       const { userType, completedSteps } = result.data;
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { redirect } from "next/navigation";
 
@@ -18,8 +20,10 @@ const ProfileAvatar = ({
 
   return (
     <Avatar onClick={handleProfileNavigate} className="cursor-pointer">
-      <AvatarImage src="" alt="@shadcn" className="grayscale" />
-      <AvatarFallback>{userName?.slice(0, 2).toUpperCase()}</AvatarFallback>
+      <AvatarImage src="" alt="@shadcn" className="bg-primary" />
+      <AvatarFallback className="bg-light-700">
+        {userName?.slice(0, 2).toUpperCase()}
+      </AvatarFallback>
     </Avatar>
   );
 };

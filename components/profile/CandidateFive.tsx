@@ -41,16 +41,16 @@ const CandidateFive = ({ data }: IParams) => {
   return (
     <section className="w-full flex flex-col gap-2">
       <h3 className="profile-heading">Your Driving Information</h3>
-      <p>
-        <span className="font-semibold">Driving Licence No:</span>{" "}
-        {data.drivingLicenceNo}
-      </p>
-      <p>
-        <span className="font-semibold">Driving License Share Code:</span>{" "}
-        {data.drivingLicenseShareCode}
-      </p>
+      <div className="flex-items-start">
+        <p className="profile-detail-label">Driving Licence No:</p>
+        <p className="profile-detail">{data.drivingLicenceNo}</p>
+      </div>
+      <div className="flex-items-start">
+        <p className="profile-detail-label">Driving License Share Code:</p>
+        <p className="profile-detail">{data.drivingLicenseShareCode}</p>
+      </div>
 
-      <p>Driving License Front & Back Images</p>
+      <p className="font-semibold my-4">Driving License Front & Back Images</p>
       <div className="flex gap-4">
         <Image
           src={data.drivingLicense.frontPic}
@@ -67,7 +67,7 @@ const CandidateFive = ({ data }: IParams) => {
           className="card-img"
         />
       </div>
-      <p>CPC Card Front & Back Images</p>
+      <p className="font-semibold my-4">CPC Card Front & Back Images</p>
       <div className="flex gap-4">
         <Image
           src={data.cpcCard.frontPic}
@@ -84,7 +84,9 @@ const CandidateFive = ({ data }: IParams) => {
           className="card-img"
         />
       </div>
-      <p>Digital Driving Tachograph Card Front & Back Images</p>
+      <p className="font-semibold my-4">
+        Digital Driving Tachograph Card Front & Back Images
+      </p>
       <div className="flex gap-4">
         <Image
           src={data.digitalDrivingTachographCard.frontPic}
@@ -101,7 +103,9 @@ const CandidateFive = ({ data }: IParams) => {
           className="card-img"
         />
       </div>
-      <p>All In One include Front & Back Images</p>
+      <p className="font-semibold my-4">
+        All In One include Front & Back Images
+      </p>
       <div className="flex gap-4">
         <Image
           src={data.allInOne.frontPic}

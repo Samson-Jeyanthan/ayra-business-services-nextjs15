@@ -22,7 +22,7 @@ export default async function RootLayout({
 }>) {
   const session = await auth();
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" data-scroll-behavior="smooth">
       <body className={`${plusJakartaSans.variable} antialiased`}>
         <SessionProvider session={session}>{children}</SessionProvider>
         <Toaster />

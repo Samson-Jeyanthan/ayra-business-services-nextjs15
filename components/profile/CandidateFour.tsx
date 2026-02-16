@@ -13,27 +13,32 @@ const CandidateFour = ({ data }: IParams) => {
   return (
     <section className="w-full flex flex-col gap-2">
       <h3 className="profile-heading">Pay Information</h3>
-      <p>
-        <span className="font-semibold">Name As On Account:</span>{" "}
-        {data.nameAsOnAccount}
-      </p>
-      <p>
-        <span className="font-semibold">Bank Society Name:</span>{" "}
-        {data.bankSocietyName}
-      </p>
-      <p>
-        <span className="font-semibold">Account No:</span> {data.accountNo}
-      </p>
-      <p>
-        <span className="font-semibold">Sort Code:</span> {data.sortCode}
-      </p>
-      <p>
-        <span className="font-semibold">Bank Detail Confirmation:</span>{" "}
-        {data.bankDetailConfirmation ? "Yes" : "No"}
-      </p>
-      <p>
-        <span className="font-semibold">Holiday Mode:</span> {data.holidayMode}
-      </p>
+      <div className="flex-items-start">
+        <p className="profile-detail-label">Name As On Account:</p>
+        <p className="profile-detail">{data.nameAsOnAccount}</p>
+      </div>
+      <div className="flex-items-start">
+        <p className="profile-detail-label">Bank Society Name:</p>
+        <p className="profile-detail">{data.bankSocietyName}</p>
+      </div>
+      <div className="flex-items-start">
+        <p className="profile-detail-label">Account No:</p>
+        <p className="profile-detail">{data.accountNo}</p>
+      </div>
+      <div className="flex-items-start">
+        <p className="profile-detail-label">Sort Code:</p>
+        <p className="profile-detail">{data.sortCode}</p>
+      </div>
+      <div className="flex-items-start">
+        <p className="profile-detail-label">Bank Detail Confirmation:</p>
+        <p className="profile-detail">
+          {data.bankDetailConfirmation ? "Yes" : "No"}
+        </p>
+      </div>
+      <div className="flex-items-start">
+        <p className="profile-detail-label">Holiday Mode:</p>
+        <p className="profile-detail">{data.holidayMode}</p>
+      </div>
     </section>
   );
 };
