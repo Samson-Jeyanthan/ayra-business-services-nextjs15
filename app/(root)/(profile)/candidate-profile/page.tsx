@@ -7,7 +7,7 @@ import {
   CandidateFive,
   CandidateSix,
   CandidateSeven,
-  // CandidateEight,
+  CandidateEight,
   CandidateNine,
 } from "@/components/profile";
 import { getCandidateRegInfoByUserId } from "@/lib/actions/candidate.action";
@@ -37,13 +37,13 @@ const CandidateProfile = async () => {
     stepFive,
     stepSix,
     stepSeven,
-    // stepEight,
+    stepEight,
     stepNine,
   } = candidate;
 
   return (
     <main className="min-h-screen justify-start w-full flex flex-col items-center">
-      <section className="w-full max-w-[90rem] flex flex-col items-center mt-24 gap-6">
+      <section className="w-full max-w-[86rem] flex flex-col items-center mt-28 gap-6">
         <CandidateOne data={stepOne?.data} />
         <CandidateTwo data={stepTwo?.data} />
         <CandidateThree data={stepThree?.data} />
@@ -51,7 +51,7 @@ const CandidateProfile = async () => {
         <CandidateFive data={stepFive?.data} />
         <CandidateSix data={stepSix?.data} />
         <CandidateSeven data={stepSeven?.data} />
-        {/* <CandidateEight data={stepEight?.data} /> */}
+        <CandidateEight data={stepEight?.data} />
         <CandidateNine data={stepNine?.data} />
       </section>
     </main>

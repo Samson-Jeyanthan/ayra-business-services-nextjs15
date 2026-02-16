@@ -2,27 +2,26 @@ import { NAV_LINKS } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 import MobileNavbar from "./MobileNavbar";
-import { auth, signOut } from "@/auth";
-import { Button } from "../ui/button";
-// import { getUserAction } from "@/lib/actions/auth.actions";
-// import ProfileAvatar from "./common/ProfileAvatar";
+import { auth } from "@/auth";
+import { getUserAction } from "@/lib/actions/auth.actions";
+import ProfileAvatar from "./common/ProfileAvatar";
 
 const Navbar = async () => {
   const session = await auth();
   const scrollNav = true;
 
-  //   const userId = session?.user?.id;
-  //   let userLink = "";
+  const userId = session?.user?.id;
+  let userLink = "";
 
-  //   if (userId) {
-  //     const res = await getUserAction({ userId });
+  if (userId) {
+    const res = await getUserAction({ userId });
 
-  //     const user = res.success ? res.data?.user : null;
+    const user = res.success ? res.data?.user : null;
 
-  //     if (user?.userType === "client") userLink = "client";
-  //     else if (user?.userType === "candidate") userLink = "candidate";
-  //     else if (user?.userType === "admin") userLink = "admin";
-  // }
+    if (user?.userType === "client") userLink = "client";
+    else if (user?.userType === "candidate") userLink = "candidate";
+    else if (user?.userType === "admin") userLink = "admin";
+  }
 
   return (
     <nav
@@ -52,24 +51,9 @@ const Navbar = async () => {
         })}
       </div>
 
-      {/* <ProfileAvatar userName={ session?.user?.name } userLink={ userLink } /> */}
       <div className="hidden md:flex w-auto">
         {session ? (
-          <form
-            action={async () => {
-              "use server";
-
-              await signOut();
-            }}
-            className="flex-center"
-          >
-            <Button
-              type="submit"
-              className="secondary-btn-custom h-10 px-6 text-sm rounded-full bg-white cursor-pointer"
-            >
-              <p className="text-dark300_light900">Logout</p>
-            </Button>
-          </form>
+          <ProfileAvatar userName={session?.user?.name} userLink={userLink} />
         ) : (
           <Link
             href="/sign-in"

@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <div className="relative flex-col flex md:flex-row gap-10 w-full pt-20 p-10 md:p-20 3xl:px-44 min-h-[calc(100vh-12.5rem)]">
+    <div className="relative flex-col flex md:flex-row gap-10 w-full pt-20 p-10 md:p-20 3xl:px-44 min-h-[calc(100vh-12.5rem)] mt-14">
       <Image
         src="/svgs/net.svg"
         alt="bg-net"
@@ -45,11 +45,11 @@ const Hero = () => {
       </section>
       <section className="w-full md:w-1/2 flex-center">
         <Image
-          src="/images/shell-cards.png"
+          src="/images/hero-img.png"
           alt="shell-img"
           width={900}
           height={900}
-          className="w-9/10 md:w-[55%] h-auto object-cover rounded-4xl"
+          className="w-9/10 md:w-[65%] h-auto object-cover rounded-4xl"
         />
       </section>
     </div>

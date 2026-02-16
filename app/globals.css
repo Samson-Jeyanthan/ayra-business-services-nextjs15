@@ -251,7 +251,7 @@
   }
 
   .profile-detail-label {
-    @apply font-medium text-light-200 w-64;
+    @apply font-medium text-light-200 pr-2 md:pr-0 md:min-w-52 md:max-w-52;
   }
 
   .profile-detail {
