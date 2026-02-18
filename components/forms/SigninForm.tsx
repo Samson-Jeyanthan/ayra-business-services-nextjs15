@@ -73,7 +73,7 @@ const SigninForm = () => {
   }
 
   return (
-    <div className="z-10 -mt-40 md:mt-0 bg-white rounded-2xl p-8 md:p-0 w-full md:w-2/5 flex flex-col items-center justify-center border border-solid border-black">
+    <div className="bg-white rounded-2xl p-8 md:p-0 w-full md:w-2/5 flex flex-col items-center justify-center border border-solid border-black">
       <Image src="/images/ayrabs-logo.png" alt="logo" width={180} height={32} />
       <h3 className="font-semibold text-2xl mt-5">Login to your account</h3>
       <Form {...form}>

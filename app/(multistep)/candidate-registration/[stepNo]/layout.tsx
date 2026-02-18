@@ -2,9 +2,9 @@ import React from "react";
 import { MultiStepSidebar } from "@/components/shared";
 import { CANDIDATE_MULTISTEP_STAGES } from "@/constants";
 import Image from "next/image";
-// import { auth } from "@/auth";
-// import { getCandidateRegInfoByUserId } from "@/lib/actions/candidate.action";
-// import { redirect } from "next/navigation";
+import { getCandidateRegInfoByUserId } from "@/lib/actions/candidate.action";
+import { redirect } from "next/navigation";
+import { auth } from "@/auth";
 
 export default async function MultiStepLayout({
   params,
@@ -14,15 +14,29 @@ export default async function MultiStepLayout({
   children: React.ReactNode;
 }>) {
   const resolvedParams = await params;
-  // const session = await auth();
+  const session = await auth();
+  const userId = session?.user?.id;
 
-  // if (!session) return redirect("/");
+  if (!session) {
+    return redirect("/");
+  } else if (userId) {
+    const res = await getCandidateRegInfoByUserId({ userId: "" });
 
-  // const res = await getUserByIdAction(session?.user?.id as string);
+    const completedSteps = res?.data?.completedSteps ?? 0;
 
-  // const resTwo = await getCandidateRegInfoByUserId({ userId: "" });
+    const TOTAL_STEPS = 9;
 
-  // console.log(resTwo, "this_is_a_reg_info");
+    if (completedSteps >= TOTAL_STEPS) {
+      redirect("/candidate-profile");
+    }
+
+    // ✅ Otherwise go to next step
+    // If completedSteps = 2 -> next is step 3 => /candidate-registration/step-3
+    const nextStep = completedSteps + 1;
+
+    // If your routes are /candidate-registration/1, /candidate-registration/2 ...
+    redirect(`/candidate-registration/${nextStep}`);
+  }
 
   return (
     <main className="relative flex justify-center w-full">

@@ -10,7 +10,7 @@ const SignIn = () => {
         alt="signup"
         width={1000}
         height={1000}
-        className="w-full md:w-3/5 h-auto rounded-3xl object-cover"
+        className="hidden md:flex md:w-3/5 h-auto rounded-3xl object-cover"
       />
     </section>
   );
