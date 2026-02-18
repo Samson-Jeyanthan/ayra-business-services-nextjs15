@@ -235,11 +235,7 @@
   }
 
   .profile-heading {
-    @apply text-lg md:text-2xl font-semibold w-full p-3 bg-light-700 text-black;
-  }
-
-  .card-img {
-    @apply w-72 h-40 rounded-2xl object-cover border border-solid border-light-500;
+    @apply text-center md:text-left text-xl md:text-2xl font-semibold w-full p-3 bg-light-700 text-black;
   }
 
   .profile-detail-section-wrapper {
@@ -251,10 +247,26 @@
   }
 
   .profile-detail-label {
-    @apply font-medium text-light-200 pr-2 md:pr-0 md:min-w-52 md:max-w-52;
+    @apply font-medium pr-2 md:pr-0 text-sm md:text-base text-light-200 min-w-28 max-w-28 md:min-w-52 md:max-w-52;
+  }
+
+  .profile-detail-label-2 {
+    @apply font-medium pr-2 md:pr-0 text-sm md:text-base text-light-200 min-w-44 max-w-44 md:min-w-52 md:max-w-52;
   }
 
   .profile-detail {
-    @apply font-medium capitalize;
+    @apply font-medium text-sm md:text-base;
+  }
+
+  .profile-detail::first-letter {
+    @apply uppercase;
+  }
+
+  .profile-card-img-wrapper {
+    @apply flex flex-col md:flex-row gap-4 w-full;
+  }
+
+  .card-img {
+    @apply w-full md:w-72 h-52 md:h-40 rounded-2xl border border-solid border-light-500 object-contain p-2;
   }
 }

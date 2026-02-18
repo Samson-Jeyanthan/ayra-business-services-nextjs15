@@ -1,7 +1,6 @@
 "use server";
 
 import bcrypt from "bcryptjs";
-import mongoose from "mongoose";
 import User, { IUserDoc } from "@/database/user.model";
 import { signIn, signOut } from "@/auth";
 
@@ -18,7 +17,7 @@ import Candidate from "@/database/candidate.model";
 
 export async function signUpWithCredentials(
   params: AuthCredentials
-): Promise<ActionResponse> {
+): Promise<ActionResponse<{ userType: string }>> {
   const validationResult = await action({ params, schema: SignUpSchema });
 
   if (validationResult instanceof Error) {
@@ -27,19 +26,14 @@ export async function signUpWithCredentials(
 
   const { username, email, password } = validationResult.params!;
 
-  const session = await mongoose.startSession();
-  session.startTransaction();
-
   try {
     // ✅ User MUST already exist (created by admin)
-    const user = await User.findOne({ email }).session(session);
-
-    if (!user) {
-      throw new Error("Invalid or expired registration link");
-    }
+    const user = await User.findOne({ email });
+    if (!user) throw new Error("Invalid or expired registration link");
 
     // ❌ Prevent re-registration
-    if (user.password !== "N/A") {
+    // Better check: if password is already set (hashed), user registered already
+    if (user.password && user.password !== "N/A") {
       throw new Error("User already registered");
     }
 
@@ -47,7 +41,7 @@ export async function signUpWithCredentials(
     const usernameTaken = await User.findOne({
       username,
       _id: { $ne: user._id },
-    }).session(session);
+    });
 
     if (usernameTaken) {
       throw new Error("Username already exists");
@@ -55,14 +49,12 @@ export async function signUpWithCredentials(
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    // ✅ Update ONLY allowed fields
+    // ✅ Update only allowed fields
     user.username = username;
     user.password = hashedPassword;
     user.status = "signedUp";
 
-    await user.save({ session });
-
-    await session.commitTransaction();
+    await user.save();
 
     // ✅ Auto-login after registration
     await signIn("credentials", {
@@ -71,17 +63,12 @@ export async function signUpWithCredentials(
       redirect: false,
     });
 
-    const userData = await getUserAction(user._id.toString());
-
     return {
       success: true,
-      data: JSON.parse(JSON.stringify(userData.data?.user?.userType)),
+      data: JSON.parse(JSON.stringify({ userType: user.userType })),
     };
   } catch (error) {
-    await session.abortTransaction();
     return handleError(error) as ErrorResponse;
-  } finally {
-    await session.endSession();
   }
 }
 

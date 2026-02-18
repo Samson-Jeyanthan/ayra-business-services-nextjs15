@@ -1,21 +1,23 @@
 import { auth } from "@/auth";
-// import { getUserByIdAction } from "@/lib/actions/auth.actions";
-// import { redirect } from "next/navigation";
+import { getUserAction } from "@/lib/actions/auth.actions";
+import { redirect } from "next/navigation";
 import React from "react";
 
 const AuthLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await auth();
-  console.log(session, "authlayout-session");
+  const userId = session?.user?.id;
 
-  // if (session) {
-  //   const user = await getUserByIdAction(session?.user?.id);
+  if (userId) {
+    const res = await getUserAction({ userId });
 
-  //   if (user?.userType === "client") {
-  //     redirect("/client-profile");
-  //   } else {
-  //     redirect("/candidate-profile");
-  //   }
-  // }
+    const user = res.success ? res.data?.user : null;
+
+    if (user?.userType === "client") {
+      redirect("/client-profile");
+    } else {
+      redirect("/candidate-profile");
+    }
+  }
 
   return (
     <main

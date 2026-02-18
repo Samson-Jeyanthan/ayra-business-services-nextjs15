@@ -4,7 +4,7 @@ import Link from "next/link";
 import MobileNavbar from "./MobileNavbar";
 import { auth } from "@/auth";
 import { getUserAction } from "@/lib/actions/auth.actions";
-import ProfileAvatar from "./common/ProfileAvatar";
+import { ProfileOptions } from "../options";
 
 const Navbar = async () => {
   const session = await auth();
@@ -51,9 +51,10 @@ const Navbar = async () => {
         })}
       </div>
 
+      {/* <p className="text-sm font-semibold">{session?.user?.name}</p> */}
       <div className="hidden md:flex w-auto">
         {session ? (
-          <ProfileAvatar userName={session?.user?.name} userLink={userLink} />
+          <ProfileOptions username={session?.user?.name} userLink={userLink} />
         ) : (
           <Link
             href="/sign-in"

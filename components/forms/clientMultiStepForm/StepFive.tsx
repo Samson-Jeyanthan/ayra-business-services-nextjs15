@@ -92,8 +92,8 @@ const StepFive = () => {
             </span>
           </p>
         </div>
-        <footer className="flex w-full gap-4 justify-between">
-          <Button className="secondary-btn">Back</Button>
+        <footer className="flex w-full gap-4 justify-end">
+          {/* <Button className="secondary-btn">Back</Button> */}
           <Button className="primary-btn" type="submit" disabled={isPending}>
             {isPending ? (
               <>

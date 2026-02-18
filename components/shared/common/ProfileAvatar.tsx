@@ -1,28 +1,11 @@
-"use client";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { redirect } from "next/navigation";
 
-const ProfileAvatar = ({
-  userName,
-  userLink,
-}: {
-  userName?: string | null;
-  userLink: string;
-}) => {
-  const handleProfileNavigate = () => {
-    if (userLink === "client") {
-      redirect("/client-profile");
-    } else if (userLink === "candidate") {
-      redirect("/candidate-profile");
-    }
-  };
-
+const ProfileAvatar = ({ username }: { username?: string | null }) => {
   return (
-    <Avatar onClick={handleProfileNavigate} className="cursor-pointer">
+    <Avatar className="cursor-pointer">
       <AvatarImage src="" alt="@shadcn" className="bg-primary" />
       <AvatarFallback className="bg-light-700">
-        {userName?.slice(0, 2).toUpperCase()}
+        {username?.slice(0, 2).toUpperCase()}
       </AvatarFallback>
     </Avatar>
   );

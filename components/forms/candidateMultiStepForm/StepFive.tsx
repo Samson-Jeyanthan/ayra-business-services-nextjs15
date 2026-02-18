@@ -515,13 +515,13 @@ const StepFive = () => {
             />
           </div>
         </div>
-        <footer className="flex w-full gap-4 justify-between">
-          <Button
+        <footer className="flex w-full gap-4 justify-end">
+          {/* <Button
             className="secondary-btn"
-            onClick={() => redirect("/candidate-registration/step-four")}
+            onClick={() => redirect("/candidate-registration/step-4")}
           >
             Back
-          </Button>
+          </Button> */}
           <Button className="primary-btn" type="submit" disabled={isPending}>
             {isPending ? (
               <>

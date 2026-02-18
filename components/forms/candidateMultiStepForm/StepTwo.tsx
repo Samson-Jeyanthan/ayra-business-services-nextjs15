@@ -79,14 +79,14 @@ const StepTwo = () => {
             formLabel="Email Address"
           />
         </div>
-        <footer className="flex w-full gap-4 justify-between">
-          <Button
+        <footer className="flex w-full gap-4 justify-end">
+          {/* <Button
             type="button"
             className="secondary-btn"
-            onClick={() => redirect("/candidate-registration/step-one")}
+            onClick={() => redirect("/candidate-registration/step-1")}
           >
             Back
-          </Button>
+          </Button> */}
           <Button className="primary-btn" type="submit" disabled={isPending}>
             {isPending ? (
               <>

@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const SignUp = () => {
   return (
-    <section className="h-auto md:min-h-screen w-full flex item-start justify-center md:justify-none md:items-none flex-col md:flex-row gap-10 p-4">
+    <section className="h-auto md:min-h-screen w-full flex item-start justify-center md:justify-none md:items-none flex-col md:flex-row gap-10 p-4 bg-black">
       <Image
         src="/images/staff-hero-img-1.jpg"
         alt="signup"
