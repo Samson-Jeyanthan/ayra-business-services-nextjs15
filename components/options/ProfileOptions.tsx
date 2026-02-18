@@ -26,7 +26,7 @@ const ProfileOptions = ({
         : "/";
 
   return (
-    <Menubar className="relative border-none !rounded-full !p-0 shadow-none">
+    <Menubar className="relative border-none rounded md:!rounded-full !p-0 shadow-none">
       <MenubarMenu>
         <MenubarTrigger className="!p-0">
           <ProfileAvatar username={username} />
@@ -35,7 +35,7 @@ const ProfileOptions = ({
           <MenubarItem className="flex justify-center !w-full !items-center cursor-pointer gap-3 rounded text-sm hover:bg-light-600">
             <Link
               href={profileHref}
-              className="w-full flex justify-center items-center gap-2 "
+              className="w-full flex justify-center items-center gap-2"
             >
               <User className="size-4" />
               <p className="w-min">Profile</p>

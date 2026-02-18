@@ -51,7 +51,6 @@ const Navbar = async () => {
         })}
       </div>
 
-      {/* <p className="text-sm font-semibold">{session?.user?.name}</p> */}
       <div className="hidden md:flex w-auto">
         {session ? (
           <ProfileOptions username={session?.user?.name} userLink={userLink} />
