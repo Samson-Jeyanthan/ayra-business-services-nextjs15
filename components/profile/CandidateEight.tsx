@@ -13,8 +13,8 @@ const CandidateEight = ({ data }: IParams) => {
   return (
     <section className="w-full flex flex-col gap-4">
       <h3 className="profile-heading">Data Protect & Privacy Information</h3>
-      <div className="flex flex-col gap-2">
-        <p className="text-sm md:text-base">
+      <div className="flex flex-col gap-2 p-4 md:p-0">
+        <p className="text-sm md:text-base text-justify md:text-left">
           You have gave permission to use these information and when we process
           your personal data, we must do so in accordance with data protection
           laws. Those laws require us to give you a Privacy Statement to explain
@@ -25,7 +25,10 @@ const CandidateEight = ({ data }: IParams) => {
         </p>
 
         <div className="flex-items-start mt-2">
-          <p className="profile-detail-label"> Driving license information:</p>
+          <p className="profile-detail-label-2">
+            {" "}
+            Driving license information:
+          </p>
           <p className="profile-detail">
             {data.drivingLicenseInfo
               ? "Permission Granted"
@@ -34,28 +37,28 @@ const CandidateEight = ({ data }: IParams) => {
         </div>
 
         <div className="flex-items-start">
-          <p className="profile-detail-label"> Pay information:</p>
+          <p className="profile-detail-label-2"> Pay information:</p>
           <p className="profile-detail">
             {data.payInfo ? "Permission Granted" : "Permission Denied"}
           </p>
         </div>
 
         <div className="flex-items-start">
-          <p className="profile-detail-label"> Contact information:</p>
+          <p className="profile-detail-label-2"> Contact information:</p>
           <p className="profile-detail">
             {data.contactInfo ? "Permission Granted" : "Permission Denied"}
           </p>
         </div>
 
         <div className="flex-items-start">
-          <p className="profile-detail-label"> Medical information:</p>
+          <p className="profile-detail-label-2"> Medical information:</p>
           <p className="profile-detail">
             {data.medicalInfo ? "Permission Granted" : "Permission Denied"}
           </p>
         </div>
 
         <div className="flex-items-start">
-          <p className="profile-detail-label">
+          <p className="profile-detail-label-2">
             {" "}
             Criminal convictions information:
           </p>
@@ -67,7 +70,7 @@ const CandidateEight = ({ data }: IParams) => {
         </div>
 
         <div className="flex-items-start">
-          <p className="profile-detail-label"> Right to work information:</p>
+          <p className="profile-detail-label-2"> Right to work information:</p>
           <p className="profile-detail">
             {data.rightToWorkInfo ? "Permission Granted" : "Permission Denied"}
           </p>

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { ADMIN_SIDEBAR_LINKS } from "@/constants";
 import Image from "next/image";
+import { signOut } from "@/auth";
 
 const Sidebar = () => {
   return (
@@ -29,9 +30,21 @@ const Sidebar = () => {
         </div>
       </header>
 
-      <Button className="bg-white text-black mt-10 rounded-2xl w-full">
-        Logout
-      </Button>
+      <form
+        action={async () => {
+          "use server";
+
+          await signOut();
+        }}
+        className="flex-center"
+      >
+        <Button
+          type="submit"
+          className="secondary-btn-custom h-10 px-6 text-sm rounded-full bg-white cursor-pointer"
+        >
+          <p className="text-dark300_light900">Logout</p>
+        </Button>
+      </form>
     </aside>
   );
 };

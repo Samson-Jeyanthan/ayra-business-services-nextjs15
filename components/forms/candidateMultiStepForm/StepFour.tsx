@@ -91,13 +91,13 @@ const StepFour = () => {
             ]}
           />
         </div>
-        <footer className="flex w-full gap-4 justify-between">
-          <Button
+        <footer className="flex w-full gap-4 justify-end">
+          {/* <Button
             className="secondary-btn"
-            onClick={() => redirect("/candidate-registration/step-three")}
+            onClick={() => redirect("/candidate-registration/step-3")}
           >
             Back
-          </Button>
+          </Button> */}
           <Button className="primary-btn" type="submit" disabled={isPending}>
             {isPending ? (
               <>

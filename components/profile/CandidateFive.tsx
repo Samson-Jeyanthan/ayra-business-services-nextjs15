@@ -41,86 +41,93 @@ const CandidateFive = ({ data }: IParams) => {
   return (
     <section className="w-full flex flex-col gap-2">
       <h3 className="profile-heading">Your Driving Information</h3>
-      <div className="flex-items-start">
-        <p className="profile-detail-label">Driving Licence No:</p>
-        <p className="profile-detail">{data.drivingLicenceNo}</p>
-      </div>
-      <div className="flex-items-start">
-        <p className="profile-detail-label">Driving License Share Code:</p>
-        <p className="profile-detail">{data.drivingLicenseShareCode}</p>
+
+      <div className="p-4 md:p-0">
+        <div className="flex-items-start">
+          <p className="profile-detail-label">Driving Licence No:</p>
+          <p className="profile-detail">{data.drivingLicenceNo}</p>
+        </div>
+        <div className="flex-items-start">
+          <p className="profile-detail-label">Driving License Share Code:</p>
+          <p className="profile-detail">{data.drivingLicenseShareCode}</p>
+        </div>
       </div>
 
-      <p className="font-semibold my-4">Driving License Front & Back Images</p>
-      <div className="flex gap-4">
-        <Image
-          src={data.drivingLicense.frontPic}
-          alt="Candidate Picture"
-          width={200}
-          height={200}
-          className="card-img"
-        />
-        <Image
-          src={data.drivingLicense.backPic}
-          alt="Candidate Picture"
-          width={200}
-          height={200}
-          className="card-img"
-        />
-      </div>
-      <p className="font-semibold my-4">CPC Card Front & Back Images</p>
-      <div className="flex gap-4">
-        <Image
-          src={data.cpcCard.frontPic}
-          alt="Candidate Picture"
-          width={200}
-          height={200}
-          className="card-img"
-        />
-        <Image
-          src={data.cpcCard.backPic}
-          alt="Candidate Picture"
-          width={200}
-          height={200}
-          className="card-img"
-        />
-      </div>
-      <p className="font-semibold my-4">
-        Digital Driving Tachograph Card Front & Back Images
-      </p>
-      <div className="flex gap-4">
-        <Image
-          src={data.digitalDrivingTachographCard.frontPic}
-          alt="Candidate Picture"
-          width={200}
-          height={200}
-          className="card-img"
-        />
-        <Image
-          src={data.digitalDrivingTachographCard.backPic}
-          alt="Candidate Picture"
-          width={200}
-          height={200}
-          className="card-img"
-        />
-      </div>
-      <p className="font-semibold my-4">
-        All In One include Front & Back Images
-      </p>
-      <div className="flex gap-4">
-        <Image
-          src={data.allInOne.frontPic}
-          alt="Candidate Picture"
-          width={200}
-          height={200}
-          className="card-img"
-        />
-        <Image
-          src={data.allInOne.backPic}
-          alt="Candidate Picture"
-          width={200}
-          height={200}
-          className="card-img"
-        />
+      <div className="p-4 md:p-0">
+        <p className="font-semibold -mt-4 md:mt-0 my-4">
+          Driving License Front & Back Images
+        </p>
+        <div className="profile-card-img-wrapper">
+          <Image
+            src={data.drivingLicense.frontPic}
+            alt="Candidate Picture"
+            width={200}
+            height={200}
+            className="card-img"
+          />
+          <Image
+            src={data.drivingLicense.backPic}
+            alt="Candidate Picture"
+            width={200}
+            height={200}
+            className="card-img"
+          />
+        </div>
+        <p className="font-semibold my-4">CPC Card Front & Back Images</p>
+        <div className="profile-card-img-wrapper">
+          <Image
+            src={data.cpcCard.frontPic}
+            alt="Candidate Picture"
+            width={200}
+            height={200}
+            className="card-img"
+          />
+          <Image
+            src={data.cpcCard.backPic}
+            alt="Candidate Picture"
+            width={200}
+            height={200}
+            className="card-img"
+          />
+        </div>
+        <p className="font-semibold my-4">
+          Digital Driving Tachograph Card Front & Back Images
+        </p>
+        <div className="profile-card-img-wrapper">
+          <Image
+            src={data.digitalDrivingTachographCard.frontPic}
+            alt="Candidate Picture"
+            width={200}
+            height={200}
+            className="card-img"
+          />
+          <Image
+            src={data.digitalDrivingTachographCard.backPic}
+            alt="Candidate Picture"
+            width={200}
+            height={200}
+            className="card-img"
+          />
+        </div>
+        <p className="font-semibold my-4">
+          All In One include Front & Back Images
+        </p>
+        <div className="profile-card-img-wrapper">
+          <Image
+            src={data.allInOne.frontPic}
+            alt="Candidate Picture"
+            width={200}
+            height={200}
+            className="card-img"
+          />
+          <Image
+            src={data.allInOne.backPic}
+            alt="Candidate Picture"
+            width={200}
+            height={200}
+            className="card-img"
+          />
+        </div>
       </div>
     </section>
   );

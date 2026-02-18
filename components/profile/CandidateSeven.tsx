@@ -22,7 +22,7 @@ const CandidateSeven = ({ data }: IParams) => {
           .map(([key]) => key);
 
         return (
-          <div key={index} className="space-y-2">
+          <div key={index} className="space-y-2 p-4 md:p-0">
             {/* Job Preferences */}
             {trueJobPrefs.length > 0 && (
               <div>

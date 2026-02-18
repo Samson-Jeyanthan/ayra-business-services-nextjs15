@@ -120,14 +120,14 @@ const StepEight = () => {
           ability to perform the relevant duties required by the particular
           vacancy.
         </p>
-        <footer className="flex w-full gap-4 justify-between">
-          <Button
+        <footer className="flex w-full gap-4 justify-end">
+          {/* <Button
             type="button"
             className="secondary-btn"
-            onClick={() => redirect("/candidate-registration/step-seven")}
+            onClick={() => redirect("/candidate-registration/step-7")}
           >
             Back
-          </Button>
+          </Button> */}
           <Button className="primary-btn" type="submit" disabled={isPending}>
             {isPending ? (
               <>

@@ -8,11 +8,11 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { CandidRegNineSchema } from "@/lib/validations";
 import Required from "@/components/shared/common/Required";
-import { redirect } from "next/navigation";
 import { ReloadIcon } from "@radix-ui/react-icons";
 import { useTransition } from "react";
 import { toast } from "sonner";
 import { candidateRegStepNineAction } from "@/lib/actions/candidate.action";
+import { redirect } from "next/navigation";
 
 const StepNine = () => {
   const [isPending, startTransition] = useTransition();
@@ -45,7 +45,7 @@ const StepNine = () => {
       console.log(result, "results on server side");
       if (result.success) {
         toast.success("Form has been submitted");
-        // redirect("/candidate-registration/step-eight");
+        redirect("/candidate-profile");
       } else {
         toast.error("Form submission failed");
       }
@@ -136,14 +136,14 @@ const StepNine = () => {
           </p>
         )}
 
-        <footer className="flex w-full gap-4 justify-between">
-          <Button
+        <footer className="flex w-full gap-4 justify-end">
+          {/* <Button
             type="button"
             className="secondary-btn"
-            onClick={() => redirect("/candidate-registration/step-eight")}
+            onClick={() => redirect("/candidate-registration/step-8")}
           >
             Back
-          </Button>
+          </Button> */}
           <Button className="primary-btn" type="submit" disabled={isPending}>
             {isPending ? (
               <>

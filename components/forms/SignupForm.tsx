@@ -12,6 +12,7 @@ import { ReloadIcon } from "@radix-ui/react-icons";
 import { signUpWithCredentials } from "@/lib/actions/auth.actions";
 import { toast } from "sonner";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 // import { redirect } from "next/navigation";
 
 const SignupForm = () => {
@@ -31,11 +32,11 @@ const SignupForm = () => {
       console.log(result, "signup-result");
       if (result.success) {
         toast.success("You have signed up successfully");
-        // if (result.data.userType === "client") {
-        //   redirect("/client-registration/step-one");
-        // } else {
-        //   redirect("/candidate-registration/step-one");
-        // }
+        if (result?.data?.userType === "client") {
+          redirect("/client-registration/step-1");
+        } else {
+          redirect("/candidate-registration/step-1");
+        }
       } else {
         toast.error("Sign-up failed", {
           description: `${result?.error?.message}`,

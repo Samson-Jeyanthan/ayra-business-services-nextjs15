@@ -29,13 +29,12 @@ const CandidateOne = ({ data }: IParams) => {
               alt="Candidate Picture"
               width={200}
               height={200}
-              className="bg-light-600 rounded-full border border-solid border-light-200 !size-28 md:!size-48 object-cover"
+              className="bg-light-600 rounded-4xl border border-solid border-light-200 !size-28 md:!size-48 object-cover"
             />
           ) : (
             <p>No picture uploaded</p>
           )}
         </div>
-
         <div className="flex flex-col gap-1">
           <div className="flex-items-start">
             <p className="profile-detail-label">First Name:</p>
