@@ -17,28 +17,33 @@ export default async function MultiStepLayout({
 
   const session = await auth();
   const userId = session?.user?.id;
+  let loopupStep = 0;
 
   if (!session) {
     return redirect("/");
   } else if (userId) {
-    const res = await getClientRegInfoByUserId({ userId: "" });
+    loopupStep++;
 
-    const completedSteps = Array.isArray(res?.data)
-      ? (res.data[0]?.completedSteps ?? 0)
-      : (res?.data?.completedSteps ?? 0);
+    if (loopupStep === 1) {
+      const res = await getClientRegInfoByUserId({ userId: "" });
 
-    const TOTAL_STEPS = 5;
+      const completedSteps = Array.isArray(res?.data)
+        ? (res.data[0]?.completedSteps ?? 0)
+        : (res?.data?.completedSteps ?? 0);
 
-    if (completedSteps >= TOTAL_STEPS) {
-      redirect("/client-profile");
+      const TOTAL_STEPS = 5;
+
+      if (completedSteps >= TOTAL_STEPS) {
+        redirect("/client-profile");
+      }
+
+      // ✅ Otherwise go to next step
+      // If completedSteps = 2 -> next is step 3 => /candidate-registration/step-3
+      const nextStep = completedSteps + 1;
+
+      // If your routes are /candidate-registration/1, /candidate-registration/2 ...
+      redirect(`/client-registration/step-${nextStep}`);
     }
-
-    // ✅ Otherwise go to next step
-    // If completedSteps = 2 -> next is step 3 => /candidate-registration/step-3
-    const nextStep = completedSteps + 1;
-
-    // If your routes are /candidate-registration/1, /candidate-registration/2 ...
-    redirect(`/client-registration/step-${nextStep}`);
   }
 
   return (
