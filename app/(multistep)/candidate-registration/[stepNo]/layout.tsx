@@ -35,7 +35,7 @@ export default async function MultiStepLayout({
     const nextStep = completedSteps + 1;
 
     // If your routes are /candidate-registration/1, /candidate-registration/2 ...
-    redirect(`/candidate-registration/${nextStep}`);
+    redirect(`/candidate-registration/step-${nextStep}`);
   }
 
   return (
