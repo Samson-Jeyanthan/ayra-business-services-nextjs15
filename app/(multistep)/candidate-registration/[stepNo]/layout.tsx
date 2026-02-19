@@ -2,9 +2,9 @@ import React from "react";
 import { MultiStepSidebar } from "@/components/shared";
 import { CANDIDATE_MULTISTEP_STAGES } from "@/constants";
 import Image from "next/image";
-import { getCandidateRegInfoByUserId } from "@/lib/actions/candidate.action";
-import { redirect } from "next/navigation";
-import { auth } from "@/auth";
+// import { getCandidateRegInfoByUserId } from "@/lib/actions/candidate.action";
+// import { redirect } from "next/navigation";
+// import { auth } from "@/auth";
 
 export default async function MultiStepLayout({
   params,
@@ -14,34 +14,34 @@ export default async function MultiStepLayout({
   children: React.ReactNode;
 }>) {
   const resolvedParams = await params;
-  const session = await auth();
-  const userId = session?.user?.id;
-  let loopupStep = 0;
+  // const session = await auth();
+  // const userId = session?.user?.id;
+  // let loopupStep = 0;
 
-  if (!session) {
-    return redirect("/");
-  } else if (userId) {
-    loopupStep++;
+  // if (!session) {
+  //   return redirect("/");
+  // } else if (userId) {
+  //   loopupStep++;
 
-    if (loopupStep === 1) {
-      const res = await getCandidateRegInfoByUserId({ userId: "" });
+  //   if (loopupStep === 1) {
+  //     const res = await getCandidateRegInfoByUserId({ userId: "" });
 
-      const completedSteps = res?.data?.completedSteps ?? 0;
+  //     const completedSteps = res?.data?.completedSteps ?? 0;
 
-      const TOTAL_STEPS = 9;
+  //     const TOTAL_STEPS = 9;
 
-      if (completedSteps >= TOTAL_STEPS) {
-        redirect("/candidate-profile");
-      }
+  //     if (completedSteps >= TOTAL_STEPS) {
+  //       redirect("/candidate-profile");
+  //     }
 
-      // ✅ Otherwise go to next step
-      // If completedSteps = 2 -> next is step 3 => /candidate-registration/step-3
-      const nextStep = completedSteps + 1;
+  //     // ✅ Otherwise go to next step
+  //     // If completedSteps = 2 -> next is step 3 => /candidate-registration/step-3
+  //     const nextStep = completedSteps + 1;
 
-      // If your routes are /candidate-registration/1, /candidate-registration/2 ...
-      redirect(`/candidate-registration/step-${nextStep}`);
-    }
-  }
+  //     // If your routes are /candidate-registration/1, /candidate-registration/2 ...
+  //     redirect(`/candidate-registration/step-${nextStep}`);
+  //   }
+  // }
 
   return (
     <main className="relative flex justify-center w-full">

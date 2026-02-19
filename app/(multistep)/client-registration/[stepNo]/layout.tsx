@@ -2,9 +2,9 @@ import React from "react";
 import { MultiStepSidebar } from "@/components/shared";
 import { CLIENT_MULTISTEP_STAGES } from "@/constants";
 import Image from "next/image";
-import { redirect } from "next/navigation";
-import { getClientRegInfoByUserId } from "@/lib/actions/client.action";
-import { auth } from "@/auth";
+// import { redirect } from "next/navigation";
+// import { getClientRegInfoByUserId } from "@/lib/actions/client.action";
+// import { auth } from "@/auth";
 
 export default async function MultiStepLayout({
   params,
@@ -15,36 +15,36 @@ export default async function MultiStepLayout({
 }>) {
   const resolvedParams = await params;
 
-  const session = await auth();
-  const userId = session?.user?.id;
-  let loopupStep = 0;
+  // const session = await auth();
+  // const userId = session?.user?.id;
+  // let loopupStep = 0;
 
-  if (!session) {
-    return redirect("/");
-  } else if (userId) {
-    loopupStep++;
+  // if (!session) {
+  //   return redirect("/");
+  // } else if (userId) {
+  //   loopupStep++;
 
-    if (loopupStep === 1) {
-      const res = await getClientRegInfoByUserId({ userId: "" });
+  //   if (loopupStep === 1) {
+  //     const res = await getClientRegInfoByUserId({ userId: "" });
 
-      const completedSteps = Array.isArray(res?.data)
-        ? (res.data[0]?.completedSteps ?? 0)
-        : (res?.data?.completedSteps ?? 0);
+  //     const completedSteps = Array.isArray(res?.data)
+  //       ? (res.data[0]?.completedSteps ?? 0)
+  //       : (res?.data?.completedSteps ?? 0);
 
-      const TOTAL_STEPS = 5;
+  //     const TOTAL_STEPS = 5;
 
-      if (completedSteps >= TOTAL_STEPS) {
-        redirect("/client-profile");
-      }
+  //     if (completedSteps >= TOTAL_STEPS) {
+  //       redirect("/client-profile");
+  //     }
 
-      // ✅ Otherwise go to next step
-      // If completedSteps = 2 -> next is step 3 => /candidate-registration/step-3
-      const nextStep = completedSteps + 1;
+  //     // ✅ Otherwise go to next step
+  //     // If completedSteps = 2 -> next is step 3 => /candidate-registration/step-3
+  //     const nextStep = completedSteps + 1;
 
-      // If your routes are /candidate-registration/1, /candidate-registration/2 ...
-      redirect(`/client-registration/step-${nextStep}`);
-    }
-  }
+  //     // If your routes are /candidate-registration/1, /candidate-registration/2 ...
+  //     redirect(`/client-registration/step-${nextStep}`);
+  //   }
+  // }
 
   return (
     <main className="relative flex justify-center w-full">
