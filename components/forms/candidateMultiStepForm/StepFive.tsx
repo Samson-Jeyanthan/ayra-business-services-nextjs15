@@ -223,7 +223,7 @@ const StepFive = () => {
 
       if (result.success) {
         toast.success("Form has been submitted");
-        redirect("/candidate-registration/step-six");
+        redirect("/candidate-registration/step-6");
       } else {
         toast.error("Form submission failed");
       }

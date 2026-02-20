@@ -32,7 +32,7 @@ const StepFour = () => {
       const result = await candidateRegStepFourAction(values);
       if (result.success) {
         toast.success("Form has been submitted");
-        redirect("/candidate-registration/step-five");
+        redirect("/candidate-registration/step-5");
       } else {
         toast.error("Form submission failed");
       }
