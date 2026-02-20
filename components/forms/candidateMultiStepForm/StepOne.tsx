@@ -86,7 +86,7 @@ const StepOne = () => {
 
       if (result.success) {
         toast.success("Form has been submitted");
-        redirect("/candidate-registration/step-two");
+        redirect("/candidate-registration/step-2");
       } else {
         toast.error("Form submission failed");
       }

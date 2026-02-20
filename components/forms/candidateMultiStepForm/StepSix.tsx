@@ -45,7 +45,7 @@ const StepSix = () => {
       console.log(result, "results on server side");
       if (result.success) {
         toast.success("Form has been submitted");
-        redirect("/candidate-registration/step-seven");
+        redirect("/candidate-registration/step-7");
       } else {
         toast.error("Form submission failed");
       }
