@@ -473,7 +473,24 @@ export async function clientRegStepFiveAction(
   }
 }
 
-export async function getClientRegInfoByUserId(params: IGetUserRegInfoParams) {
+// types/client-reg.ts
+export type ClientRegInfo = {
+  userId: string;
+  completedSteps: number;
+  stepOne?: { data?: unknown };
+  stepTwo?: { data?: unknown };
+  stepThree?: { data?: unknown };
+  stepFour?: { data?: unknown };
+  stepFive?: { data?: unknown };
+};
+
+export type GetClientRegInfoResponse =
+  | { success: true; data: ClientRegInfo | null }
+  | { success: false; data: null; error: { message: string } };
+
+export async function getClientRegInfoByUserId(
+  params: IGetUserRegInfoParams
+): Promise<GetClientRegInfoResponse> {
   const validationResult = await action({
     params,
     schema: GetUserRegInfoSchema,
@@ -481,7 +498,12 @@ export async function getClientRegInfoByUserId(params: IGetUserRegInfoParams) {
   });
 
   if (validationResult instanceof Error) {
-    return handleError(validationResult) as ErrorResponse;
+    // IMPORTANT: don't return a different "ErrorResponse" shape here
+    return {
+      success: false,
+      data: null,
+      error: { message: validationResult.message },
+    };
   }
 
   const { userId } = validationResult.params!;
@@ -498,12 +520,10 @@ export async function getClientRegInfoByUserId(params: IGetUserRegInfoParams) {
 
   const clientRegInfo = await Client.findOne({ userId: paramId })
     .select("+stepThree")
-    .lean();
-
-  console.log(clientRegInfo, "client.actions.ts");
+    .lean<ClientRegInfo | null>(); // ✅ key fix
 
   return {
     success: true,
-    data: clientRegInfo ? clientRegInfo : null,
+    data: clientRegInfo ?? null,
   };
 }

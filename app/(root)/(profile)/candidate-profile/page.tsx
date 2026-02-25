@@ -27,6 +27,9 @@ const CandidateProfile = async () => {
 
   if (!candidate) {
     return <p>No candidate info found.</p>;
+  } else if (candidate.completedSteps < 9) {
+    const allowedStep = candidate.completedSteps + 1;
+    redirect(`/candidate-registration/step-${allowedStep}`);
   }
 
   const {
