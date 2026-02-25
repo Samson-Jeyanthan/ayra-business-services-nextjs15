@@ -2,9 +2,9 @@ import React from "react";
 import { MultiStepSidebar } from "@/components/shared";
 import { CANDIDATE_MULTISTEP_STAGES } from "@/constants";
 import Image from "next/image";
-import { getCandidateRegInfoByUserId } from "@/lib/actions/candidate.action";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
+import { enforceCandidateStep } from "@/lib/functions/profileRedirection";
 
 export default async function MultiStepLayout({
   params,
@@ -17,39 +17,18 @@ export default async function MultiStepLayout({
   const session = await auth();
   const userId = session?.user?.id;
 
-  let isRetry: boolean = false;
   const TOTAL_STEPS = 9;
 
   if (!session) {
     return redirect("/");
   } else if (userId) {
-    if (isRetry) {
-      return console.log("Is retry is true");
-    }
-
     console.log("going to try completesteps");
 
-    try {
-      const res = await getCandidateRegInfoByUserId({ userId: "" });
-
-      const completedSteps = res?.data?.completedSteps ?? 0;
-
-      if (completedSteps >= TOTAL_STEPS) {
-        redirect("/candidate-profile");
-      }
-
-      isRetry = true;
-      if (completedSteps !== Number(resolvedParams.stepNo)) {
-        redirect(`/candidate-registration/step-${completedSteps}`);
-      }
-
-      console.log("Completed Steps: ", completedSteps);
-
-      const nextStep = completedSteps + 1;
-      redirect(`/candidate-registration/step-${nextStep}`);
-    } catch (error) {
-      console.log("Error to find completed steps: ", error);
-    }
+    await enforceCandidateStep({
+      userId,
+      stepNo: resolvedParams.stepNo,
+      totalSteps: TOTAL_STEPS,
+    });
   }
 
   return (

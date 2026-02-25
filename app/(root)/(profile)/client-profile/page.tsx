@@ -25,6 +25,9 @@ const ClientProfile = async () => {
 
   if (!client) {
     return <p>No client info found.</p>;
+  } else if (client?.completedSteps < 5) {
+    const allowedStep = client?.completedSteps + 1;
+    redirect(`/client-registration/step-${allowedStep}`);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
